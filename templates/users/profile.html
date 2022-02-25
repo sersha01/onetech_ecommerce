@@ -1,0 +1,87 @@
+{% extends 'users/base.html' %} {% load static %} {% block index %}
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12 py-4 bg-light border d-flex align-items-center bd-highlight pb-0 mb-0">
+      <div class="col-md-3 d-flex justify-content-center">
+        <img
+          class="rounded-circle bd-highlight w-50"
+          src="{{ user.image.url }}"
+          alt="profile photo"
+        />
+      </div>
+      <div class="bd-highlight">
+        <h4>{{ user.name }}</h4>
+        <h5>{{ user.username }}</h5>
+        <h5>{{ user.phone }}</h5>
+      </div>
+      <button class="btn btn-lg btn-info ml-auto bd-highlight">
+        Edit Profile
+      </button>
+    </div>
+    <div class="col-md-3"><div class="card px-0 mt-4">
+      <ul class="list-group list-group-flush">
+        <li value="dash_board" class="list-group-item active">Dashboard</li>
+        <li value="order" class="list-group-item">My Orders</li>
+        <li value="address" class="list-group-item">My Addresses</li>
+        <li value="wish_list" class="list-group-item">Whish list</li>
+      </ul>
+    </div></div>
+    <div class="col-md-9" id="list">
+      <div class="col-12 mt-4 row pl-5 d-flex justify-content-between" id="dash_board">
+        <div class="col-3 py-3 bg-white border border-secondary rounded text-center">
+          <h3>My Orders</h3>
+          <h4>5</h4>
+        </div>
+        <div class="col-3 p-3 bg-white border border-secondary rounded text-center">
+          <h3>Whish list</h3>
+          <h4>5</h4>
+        </div>
+        <div class="col-4 p-3 bg-white border border-secondary rounded text-center">
+          <h3>My Expence</h3>
+          <h4>5</h4>
+        </div>
+        <div class="col-12 mt-5 text-center">
+          <h3>My Orders</h3>
+          <h4>5</h4>
+        </div>
+      </div>
+      <div class="col-12 mt-4 row pl-5 d-none justify-content-between" id="order">
+          {% include 'users/orders.html' %}
+      </div>
+      <div class="col-12 mt-2 d-none justify-content-between row" id="address">
+          {% include 'users/address.html' %}
+          <div class="col-12 d-flex justify-content-center"><a href="{% url 'add_address' %}" class="btn btn-lg btn-info">&#10010; Add New Address</a></div>
+        </div>
+      <div class="col-12 mt-4 row pl-5 justify-content-between d-none" id="wish_list">
+            {% include 'users/orders.html' %}
+        </div>
+    </div>
+  </div>
+</div>
+<style>
+    body::-webkit-scrollbar {
+        display: none;
+      }
+      
+      /* Hide scrollbar for IE, Edge and Firefox */
+      body {
+        -ms-overflow-style: none;  /* IE and Edge */
+        scrollbar-width: none;  /* Firefox */
+      }
+</style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+  $(document).ready(function () {
+    $("ul li").on("click", function () {
+      $("ul li").removeClass("active");
+      $(this).addClass("active");
+      $("#list > div").removeClass("d-flex , d-none");
+      $("#list > div").addClass("d-none");
+      $('#' + $(this).attr('value')).removeClass("d-none");
+      $('#' + $(this).attr('value')).addClass("d-flex");
+    });
+  });
+</script>
+
+{% endblock %}

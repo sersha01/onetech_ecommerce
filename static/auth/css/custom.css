@@ -1,0 +1,18 @@
+.btn-primary {
+    --sa-button--normal-bg-color: #0e8ce4 !important;
+    --sa-button--normal-font-color: #212529;
+    --sa-arrow-opacity: 0.4;
+    --sa-button--hover-bg-color: #2f6fff
+}
+
+.red{
+    color: rgb(207, 11, 11);
+}
+
+.shade{
+    color: rgba(255, 0, 0, 0.226);
+}
+
+.admin{
+    font-weight: bold;
+}

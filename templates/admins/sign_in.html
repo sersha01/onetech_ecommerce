@@ -1,0 +1,29 @@
+{% extends 'admins/admin-base.html' %} {% block content %} {% load static %}
+<div class="min-h-100 p-0 p-sm-6 d-flex align-items-stretch">
+  <div class="card w-25x flex-grow-1 flex-sm-grow-0 m-sm-auto">
+    <div class="card-body p-sm-5 m-sm-3 flex-grow-0">
+      <h1 class="mb-0 fs-3">Sign In</h1>
+      <div class="fs-exact-14 text-muted mt-2 pt-1 mb-5 pb-2">
+        Log in to your account to continue.
+      </div>
+      <form action="{% url 'login' %}" method="post">
+        {% csrf_token %}
+        <div class="mb-4">
+          <label class="form-label">Email Address</label>
+          <input type="email" class="form-control form-control-lg" name="email" />
+        </div>
+        <div class="mb-4">
+          <label class="form-label">Password</label>
+          <input type="password" class="form-control form-control-lg" name="password" />
+          <span class="text-danger">{{message}}</span>
+        </div>
+        <div>
+          <button type="submit" class="btn btn-primary btn-lg w-100 text-white">
+            Sign In
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

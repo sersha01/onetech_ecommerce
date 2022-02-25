@@ -1,0 +1,24 @@
+{% extends 'users/base.html' %} {% load static %} {% block index %}
+
+<div class="row justify-content-center">
+  <div class="col-md-6 bg-info p-5">
+    <form action="{% url 'add_address' %}" method="POST" autocomplete="off">
+      {% csrf_token %} 
+      <div class="row m-0">
+    {% for field in form %}
+      {% if field.label != 'NAME' and field.label != 'ADDRESS' %}
+      <div class="mb-3 col-md-6">
+      {% else %}
+      <div class="mb-3 col-12">
+      {% endif %}
+      <span class="form-label m-0">{{field.label}}</span>
+      {{field}}
+      </div>
+    {% endfor %}
+    </div><span id="message"></span>
+      <div><button type="submit" class="btn btn-primary btn-lg w-100 mt-4 rounded text-white"> Save </button></div>
+    </form>
+  </div>
+</div>
+
+{% endblock %}

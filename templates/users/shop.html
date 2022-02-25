@@ -1,0 +1,843 @@
+{% extends 'users/base.html' %}
+{% load static %}
+{% block index %}
+
+  <title>Shop</title>
+<link rel="stylesheet" type="text/css" href="{% static 'users/css/Carousel2-2.2.1__animate.css_plugins__jquery-ui-1.12.1.custom__jquery-ui.css.pagespeed.cc.7O4Co5tSXP_e6p6txgk8dermjbcy24c03.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'users/css/A_shop_styles.css_shop_responsive.css_Mcc.iEttHHEJmc.css.pagespeed.cf.oyO6hahOwp_j7xdkmvn4be2rikg78r6bf.css' %}" />
+
+
+<div class="super_container">
+<header class="header">
+<!-- <div class="top_bar">
+<div class="container">
+<div class="row">
+<div class="col d-flex flex-row">
+<div class="top_bar_contact_item"><div class="top_bar_icon"><script data-pagespeed-no-defer>//<![CDATA[
+(function(){for(var g="function"==typeof Object.defineProperties?Object.defineProperty:function(b,c,a){if(a.get||a.set)throw new TypeError("ES3 does not support getters and setters.");b!=Array.prototype&&b!=Object.prototype&&(b[c]=a.value)},h="undefined"!=typeof window&&window===this?this:"undefined"!=typeof global&&null!=global?global:this,k=["String","prototype","repeat"],l=0;l<k.length-1;l++){var m=k[l];m in h||(h[m]={});h=h[m]}
+var n=k[k.length-1],p=h[n],q=p?p:function(b){var c;if(null==this)throw new TypeError("The 'this' value for String.prototype.repeat must not be null or undefined");c=this+"";if(0>b||1342177279<b)throw new RangeError("Invalid count value");b|=0;for(var a="";b;)if(b&1&&(a+=c),b>>>=1)c+=c;return a};q!=p&&null!=q&&g(h,n,{configurable:!0,writable:!0,value:q});var t=this;
+function u(b,c){var a=b.split("."),d=t;a[0]in d||!d.execScript||d.execScript("var "+a[0]);for(var e;a.length&&(e=a.shift());)a.length||void 0===c?d[e]?d=d[e]:d=d[e]={}:d[e]=c};function v(b){var c=b.length;if(0<c){for(var a=Array(c),d=0;d<c;d++)a[d]=b[d];return a}return[]};function w(b){var c=window;if(c.addEventListener)c.addEventListener("load",b,!1);else if(c.attachEvent)c.attachEvent("onload",b);else{var a=c.onload;c.onload=function(){b.call(this);a&&a.call(this)}}};var x;function y(b,c,a,d,e){this.h=b;this.j=c;this.l=a;this.f=e;this.g={height:window.innerHeight||document.documentElement.clientHeight||document.body.clientHeight,width:window.innerWidth||document.documentElement.clientWidth||document.body.clientWidth};this.i=d;this.b={};this.a=[];this.c={}}
+function z(b,c){var a,d,e=c.getAttribute("data-pagespeed-url-hash");if(a=e&&!(e in b.c))if(0>=c.offsetWidth&&0>=c.offsetHeight)a=!1;else{d=c.getBoundingClientRect();var f=document.body;a=d.top+("pageYOffset"in window?window.pageYOffset:(document.documentElement||f.parentNode||f).scrollTop);d=d.left+("pageXOffset"in window?window.pageXOffset:(document.documentElement||f.parentNode||f).scrollLeft);f=a.toString()+","+d;b.b.hasOwnProperty(f)?a=!1:(b.b[f]=!0,a=a<=b.g.height&&d<=b.g.width)}a&&(b.a.push(e),
+b.c[e]=!0)}y.prototype.checkImageForCriticality=function(b){b.getBoundingClientRect&&z(this,b)};u("pagespeed.CriticalImages.checkImageForCriticality",function(b){x.checkImageForCriticality(b)});u("pagespeed.CriticalImages.checkCriticalImages",function(){A(x)});
+function A(b){b.b={};for(var c=["IMG","INPUT"],a=[],d=0;d<c.length;++d)a=a.concat(v(document.getElementsByTagName(c[d])));if(a.length&&a[0].getBoundingClientRect){for(d=0;c=a[d];++d)z(b,c);a="oh="+b.l;b.f&&(a+="&n="+b.f);if(c=!!b.a.length)for(a+="&ci="+encodeURIComponent(b.a[0]),d=1;d<b.a.length;++d){var e=","+encodeURIComponent(b.a[d]);131072>=a.length+e.length&&(a+=e)}b.i&&(e="&rd="+encodeURIComponent(JSON.stringify(B())),131072>=a.length+e.length&&(a+=e),c=!0);C=a;if(c){d=b.h;b=b.j;var f;if(window.XMLHttpRequest)f=
+new XMLHttpRequest;else if(window.ActiveXObject)try{f=new ActiveXObject("Msxml2.XMLHTTP")}catch(r){try{f=new ActiveXObject("Microsoft.XMLHTTP")}catch(D){}}f&&(f.open("POST",d+(-1==d.indexOf("?")?"?":"&")+"url="+encodeURIComponent(b)),f.setRequestHeader("Content-Type","application/x-www-form-urlencoded"),f.send(a))}}}
+function B(){var b={},c;c=document.getElementsByTagName("IMG");if(!c.length)return{};var a=c[0];if(!("naturalWidth"in a&&"naturalHeight"in a))return{};for(var d=0;a=c[d];++d){var e=a.getAttribute("data-pagespeed-url-hash");e&&(!(e in b)&&0<a.width&&0<a.height&&0<a.naturalWidth&&0<a.naturalHeight||e in b&&a.width>=b[e].o&&a.height>=b[e].m)&&(b[e]={rw:a.width,rh:a.height,ow:a.naturalWidth,oh:a.naturalHeight})}return b}var C="";u("pagespeed.CriticalImages.getBeaconData",function(){return C});
+u("pagespeed.CriticalImages.Run",function(b,c,a,d,e,f){var r=new y(b,c,a,e,f);x=r;d&&w(function(){window.setTimeout(function(){A(r)},0)})});})();
+pagespeed.CriticalImages.Run('/mod_pagespeed_beacon','https://preview.colorlib.com/theme/onetech/shop.html','-ilGEe-FWC',true,false,'KxsmUBDP-AM');
+//]]></script><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAAUCAQAAADxJQ/jAAAAs0lEQVQY09WQvwpBURzHPxMxmg2UV1AKeQnDnQwyeQPkFYSnYPLnLreE4aZubgbFQu4iRexW33sy4QWcT7/6nM/pDOdAgyMbfNYGX36gBTcyQJ66oShPcYULNg4eO4Mnt9XYU6OCRdlgyas6Zsn3msOK+EeM4v5Fjn3kSJgXP145gzNTRmJIXxPaRI2Tth3R1c/1jPXUwgtmJXmSfrsDD3IkRIExJWNZ7tAkYCtcBprQAtoviCpIDxuqV7cAAAAASUVORK5CYII=" alt="" data-pagespeed-url-hash="1895926804" onload="pagespeed.CriticalImages.checkImageForCriticality(this);"></div>+38 068 005 3570</div>
+<div class="top_bar_contact_item"><div class="top_bar_icon"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAOCAQAAACFzfR7AAAA8ElEQVQoz33QK0gDYBSG4cewIENRwUuxWASDtkUNFq0m84pN3DCYRBAxmB3C7IJFVgwyNGgQBJ3CmBNcGMwhgmgYrP0Gx3Tsct5y4LzhOx87ruU89uDBpT2CBAaMdCGKbYGKuk29Zl9diQvzqm71dZQGFZTNOuMF3KiJtWnLgnOQI28C7Aq2WrQDQRIMuSNvtHFY8CbV2PudeDXXDNAiMimomBHzLRj7l7RFXPElIamgKG5dzWqr+JvxULAGxg2DuOD4L2MREU8+Tbd9PeXdsyjuyVpUlela96kPSzKEZi2RDsCGIJBSlpZ11YWstJKjH2f0YA0DCqWNAAAAAElFTkSuQmCC" alt="" data-pagespeed-url-hash="719524515" onload="pagespeed.CriticalImages.checkImageForCriticality(this);"></div><a href="index.html#badcdbc9cec9dbd6dfc9faddd7dbd3d694d9d5d7"><span class="__cf_email__" data-cfemail="c4a2a5b7b0b7a5a8a1b784a3a9a5ada8eaa7aba9">[email&#160;protected]</span></a></div>
+<div class="top_bar_content ml-auto">
+<div class="top_bar_menu">
+<ul class="standard_dropdown top_bar_dropdown">
+<li>
+<a href="#">English<i class="fas fa-chevron-down"></i></a>
+<ul>
+<li><a href="#">Italian</a></li>
+<li><a href="#">Spanish</a></li>
+<li><a href="#">Japanese</a></li>
+</ul>
+</li>
+<li>
+<a href="#">$ US dollar<i class="fas fa-chevron-down"></i></a>
+<ul>
+<li><a href="#">EUR Euro</a></li>
+<li><a href="#">GBP British Pound</a></li>
+<li><a href="#">JPY Japanese Yen</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="top_bar_user">
+<div class="user_icon"><img src="{% static 'users/images/user.svg' %}" alt="" data-pagespeed-url-hash="367127946" onload="pagespeed.CriticalImages.checkImageForCriticality(this);"></div>
+<div><a href="#">Register</a></div>
+<div><a href="#">Sign in</a></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div> -->
+
+<nav class="main_nav">
+<div class="container">
+<div class="row">
+<div class="col">
+<div class="main_nav_content d-flex flex-row">
+<div class="cat_menu_container">
+<div class="cat_menu_title d-flex flex-row align-items-center justify-content-start">
+<div class="cat_burger"><span></span><span></span><span></span></div>
+<div class="cat_menu_text">categories</div>
+</div>
+<ul class="cat_menu">
+<li><a href="#">Computers & Laptops <i class="fas fa-chevron-right ml-auto"></i></a></li>
+<li><a href="#">Cameras & Photos<i class="fas fa-chevron-right"></i></a></li>
+<li class="hassubs">
+<a href="#">Hardware<i class="fas fa-chevron-right"></i></a>
+<ul>
+<li class="hassubs">
+<a href="#">Menu Item<i class="fas fa-chevron-right"></i></a>
+<ul>
+<li><a href="#">Menu Item<i class="fas fa-chevron-right"></i></a></li>
+<li><a href="#">Menu Item<i class="fas fa-chevron-right"></i></a></li>
+<li><a href="#">Menu Item<i class="fas fa-chevron-right"></i></a></li>
+<li><a href="#">Menu Item<i class="fas fa-chevron-right"></i></a></li>
+</ul>
+</li>
+<li><a href="#">Menu Item<i class="fas fa-chevron-right"></i></a></li>
+<li><a href="#">Menu Item<i class="fas fa-chevron-right"></i></a></li>
+<li><a href="#">Menu Item<i class="fas fa-chevron-right"></i></a></li>
+</ul>
+</li>
+<li><a href="#">Smartphones & Tablets<i class="fas fa-chevron-right"></i></a></li>
+<li><a href="#">TV & Audio<i class="fas fa-chevron-right"></i></a></li>
+<li><a href="#">Gadgets<i class="fas fa-chevron-right"></i></a></li>
+<li><a href="#">Car Electronics<i class="fas fa-chevron-right"></i></a></li>
+<li><a href="#">Video Games & Consoles<i class="fas fa-chevron-right"></i></a></li>
+<li><a href="#">Accessories<i class="fas fa-chevron-right"></i></a></li>
+</ul>
+</div>
+<div class="main_nav_menu ml-auto">
+<ul class="standard_dropdown main_nav_dropdown">
+<li><a href="#">Home<i class="fas fa-chevron-down"></i></a></li>
+<li class="hassubs">
+<a href="#">Super Deals<i class="fas fa-chevron-down"></i></a>
+<ul>
+<li>
+<a href="#">Menu Item<i class="fas fa-chevron-down"></i></a>
+<ul>
+<li><a href="#">Menu Item<i class="fas fa-chevron-down"></i></a></li>
+<li><a href="#">Menu Item<i class="fas fa-chevron-down"></i></a></li>
+<li><a href="#">Menu Item<i class="fas fa-chevron-down"></i></a></li>
+</ul>
+</li>
+<li><a href="#">Menu Item<i class="fas fa-chevron-down"></i></a></li>
+<li><a href="#">Menu Item<i class="fas fa-chevron-down"></i></a></li>
+<li><a href="#">Menu Item<i class="fas fa-chevron-down"></i></a></li>
+</ul>
+</li>
+<li class="hassubs">
+<a href="#">Featured Brands<i class="fas fa-chevron-down"></i></a>
+<ul>
+<li>
+<a href="#">Menu Item<i class="fas fa-chevron-down"></i></a>
+<ul>
+<li><a href="#">Menu Item<i class="fas fa-chevron-down"></i></a></li>
+<li><a href="#">Menu Item<i class="fas fa-chevron-down"></i></a></li>
+<li><a href="#">Menu Item<i class="fas fa-chevron-down"></i></a></li>
+</ul>
+</li>
+<li><a href="#">Menu Item<i class="fas fa-chevron-down"></i></a></li>
+<li><a href="#">Menu Item<i class="fas fa-chevron-down"></i></a></li>
+<li><a href="#">Menu Item<i class="fas fa-chevron-down"></i></a></li>
+</ul>
+</li>
+<li class="hassubs">
+<a href="#">Pages<i class="fas fa-chevron-down"></i></a>
+<ul>
+<li><a href="{% static 'users/shop.html' %}">Shop<i class="fas fa-chevron-down"></i></a></li>
+<li><a href="{% static 'users/product.html' %}">Product<i class="fas fa-chevron-down"></i></a></li>
+<li><a href="{% static 'users/blog.html' %}">Blog<i class="fas fa-chevron-down"></i></a></li>
+<li><a href="{% static 'users/blog_single.html' %}">Blog Post<i class="fas fa-chevron-down"></i></a></li>
+<li><a href="{% static 'users/regular.html' %}">Regular Post<i class="fas fa-chevron-down"></i></a></li>
+<li><a href="{% static 'users/cart.html' %}">Cart<i class="fas fa-chevron-down"></i></a></li>
+<li><a href="{% static 'users/contact.html' %}">Contact<i class="fas fa-chevron-down"></i></a></li>
+</ul>
+</li>
+<li><a href="{% static 'users/blog.html' %}">Blog<i class="fas fa-chevron-down"></i></a></li>
+<li><a href="{% static 'users/contact.html' %}">Contact<i class="fas fa-chevron-down"></i></a></li>
+</ul>
+</div>
+<div class="menu_trigger_container ml-auto">
+<div class="menu_trigger d-flex flex-row align-items-center justify-content-end">
+<div class="menu_burger">
+<div class="menu_trigger_text">menu</div>
+<div class="cat_burger menu_burger_inner"><span></span><span></span><span></span></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</nav>
+<div class="page_menu">
+<div class="container">
+<div class="row">
+<div class="col">
+<div class="page_menu_content">
+<div class="page_menu_search">
+<form action="#">
+<input type="search" required class="page_menu_search_input" placeholder="Search for products...">
+</form>
+</div>
+<ul class="page_menu_nav">
+<li class="page_menu_item has-children">
+<a href="#">Language<i class="fa fa-angle-down"></i></a>
+<ul class="page_menu_selection">
+<li><a href="#">English<i class="fa fa-angle-down"></i></a></li>
+<li><a href="#">Italian<i class="fa fa-angle-down"></i></a></li>
+<li><a href="#">Spanish<i class="fa fa-angle-down"></i></a></li>
+<li><a href="#">Japanese<i class="fa fa-angle-down"></i></a></li>
+</ul>
+</li>
+<li class="page_menu_item has-children">
+<a href="#">Currency<i class="fa fa-angle-down"></i></a>
+<ul class="page_menu_selection">
+<li><a href="#">US Dollar<i class="fa fa-angle-down"></i></a></li>
+<li><a href="#">EUR Euro<i class="fa fa-angle-down"></i></a></li>
+<li><a href="#">GBP British Pound<i class="fa fa-angle-down"></i></a></li>
+<li><a href="#">JPY Japanese Yen<i class="fa fa-angle-down"></i></a></li>
+</ul>
+</li>
+<li class="page_menu_item">
+<a href="#">Home<i class="fa fa-angle-down"></i></a>
+</li>
+<li class="page_menu_item has-children">
+<a href="#">Super Deals<i class="fa fa-angle-down"></i></a>
+<ul class="page_menu_selection">
+<li><a href="#">Super Deals<i class="fa fa-angle-down"></i></a></li>
+<li class="page_menu_item has-children">
+<a href="#">Menu Item<i class="fa fa-angle-down"></i></a>
+<ul class="page_menu_selection">
+<li><a href="#">Menu Item<i class="fa fa-angle-down"></i></a></li>
+<li><a href="#">Menu Item<i class="fa fa-angle-down"></i></a></li>
+<li><a href="#">Menu Item<i class="fa fa-angle-down"></i></a></li>
+<li><a href="#">Menu Item<i class="fa fa-angle-down"></i></a></li>
+</ul>
+</li>
+<li><a href="#">Menu Item<i class="fa fa-angle-down"></i></a></li>
+<li><a href="#">Menu Item<i class="fa fa-angle-down"></i></a></li>
+<li><a href="#">Menu Item<i class="fa fa-angle-down"></i></a></li>
+</ul>
+</li>
+<li class="page_menu_item has-children">
+<a href="#">Featured Brands<i class="fa fa-angle-down"></i></a>
+<ul class="page_menu_selection">
+<li><a href="#">Featured Brands<i class="fa fa-angle-down"></i></a></li>
+<li><a href="#">Menu Item<i class="fa fa-angle-down"></i></a></li>
+<li><a href="#">Menu Item<i class="fa fa-angle-down"></i></a></li>
+<li><a href="#">Menu Item<i class="fa fa-angle-down"></i></a></li>
+</ul>
+</li>
+<li class="page_menu_item has-children">
+<a href="#">Trending Styles<i class="fa fa-angle-down"></i></a>
+<ul class="page_menu_selection">
+<li><a href="#">Trending Styles<i class="fa fa-angle-down"></i></a></li>
+<li><a href="#">Menu Item<i class="fa fa-angle-down"></i></a></li>
+<li><a href="#">Menu Item<i class="fa fa-angle-down"></i></a></li>
+<li><a href="#">Menu Item<i class="fa fa-angle-down"></i></a></li>
+</ul>
+</li>
+<li class="page_menu_item"><a href="{% static 'users/blog.html' %}">blog<i class="fa fa-angle-down"></i></a></li>
+<li class="page_menu_item"><a href="{% static 'users/contact.html' %}">contact<i class="fa fa-angle-down"></i></a></li>
+</ul>
+<div class="menu_contact">
+<div class="menu_contact_item"><div class="menu_contact_icon"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAAUCAQAAADxJQ/jAAAAuUlEQVQY09WQvwpBcRTHz0SMZgPlFZRCXsJwJ4NM3gB5BeEpmPy5yy1hkJKbQV0L3btIEbvx49xfppsX0KdTn/Ot73CO0OLCAZe9wVU/0xEe5BCKNA1l9Qx34YaNww7PsFO3uQknGtSwqBos9TqesNZalKWwJRkJ42z+Ik5E4lgYr35cuRCuzJkoY4Y6oc24Cr6uPaWvnxsYG+Br4VtM8yb7dUd4USCllJhSMZbnKbQJOCobRjqhBXQ/458jQgbowg0AAAAASUVORK5CYII=" alt="" data-pagespeed-url-hash="4089116746" onload="pagespeed.CriticalImages.checkImageForCriticality(this);"></div>+38 068 005 3570</div>
+<div class="menu_contact_item"><div class="menu_contact_icon"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAOCAQAAACFzfR7AAAA9ElEQVQoz33QPSgEABTA8We4QSKUj8ViUQY2I4OF1WS+xSZ3GUxSksHsUmdXFt1i0MXAoJSvunyUG66QlBjUbT+D67juo//y6v2H/3thzalrNy24cmwjkBI69TahQ1glPCtbFi3YVFYMRya9OtfWUOpyp2TMQXgUwplvE3XaLA6FcB0KBoWwjpUabQtpIXS7CAV9lcWUF5nK3G7Pk/FqQI0YhvBs1IQv9P8rrRHnfEpJu/MgadG3+Vrxt3EbC0IY0COEJHb/Gh+EhFsfRuquHvbmXodwGfKmvco1ffe+dzNyQfUtiQaEsAQhoyQr76QJeVlFOz+z13cE/RLbrAAAAABJRU5ErkJggg==" alt="" data-pagespeed-url-hash="734829697" onload="pagespeed.CriticalImages.checkImageForCriticality(this);"></div><a href="index.html#abcdcad8dfd8cac7ced8ebccc6cac2c785c8c4c6"><span class="__cf_email__" data-cfemail="75131406010614191006351218141c195b161a18">[email&#160;protected]</span></a></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</header>
+<div class="home">
+<div class="home_background parallax-window" data-parallax="scroll" data-image-src="{% static 'users/images/shop_background.jpg' %}"></div>
+<div class="home_overlay"></div>
+<div class="home_content d-flex flex-column align-items-center justify-content-center">
+<h2 class="home_title">Smartphones & Tablets</h2>
+</div>
+</div>
+<div class="shop">
+<div class="container">
+<div class="row">
+<div class="col-lg-3">
+<div class="shop_sidebar">
+<div class="sidebar_section">
+<div class="sidebar_title">Categories</div>
+<ul class="sidebar_categories">
+<li><a href="#">Computers & Laptops</a></li>
+<li><a href="#">Cameras & Photos</a></li>
+<li><a href="#">Hardware</a></li>
+<li><a href="#">Smartphones & Tablets</a></li>
+<li><a href="#">TV & Audio</a></li>
+<li><a href="#">Gadgets</a></li>
+<li><a href="#">Car Electronics</a></li>
+<li><a href="#">Video Games & Consoles</a></li>
+<li><a href="#">Accessories</a></li>
+</ul>
+</div>
+<div class="sidebar_section filter_by_section">
+<div class="sidebar_title">Filter By</div>
+<div class="sidebar_subtitle">Price</div>
+<div class="filter_price">
+<div id="slider-range" class="slider_range"></div>
+<p>Range: </p>
+<p><input type="text" id="amount" class="amount" readonly style="border:0; font-weight:bold;"></p>
+</div>
+</div>
+<div class="sidebar_section">
+<div class="sidebar_subtitle color_subtitle">Color</div>
+<ul class="colors_list">
+<li class="color"><a href="#" style="background: #b19c83;"></a></li>
+<li class="color"><a href="#" style="background: #000000;"></a></li>
+<li class="color"><a href="#" style="background: #999999;"></a></li>
+<li class="color"><a href="#" style="background: #0e8ce4;"></a></li>
+<li class="color"><a href="#" style="background: #df3b3b;"></a></li>
+<li class="color"><a href="#" style="background: #ffffff; border: solid 1px #e1e1e1;"></a></li>
+</ul>
+</div>
+<div class="sidebar_section">
+<div class="sidebar_subtitle brands_subtitle">Brands</div>
+<ul class="brands_list">
+<li class="brand"><a href="#">Apple</a></li>
+<li class="brand"><a href="#">Beoplay</a></li>
+<li class="brand"><a href="#">Google</a></li>
+<li class="brand"><a href="#">Meizu</a></li>
+<li class="brand"><a href="#">OnePlus</a></li>
+<li class="brand"><a href="#">Samsung</a></li>
+<li class="brand"><a href="#">Sony</a></li>
+<li class="brand"><a href="#">Xiaomi</a></li>
+</ul>
+</div>
+</div>
+</div>
+<div class="col-lg-9">
+<div class="shop_content">
+<div class="shop_bar clearfix">
+<div class="shop_product_count"><span>186</span> products found</div>
+<div class="shop_sorting">
+<span>Sort by:</span>
+<ul>
+<li>
+<span class="sorting_text">highest rated<i class="fas fa-chevron-down"></span></i>
+<ul>
+<li class="shop_sorting_button" data-isotope-option='{ "sortBy": "original-order" }'>highest rated</li>
+<li class="shop_sorting_button" data-isotope-option='{ "sortBy": "name" }'>name</li>
+<li class="shop_sorting_button" data-isotope-option='{ "sortBy": "price" }'>price</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class="product_grid">
+<div class="product_grid_border"></div>
+<div class="product_item is_new">
+<div class="product_border"></div>
+<div class="product_image d-flex flex-column align-items-center justify-content-center"><img src="data:image/jpeg;base64,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" alt="" data-pagespeed-url-hash="1995338588" onload="pagespeed.CriticalImages.checkImageForCriticality(this);"></div>
+<div class="product_content">
+<div class="product_price">$225</div>
+<div class="product_name"><div><a href="#" tabindex="0">Philips BT6900A</a></div></div>
+</div>
+<div class="product_fav"><i class="fas fa-heart"></i></div>
+<ul class="product_marks">
+<li class="product_mark product_discount">-25%</li>
+<li class="product_mark product_new">new</li>
+</ul>
+</div>
+<div class="product_item discount">
+<div class="product_border"></div>
+<div class="product_image d-flex flex-column align-items-center justify-content-center"><img src="data:image/jpeg;base64,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" alt="" data-pagespeed-url-hash="2018603916" onload="pagespeed.CriticalImages.checkImageForCriticality(this);"></div>
+<div class="product_content">
+<div class="product_price">$225<span>$300</span></div>
+<div class="product_name"><div><a href="#" tabindex="0">Huawei MediaPad...</a></div></div>
+</div>
+<div class="product_fav"><i class="fas fa-heart"></i></div>
+<ul class="product_marks">
+<li class="product_mark product_discount">-25%</li>
+<li class="product_mark product_new">new</li>
+</ul>
+</div>
+<div class="product_item">
+<div class="product_border"></div>
+<div class="product_image d-flex flex-column align-items-center justify-content-center"><img src="{% static 'users/images/xfeatured_7.png.pagespeed.ic.EYH4e6Loot.png' %}" alt="" data-pagespeed-url-hash="2313103837" onload="pagespeed.CriticalImages.checkImageForCriticality(this);"></div>
+<div class="product_content">
+<div class="product_price">$379</div>
+<div class="product_name"><div><a href="#" tabindex="0">Apple iPod shuffle</a></div></div>
+</div>
+<div class="product_fav"><i class="fas fa-heart"></i></div>
+<ul class="product_marks">
+<li class="product_mark product_discount">-25%</li>
+<li class="product_mark product_new">new</li>
+</ul>
+</div>
+<div class="product_item">
+<div class="product_border"></div>
+<div class="product_image d-flex flex-column align-items-center justify-content-center"><img src="data:image/jpeg;base64,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" alt="" data-pagespeed-url-hash="2607603758" onload="pagespeed.CriticalImages.checkImageForCriticality(this);"></div>
+<div class="product_content">
+<div class="product_price">$225</div>
+<div class="product_name"><div><a href="#" tabindex="0">Sony MDRZX310W</a></div></div>
+</div>
+<div class="product_fav"><i class="fas fa-heart"></i></div>
+<ul class="product_marks">
+<li class="product_mark product_discount">-25%</li>
+<li class="product_mark product_new">new</li>
+</ul>
+</div>
+<div class="product_item is_new">
+<div class="product_border"></div>
+<div class="product_image d-flex flex-column align-items-center justify-content-center"><img src="{% static 'users/images/xfeatured_7.png.pagespeed.ic.EYH4e6Loot.png' %}" alt="" data-pagespeed-url-hash="2902103679" onload="pagespeed.CriticalImages.checkImageForCriticality(this);"></div>
+<div class="product_content">
+<div class="product_price">$379</div>
+<div class="product_name"><div><a href="#" tabindex="0">LUNA Smartphone</a></div></div>
+</div>
+<div class="product_fav"><i class="fas fa-heart"></i></div>
+<ul class="product_marks">
+<li class="product_mark product_discount">-25%</li>
+<li class="product_mark product_new">new</li>
+</ul>
+</div>
+<div class="product_item is_new">
+<div class="product_border"></div>
+<div class="product_image d-flex flex-column align-items-center justify-content-center"><img src="data:image/jpeg;base64,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" alt="" data-pagespeed-url-hash="4285144896" onload="pagespeed.CriticalImages.checkImageForCriticality(this);"></div>
+<div class="product_content">
+<div class="product_price">$379</div>
+<div class="product_name"><div><a href="#" tabindex="0">Canon IXUS 175...</a></div></div>
+</div>
+<div class="product_fav"><i class="fas fa-heart"></i></div>
+<ul class="product_marks">
+<li class="product_mark product_discount">-25%</li>
+<li class="product_mark product_new">new</li>
+</ul>
+</div>
+<div class="product_item">
+<div class="product_border"></div>
+<div class="product_image d-flex flex-column align-items-center justify-content-center"><img src="{% static 'users/images/xfeatured_7.png.pagespeed.ic.EYH4e6Loot.png' %}" alt="" data-pagespeed-url-hash="3196603600" onload="pagespeed.CriticalImages.checkImageForCriticality(this);"></div>
+<div class="product_content">
+<div class="product_price">$379<span>$300</span></div>
+<div class="product_name"><div><a href="#" tabindex="0">Canon STM Kit...</a></div></div>
+</div>
+<div class="product_fav"><i class="fas fa-heart"></i></div>
+<ul class="product_marks">
+<li class="product_mark product_discount">-25%</li>
+<li class="product_mark product_new">new</li>
+</ul>
+</div>
+<div class="product_item">
+<div class="product_border"></div>
+<div class="product_image d-flex flex-column align-items-center justify-content-center"><img src="{% static 'users/images/xfeatured_7.png.pagespeed.ic.EYH4e6Loot.png' %}" alt="" data-pagespeed-url-hash="3491103521" onload="pagespeed.CriticalImages.checkImageForCriticality(this);"></div>
+<div class="product_content">
+<div class="product_price">$225<span>$300</span></div>
+<div class="product_name"><div><a href="#" tabindex="0">Samsung J330F</a></div></div>
+</div>
+<div class="product_fav"><i class="fas fa-heart"></i></div>
+<ul class="product_marks">
+<li class="product_mark product_discount">-25%</li>
+<li class="product_mark product_new">new</li>
+</ul>
+</div>
+<div class="product_item">
+<div class="product_border"></div>
+<div class="product_image d-flex flex-column align-items-center justify-content-center"><img src="{% static 'users/images/xfeatured_7.png.pagespeed.ic.EYH4e6Loot.png' %}" alt="" data-pagespeed-url-hash="3785603442" onload="pagespeed.CriticalImages.checkImageForCriticality(this);"></div>
+<div class="product_content">
+<div class="product_price">$225</div>
+<div class="product_name"><div><a href="#" tabindex="0">Lenovo IdeaPad</a></div></div>
+</div>
+<div class="product_fav"><i class="fas fa-heart"></i></div>
+<ul class="product_marks">
+<li class="product_mark product_discount">-25%</li>
+<li class="product_mark product_new">new</li>
+</ul>
+</div>
+<div class="product_item">
+<div class="product_border"></div>
+<div class="product_image d-flex flex-column align-items-center justify-content-center"><img src="{% static 'users/images/xfeatured_8.png.pagespeed.ic.Zyj5ricRzb.png' %}" alt="" data-pagespeed-url-hash="4080103363" onload="pagespeed.CriticalImages.checkImageForCriticality(this);"></div>
+<div class="product_content">
+<div class="product_price">$379</div>
+<div class="product_name"><div><a href="#" tabindex="0">Digitus EDNET...</a></div></div>
+</div>
+<div class="product_fav"><i class="fas fa-heart"></i></div>
+<ul class="product_marks">
+<li class="product_mark product_discount">-25%</li>
+<li class="product_mark product_new">new</li>
+</ul>
+</div>
+<div class="product_item is_new">
+<div class="product_border"></div>
+<div class="product_image d-flex flex-column align-items-center justify-content-center"><img src="{% static 'users/images/xnew_1.jpg.pagespeed.ic.075GyvBXjv.jpg' %}" alt="" data-pagespeed-url-hash="817338904" onload="pagespeed.CriticalImages.checkImageForCriticality(this);"></div>
+<div class="product_content">
+<div class="product_price">$225</div>
+<div class="product_name"><div><a href="#" tabindex="0">Astro M2 Black</a></div></div>
+</div>
+<div class="product_fav"><i class="fas fa-heart"></i></div>
+<ul class="product_marks">
+<li class="product_mark product_discount">-25%</li>
+<li class="product_mark product_new">new</li>
+</ul>
+</div>
+<div class="product_item is_new">
+<div class="product_border"></div>
+<div class="product_image d-flex flex-column align-items-center justify-content-center"><img src="{% static 'users/images/xnew_2.jpg.pagespeed.ic.vzAFbCQdxK.jpg' %}" alt="" data-pagespeed-url-hash="1111838825" onload="pagespeed.CriticalImages.checkImageForCriticality(this);"></div>
+<div class="product_content">
+<div class="product_price">$225</div>
+<div class="product_name"><div><a href="#" tabindex="0">Transcend T.Sonic</a></div></div>
+</div>
+<div class="product_fav"><i class="fas fa-heart"></i></div>
+<ul class="product_marks">
+<li class="product_mark product_discount">-25%</li>
+<li class="product_mark product_new">new</li>
+</ul>
+</div>
+<div class="product_item is_new">
+<div class="product_border"></div>
+<div class="product_image d-flex flex-column align-items-center justify-content-center"><img src="{% static 'users/images/xnew_3.jpg.pagespeed.ic.ZDD9Ch8XUP.jpg' %}" alt="" data-pagespeed-url-hash="1406338746" onload="pagespeed.CriticalImages.checkImageForCriticality(this);"></div>
+<div class="product_content">
+<div class="product_price">$225</div>
+<div class="product_name"><div><a href="#" tabindex="0">Xiaomi Band 2...</a></div></div>
+</div>
+<div class="product_fav"><i class="fas fa-heart"></i></div>
+<ul class="product_marks">
+<li class="product_mark product_discount">-25%</li>
+<li class="product_mark product_new">new</li>
+</ul>
+</div>
+<div class="product_item is_new">
+<div class="product_border"></div>
+<div class="product_image d-flex flex-column align-items-center justify-content-center"><img src="{% static 'users/images/xview_4.jpg.pagespeed.ic.t_aBXrA5Qf.jpg' %}" alt="" data-pagespeed-url-hash="1700838667" onload="pagespeed.CriticalImages.checkImageForCriticality(this);"></div>
+<div class="product_content">
+<div class="product_price">$379</div>
+<div class="product_name"><div><a href="#" tabindex="0">Rapoo T8 White</a></div></div>
+</div>
+<div class="product_fav"><i class="fas fa-heart"></i></div>
+<ul class="product_marks">
+<li class="product_mark product_discount">-25%</li>
+<li class="product_mark product_new">new</li>
+</ul>
+</div>
+<div class="product_item discount">
+<div class="product_border"></div>
+<div class="product_image d-flex flex-column align-items-center justify-content-center"><img src="{% static 'users/images/xview_4.jpg.pagespeed.ic.t_aBXrA5Qf.jpg' %}" alt="" data-pagespeed-url-hash="2018603916" onload="pagespeed.CriticalImages.checkImageForCriticality(this);"></div>
+<div class="product_content">
+<div class="product_price">$225<span>$300</span></div>
+<div class="product_name"><div><a href="#" tabindex="0">Huawei MediaPad...</a></div></div>
+</div>
+<div class="product_fav"><i class="fas fa-heart"></i></div>
+<ul class="product_marks">
+<li class="product_mark product_discount">-25%</li>
+<li class="product_mark product_new">new</li>
+</ul>
+</div>
+<div class="product_item is_new">
+<div class="product_border"></div>
+<div class="product_image d-flex flex-column align-items-center justify-content-center"><img src="{% static 'users/images/xnew_6.jpg.pagespeed.ic.f15ukApupO.jpg' %}" alt="" data-pagespeed-url-hash="2289838509" onload="pagespeed.CriticalImages.checkImageForCriticality(this);"></div>
+<div class="product_content">
+<div class="product_price">$379</div>
+<div class="product_name"><div><a href="#" tabindex="0">Nokia 3310 (2017)</a></div></div>
+</div>
+<div class="product_fav"><i class="fas fa-heart"></i></div>
+<ul class="product_marks">
+<li class="product_mark product_discount">-25%</li>
+<li class="product_mark product_new">new</li>
+</ul>
+</div>
+<div class="product_item is_new">
+<div class="product_border"></div>
+<div class="product_image d-flex flex-column align-items-center justify-content-center"><img src="{% static 'users/images/xnew_7.jpg.pagespeed.ic.UdLJeux0pi.jpg' %}" alt="" data-pagespeed-url-hash="2584338430" onload="pagespeed.CriticalImages.checkImageForCriticality(this);"></div>
+<div class="product_content">
+<div class="product_price">$225</div>
+<div class="product_name"><div><a href="#" tabindex="0">Rapoo 7100p Gray</a></div></div>
+</div>
+<div class="product_fav"><i class="fas fa-heart"></i></div>
+<ul class="product_marks">
+<li class="product_mark product_discount">-25%</li>
+<li class="product_mark product_new">new</li>
+</ul>
+</div>
+<div class="product_item is_new">
+<div class="product_border"></div>
+<div class="product_image d-flex flex-column align-items-center justify-content-center"><img src="{% static 'users/images/xnew_8.jpg.pagespeed.ic.AdqPkH2aMd.jpg' %}" alt="" data-pagespeed-url-hash="2878838351" onload="pagespeed.CriticalImages.checkImageForCriticality(this);"></div>
+<div class="product_content">
+<div class="product_price">$379</div>
+<div class="product_name"><div><a href="#" tabindex="0">Canon EF</a></div></div>
+</div>
+<div class="product_fav"><i class="fas fa-heart"></i></div>
+<ul class="product_marks">
+<li class="product_mark product_discount">-25%</li>
+<li class="product_mark product_new">new</li>
+</ul>
+</div>
+<div class="product_item is_new">
+<div class="product_border"></div>
+<div class="product_image d-flex flex-column align-items-center justify-content-center"><img src="{% static 'users/images/xfeatured_5.png.pagespeed.ic.qlPjJYU3eP.png' %}" alt="" data-pagespeed-url-hash="284677521" onload="pagespeed.CriticalImages.checkImageForCriticality(this);"></div>
+<div class="product_content">
+<div class="product_price">$225</div>
+<div class="product_name"><div><a href="#" tabindex="0">Gembird SPK-103</a></div></div>
+</div>
+<div class="product_fav"><i class="fas fa-heart"></i></div>
+<ul class="product_marks">
+<li class="product_mark product_discount">-25%</li>
+<li class="product_mark product_new">new</li>
+</ul>
+</div>
+<div class="product_item is_new">
+<div class="product_border"></div>
+<div class="product_image d-flex flex-column align-items-center justify-content-center"><img src="{% static 'users/images/xfeatured_5.png.pagespeed.ic.qlPjJYU3eP.png' %}" alt="" data-pagespeed-url-hash="3196603600" onload="pagespeed.CriticalImages.checkImageForCriticality(this);"></div>
+<div class="product_content">
+<div class="product_price">$379</div>
+<div class="product_name"><div><a href="#" tabindex="0">Canon STM Kit...</a></div></div>
+</div>
+<div class="product_fav"><i class="fas fa-heart"></i></div>
+<ul class="product_marks">
+<li class="product_mark product_discount">-25%</li>
+<li class="product_mark product_new">new</li>
+</ul>
+</div>
+</div>
+<div class="shop_page_nav d-flex flex-row">
+<div class="page_prev d-flex flex-column align-items-center justify-content-center"><i class="fas fa-chevron-left"></i></div>
+<ul class="page_nav d-flex flex-row">
+<li><a href="#">1</a></li>
+<li><a href="#">2</a></li>
+<li><a href="#">3</a></li>
+<li><a href="#">...</a></li>
+<li><a href="#">21</a></li>
+</ul>
+<div class="page_next d-flex flex-column align-items-center justify-content-center"><i class="fas fa-chevron-right"></i></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="viewed">
+<div class="container">
+<div class="row">
+<div class="col">
+<div class="viewed_title_container">
+<h3 class="viewed_title">Recently Viewed</h3>
+<div class="viewed_nav_container">
+<div class="viewed_nav viewed_prev"><i class="fas fa-chevron-left"></i></div>
+<div class="viewed_nav viewed_next"><i class="fas fa-chevron-right"></i></div>
+</div>
+</div>
+<div class="viewed_slider_container">
+<div class="owl-carousel owl-theme viewed_slider">
+<div class="owl-item">
+<div class="viewed_item discount d-flex flex-column align-items-center justify-content-center text-center">
+<div class="viewed_image"><img src="{% static 'users/images/xview_1.jpg.pagespeed.ic.WwTMxeNned.jpg' %}" alt="" data-pagespeed-url-hash="3672640395" onload="pagespeed.CriticalImages.checkImageForCriticality(this);"></div>
+<div class="viewed_content text-center">
+<div class="viewed_price">$225<span>$300</span></div>
+<div class="viewed_name"><a href="#">Beoplay H7</a></div>
+</div>
+<ul class="item_marks">
+<li class="item_mark item_discount">-25%</li>
+<li class="item_mark item_new">new</li>
+</ul>
+</div>
+</div>
+<div class="owl-item">
+<div class="viewed_item d-flex flex-column align-items-center justify-content-center text-center">
+<div class="viewed_image"><img src="{% static 'users/images/xview_2.jpg.pagespeed.ic.JKzD8B3rDq.jpg' %}" alt="" data-pagespeed-url-hash="3967140316" onload="pagespeed.CriticalImages.checkImageForCriticality(this);"></div>
+<div class="viewed_content text-center">
+<div class="viewed_price">$379</div>
+<div class="viewed_name"><a href="#">LUNA Smartphone</a></div>
+</div>
+<ul class="item_marks">
+<li class="item_mark item_discount">-25%</li>
+<li class="item_mark item_new">new</li>
+</ul>
+</div>
+</div>
+<div class="owl-item">
+<div class="viewed_item d-flex flex-column align-items-center justify-content-center text-center">
+<div class="viewed_image"><img src="{% static 'users/images/xview_3.jpg.pagespeed.ic.TNCpAMElOM.jpg' %}" alt="" data-pagespeed-url-hash="4261640237" onload="pagespeed.CriticalImages.checkImageForCriticality(this);"></div>
+<div class="viewed_content text-center">
+<div class="viewed_price">$225</div>
+<div class="viewed_name"><a href="#">Samsung J730F...</a></div>
+</div>
+<ul class="item_marks">
+<li class="item_mark item_discount">-25%</li>
+<li class="item_mark item_new">new</li>
+</ul>
+</div>
+</div>
+<div class="owl-item">
+<div class="viewed_item is_new d-flex flex-column align-items-center justify-content-center text-center">
+<div class="viewed_image"><img src="{% static 'users/images/xview_4.jpg.pagespeed.ic.t_aBXrA5Qf.jpg' %}" alt="" data-pagespeed-url-hash="261172862" onload="pagespeed.CriticalImages.checkImageForCriticality(this);"></div>
+<div class="viewed_content text-center">
+<div class="viewed_price">$379</div>
+<div class="viewed_name"><a href="#">Huawei MediaPad...</a></div>
+</div>
+<ul class="item_marks">
+<li class="item_mark item_discount">-25%</li>
+<li class="item_mark item_new">new</li>
+</ul>
+</div>
+</div>
+<div class="owl-item">
+<div class="viewed_item discount d-flex flex-column align-items-center justify-content-center text-center">
+<div class="viewed_image"><img src="{% static 'users/images/xreview_2.jpg.pagespeed.ic.FUH_t73PcL.jpg' %}" alt="" data-pagespeed-url-hash="555672783" onload="pagespeed.CriticalImages.checkImageForCriticality(this);"></div>
+<div class="viewed_content text-center">
+<div class="viewed_price">$225<span>$300</span></div>
+<div class="viewed_name"><a href="#">Sony PS4 Slim</a></div>
+</div>
+<ul class="item_marks">
+<li class="item_mark item_discount">-25%</li>
+<li class="item_mark item_new">new</li>
+</ul>
+</div>
+</div>
+<div class="owl-item">
+<div class="viewed_item d-flex flex-column align-items-center justify-content-center text-center">
+<div class="viewed_image"><img src="{% static 'users/images/xview_6.jpg.pagespeed.ic.tsbubaWEEP.jpg' %}" alt="" data-pagespeed-url-hash="850172704" onload="pagespeed.CriticalImages.checkImageForCriticality(this);"></div>
+<div class="viewed_content text-center">
+<div class="viewed_price">$375</div>
+<div class="viewed_name"><a href="#">Speedlink...</a></div>
+</div>
+<ul class="item_marks">
+<li class="item_mark item_discount">-25%</li>
+<li class="item_mark item_new">new</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="newsletter">
+<div class="container">
+<div class="row">
+<div class="col">
+<div class="newsletter_container d-flex flex-lg-row flex-column align-items-lg-center align-items-center justify-content-lg-start justify-content-center">
+<div class="newsletter_title_container">
+<div class="newsletter_icon"><img src="{% static 'users/images/send.png' %}" alt="" data-pagespeed-url-hash="657967360" onload="pagespeed.CriticalImages.checkImageForCriticality(this);"></div>
+<div class="newsletter_title">Sign up for Newsletter</div>
+<div class="newsletter_text"><p>...and receive %20 coupon for first shopping.</p></div>
+</div>
+<div class="newsletter_content clearfix">
+<form action="#" class="newsletter_form">
+<input type="email" class="newsletter_input" required placeholder="Enter your email address">
+<button class="newsletter_button">Subscribe</button>
+</form>
+<div class="newsletter_unsubscribe_link"><a href="#">unsubscribe</a></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<footer class="footer">
+<div class="container">
+<div class="row">
+<div class="col-lg-3 footer_col">
+<div class="footer_column footer_contact">
+<div class="logo_container">
+<div class="logo"><a href="#">OneTech</a></div>
+</div>
+<div class="footer_title">Got Question? Call Us 24/7</div>
+<div class="footer_phone">+38 068 005 3570</div>
+<div class="footer_contact_text">
+<p>17 Princess Road, London</p>
+<p>Grester London NW18JR, UK</p>
+</div>
+<div class="footer_social">
+<ul>
+<li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
+<li><a href="#"><i class="fab fa-twitter"></i></a></li>
+<li><a href="#"><i class="fab fa-youtube"></i></a></li>
+<li><a href="#"><i class="fab fa-google"></i></a></li>
+<li><a href="#"><i class="fab fa-vimeo-v"></i></a></li>
+</ul>
+</div>
+</div>
+</div>
+<div class="col-lg-2 offset-lg-2">
+<div class="footer_column">
+<div class="footer_title">Find it Fast</div>
+<ul class="footer_list">
+<li><a href="#">Computers & Laptops</a></li>
+<li><a href="#">Cameras & Photos</a></li>
+<li><a href="#">Hardware</a></li>
+<li><a href="#">Smartphones & Tablets</a></li>
+<li><a href="#">TV & Audio</a></li>
+</ul>
+<div class="footer_subtitle">Gadgets</div>
+<ul class="footer_list">
+<li><a href="#">Car Electronics</a></li>
+</ul>
+</div>
+</div>
+<div class="col-lg-2">
+<div class="footer_column">
+<ul class="footer_list footer_list_2">
+<li><a href="#">Video Games & Consoles</a></li>
+<li><a href="#">Accessories</a></li>
+<li><a href="#">Cameras & Photos</a></li>
+<li><a href="#">Hardware</a></li>
+<li><a href="#">Computers & Laptops</a></li>
+</ul>
+</div>
+</div>
+<div class="col-lg-2">
+<div class="footer_column">
+<div class="footer_title">Customer Care</div>
+<ul class="footer_list">
+<li><a href="#">My Account</a></li>
+<li><a href="#">Order Tracking</a></li>
+<li><a href="#">Wish List</a></li>
+<li><a href="#">Customer Services</a></li>
+<li><a href="#">Returns / Exchange</a></li>
+<li><a href="#">FAQs</a></li>
+<li><a href="#">Product Support</a></li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</footer>
+<div class="copyright">
+<div class="container">
+<div class="row">
+<div class="col">
+<div class="copyright_container d-flex flex-sm-row flex-column align-items-center justify-content-start">
+<div class="copyright_content">
+Copyright &copy;<script data-cfasync="false" src="{% static 'users/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js' %}"></script><script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+</div>
+<div class="logos ml-sm-auto">
+<ul class="logos_list">
+<li><a href="#"><img src="{% static 'users/images/xlogos_1.png.pagespeed.ic.6lpLx7vwSE.png' %}" alt="" data-pagespeed-url-hash="3938784508" onload="pagespeed.CriticalImages.checkImageForCriticality(this);"></a></li>
+<li><a href="#"><img src="{% static 'users/images/xlogos_2.png.pagespeed.ic.xUbACoDiyn.png' %}" alt="" data-pagespeed-url-hash="4233284429" onload="pagespeed.CriticalImages.checkImageForCriticality(this);"></a></li>
+<li><a href="#"><img src="{% static 'users/images/xlogos_3.png.pagespeed.ic.Tz93ccg5Y6.png' %}" alt="" data-pagespeed-url-hash="232817054" onload="pagespeed.CriticalImages.checkImageForCriticality(this);"></a></li>
+<li><a href="#"><img src="{% static 'users/images/logos_4.png' %}" alt="" data-pagespeed-url-hash="527316975" onload="pagespeed.CriticalImages.checkImageForCriticality(this);"></a></li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<script src="{% static 'users/js/jquery-3.3.1.min.js' %}"></script>
+<script src="{% static 'users/styles/bootstrap4/popper.js' %}"></script>
+<script src="{% static 'users/styles/bootstrap4/bootstrap.min.js' %}"></script>
+<script src="{% static 'users/plugins/greensock/TweenMax.min.js' %}"></script>
+<script src="{% static 'users/script/gic.min.js_greensock__animation.gsap.min.js_greensock__ScrollToPlugin.min.js.pagespeed.jc.TWF3tvWfFP_8nhr7mvjdeweu6tzssxz6r.js' %}"></script><script>eval(mod_pagespeed_x8CakUBXmJ);</script>
+<script>eval(mod_pagespeed_$y3A$Lt1kj);</script>
+<script>eval(mod_pagespeed_P1Sh7qjcF9);</script>
+<script>eval(mod_pagespeed_z5qXXkaQ_q);</script>
+<script src="{% static 'users/plugins/OwlCarousel2-2.2.1/owl.carousel.js' %}"></script>
+<script src="{% static 'users/script/easing__easing.js_Isotope__isotope.pkgd.min.js.pagespeed.jc.iCC8QcaG9B_rbrdhfocqvjfeibwmqq4mu.js' %}"></script><script>eval(mod_pagespeed_VosBi8xjjG);</script>
+<script>eval(mod_pagespeed_Gzchgz006B);</script>
+<script src="{% static 'users/plugins/jquery-ui-1.12.1.custom/jquery-ui.js' %}"></script>
+<script src="{% static 'users/script/plugins__parallax-js-master__parallax.min.js_js__shop_custom.js.pagespeed.jc.FI00cP4rAy_qs3e7z650kuowqy7dx67po.js' %}"></script><script>eval(mod_pagespeed_3A6wRQMZMx);</script>
+<script>eval(mod_pagespeed_D$Pvd01Mcx);</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-23581568-13"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'UA-23581568-13');
+</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-23581568-13"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'UA-23581568-13');
+</script>
+<script defer src="{% static 'users/beacon.min.js' %}" data-cf-beacon='{"rayId":"6d85a0987951d15b","token":"cd0b4b3a733644fc843ef0b185f98241","version":"2021.12.0","si":100}' ></script>
+
+{% endblock %}

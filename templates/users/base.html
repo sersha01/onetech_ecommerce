@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <title>OneTech</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+  <meta name="description" content="OneTech shop project"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  {% load static %}
+</head>
+
+<link
+  rel="stylesheet"
+  type="text/css"
+  href="{% static 'users/css/gins___fontawesome-free-5.0.1___css___fontawesome-all.css_Mcc.3LqlYnulIa.css.pagespeed.cf.FwyNEhjhjm_huqzz027j2z05hxypbk0yy.css' %}"
+/>
+<link
+  rel="stylesheet"
+  type="text/css"
+  href="{% static 'users/css/A.cart_styles.css_cart_responsive.css_Mcc.DhDKfA-jyL.css.pagespeed.cf.2aZKpMdzfM_n2a6a5d2riu54jn0ozdvxq.css' %}"
+/>
+<link rel="stylesheet" href="{% static 'users/css/style.css' %}" />
+
+
+
+<style>
+    .cls{
+        position: sticky !important;
+    }
+</style>
+
+<body>
+  {% if request.user.is_authenticated %}
+  <div class="top_bar">
+    <div class="container">
+      <div class="row">
+        <div class="col d-flex flex-row">
+          <div class="top_bar_content ml-auto">
+            <div class="top_bar_user">
+              <div><a href="{% url 'logout' %}">Sign Out</a></div>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
+</div>
+  {% else %}
+          <div class="top_bar">
+            <div class="container">
+              <div class="row">
+                <div class="col d-flex flex-row">
+                  <div class="top_bar_content ml-auto">
+                    <div class="top_bar_user">
+                      <div class="user_icon">
+                        <img src="{% static 'users/images/user.svg' %}" alt="" />
+                      </div>
+                      <div><a href="{% url 'logout' %}">Register</a></div>
+                      <div><a href="{% url 'email_login' %}">Sign in</a></div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+  {% endif %}
+  
+  <div class="header_main">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-2 col-sm-3 col-3 order-1">
+          <div class="logo_container">
+            <div class="logo"><a href="{% url 'home' %}">OneTech</a></div>
+          </div>
+        </div>
+        <div class="col-lg-6 col-12 order-lg-2 order-3 text-lg-left text-right">
+          <div class="header_search">
+            <div class="header_search_content">
+              <div class="header_search_form_container">
+                <form action="#" class="header_search_form clearfix">
+                  <input type="search" required class="header_search_input" placeholder="Search for products...">
+                  <div class="custom_dropdown">
+                    <div class="custom_dropdown_list">
+                      <span class="custom_dropdown_placeholder clc">All Categories</span>
+                      <i class="fas fa-chevron-down"></i>
+                      <ul class="custom_list clc">
+                        <li><a class="clc" href="#">All Categories</a></li>
+                        <!-- <li><a class="clc" href="#">Computers</a></li>
+                        <li><a class="clc" href="#">Laptops</a></li>
+                        <li><a class="clc" href="#">Cameras</a></li>
+                        <li><a class="clc" href="#">Hardware</a></li>
+                        <li><a class="clc" href="#">Smartphones</a></li> -->
+                      </ul>
+                    </div>
+                  </div>
+                  <button type="submit" class="header_search_button trans_300" value="Submit"><img src="{% static 'users/images/search_icon.png' %}" alt="" data-pagespeed-url-hash="1234169816" onload="pagespeed.CriticalImages.checkImageForCriticality(this);"></button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-4 col-9 order-lg-3 order-2 text-lg-left text-right">
+          <div class="wishlist_cart d-flex flex-row align-items-center justify-content-end">
+             <div class="wishlist d-flex flex-row align-items-center justify-content-end">
+               <div class="wishlist_icon"><img src="{% static 'users/images/wish_icon.png' %}" alt="" data-pagespeed-url-hash="1440773528"onload="pagespeed.CriticalImages.checkImageForCriticality(this);"></div>
+               <div class="wishlist_content">
+                 <div class="wishlist_text"><a href="#">Wishlist</a></div>
+                 <div class="wishlist_count">115</div>
+               </div>
+             </div>
+             <div class="cart">
+               <div class="cart_container d-flex flex-row align-items-center justify-content-end">
+                 <div class="cart_icon">
+                   <img src="{% static 'users/images/cart_icon.png' %}" alt="" data-pagespeed-url-hash="3841846216" onload="pagespeed.CriticalImages.checkImageForCriticality(this);">
+                   <div class="cart_count"><span>{{ order.get_cart_items }}</span></div>
+                 </div>
+                 <div class="cart_content">
+                   <div class="cart_text"><a href="{% url 'add_to_cart' %}">Cart</a></div>
+                   <div class="cart_price">₹{{ order.get_cart_total }}</div>
+                 </div>
+               </div>
+             </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  {% block index %}
+  {% endblock %}
+  
+
+  <script src="{% static 'users/js/jquery-3.3.1.min.js' %}"></script>
+<script src="{% static 'users/styles/bootstrap4/popper.js' %}"></script>
+<script src="{% static 'users/styles/bootstrap4/bootstrap.min.js' %}"></script>
+<script src="{% static 'users/plugins/greensock/TweenMax.min.js' %}"></script>
+<script src="{% static 'users/script/eensock__ScrollToPlugin.min.js_plugins__easing__easing.js_js__cart_custom.js.pagespeed.jc.kqrLQpu_oa_4o7z5em7dhg33rkuf78kbu.js' %}"></script>
+<script>
+  eval(mod_pagespeed_x8CakUBXmJ);
+</script>
+<script>
+  eval(mod_pagespeed_$y3A$Lt1kj);
+</script>
+<script>
+  eval(mod_pagespeed_P1Sh7qjcF9);
+</script>
+<script>
+  eval(mod_pagespeed_z5qXXkaQ_q);
+</script>
+<script>
+  eval(mod_pagespeed_VosBi8xjjG);
+</script>
+<script>
+  eval(mod_pagespeed_d6oKc_4rj7);
+</script>
+<script
+  async
+  src="https://www.googletagmanager.com/gtag/js?id=UA-23581568-13"
+></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag() {
+    dataLayer.push(arguments);
+  }
+  gtag("js", new Date());
+  gtag("config", "UA-23581568-13");
+</script>
+<script
+  defer
+  src="{% static 'users/beacon.min.js' %}"
+  data-cf-beacon='{"rayId":"6d85a09e6e22d153","token":"cd0b4b3a733644fc843ef0b185f98241","version":"2021.12.0","si":100}'
+></script>
+</body>
+</html>

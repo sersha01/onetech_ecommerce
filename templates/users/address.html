@@ -1,0 +1,11 @@
+{% for address in address %}
+<div class="col-md-6 my-3"><div class="col-md-12 border border-secondary p-3 rounded" id="{{ address.id }}">
+<table><tr><td></td><td></td><td></td></tr>
+<tr><td>NAME </td><td>:</td><td> {{ address.name }}</td></tr>
+<tr style="vertical-align:top"><td class="pr-3 sticky-top">ADDRESS </td><td class="pr-3">:</td><td><div style="white-space:pre-line"> {{ address.address }} </div></td></tr>
+<tr><td>CITY </td><td>:</td><td> {{ address.city }}</td></tr>
+<tr><td>STATE </td><td>:</td><td> {{ address.state }}</td></tr>
+<tr><td>PIN CODE </td><td>:</td><td> {{ address.pincode }}</td></tr>
+<tr><td>PHONE </td><td>:</td><td> {{ address.number }}</td></tr></table>
+</div></div>
+{% endfor %}
