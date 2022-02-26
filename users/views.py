@@ -65,7 +65,7 @@ def otp_login(request):
             client = Client(account_sid, auth_token)
             message = client.messages.create(  
                               messaging_service_sid=config('messaging_service_sid'), 
-                              body=str(num),      
+                              body=str(num),
                               to='+919061427297' 
                             ) 
             print(message.sid)
@@ -179,12 +179,12 @@ def checkout(request):
 
 @never_cache
 def proceed(request):
-    print('yes')
     if request.method == 'POST':
         payment = request.POST.get('payment')
+        print(payment)
         status = True if str(payment) != 'COD' else False
-        print(status)
         address_id = request.POST.get('address')
+        print(address_id)
         address = Address.objects.get(id=address_id)
         user = request.user
         Order.objects.filter(user=user,order_status=False).update(order_status=True, address=address, payment=status)

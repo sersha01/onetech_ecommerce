@@ -70,7 +70,7 @@ def add_product(request):
             form.save()
             return redirect('products')
 
-    return render(request, 'admins/add_product.html', {'form':form})
+    return render(request, 'admins/tt.html', {'form':form})
 
 def customers(request):
     if request.session.has_key('admin'):
@@ -121,7 +121,7 @@ def order_update(request):
         order_id = request.POST.get('order_id')
         selected = request.POST.get('selected')
         order = Order.objects.filter(id=order_id)
-        if selected == 'Pending':
+        if selected == 'Pending' or selected == 'New':
             status = 'Pending'
         elif selected == 'Shipped':
             status = 'Shipped'

@@ -5,7 +5,7 @@ from django.contrib.auth.models import AbstractUser
 
 class User(AbstractUser):
     name = models.CharField(max_length=200, null=True)
-    phone = models.IntegerField(null=True)
+    phone = models.BigIntegerField(null=True)
     status = models.BooleanField(default=True, null=True)
     date = models.DateTimeField(auto_now_add=True, null=True)
     image = models.ImageField(upload_to='profile_pic', default='profile_pic/male-avatar.jpg')

@@ -7,11 +7,7 @@
       {% for item in items %}
       <div class="d-flex my-3">
         <div class="px-4 py-3 bg-white border">
-          <img
-            src="{{ item.product.images1.url }}"
-            alt=""
-            style="max-width: 80px"
-          />
+          <img src="{{ item.product.images1.url }}" alt="" style="max-width: 80px" />
         </div>
         <div class="ml-4 mt-4 pl-2">
           <h4>{{ item }}</h4>
@@ -51,11 +47,7 @@
                 </tr>
                 <tr>
                   <td>
-                    <input
-                      type="radio"
-                      name="address"
-                      value="{{ address.id }}"
-                    />
+                    <input type="radio" name="address" value="{{ address.id }}" />
                   </td>
                   <td></td>
                   <td></td>
@@ -101,11 +93,9 @@
         </div>
       </div>
       <center>
-        <a href="{% url 'add_address' %}"
-          ><button class="btn btn-info btn-lg col-md-9">
+        <a href="{% url 'add_address' %}"><button class="btn btn-info btn-lg col-md-9">
             &#10010; Add New Address
-          </button></a
-        >
+          </button></a>
       </center>
       <center>
         <div class="col-md-12 d-flex justify-content-between mt-5">
@@ -121,52 +111,26 @@
               <div class="col-md-11 py-3 border-secondary border">
                 <h4>SELECT PAYMENT METHOD</h4>
                 <div class="text-left pl-3">
-                  <input
-                    class="mb-2"
-                    type="radio"
-                    name="payment"
-                    id="RazorPay"
-                    value="RazorPay"
-                  />
+                  <input class="mb-2" type="radio" name="payment" id="RazorPay" value="RazorPay" />
                   RazorPay <br />
                   <div class="d-none" id="div_RazorPay"><button>Pay</button></div>
-                  <input
-                    class="mb-2"
-                    type="radio"
-                    name="payment"
-                    id="PayPal"
-                    value="PayPal"
-                  />
+                  <input class="mb-2" type="radio" name="payment" id="PayPal" value="PayPal" />
                   PayPal <br />
                   <div class="d-none" id="div_PayPal">
                     <div id="paypal-button-container"></div>
                   </div>
-                  <input
-                    class="mb-2"
-                    type="radio"
-                    name="payment"
-                    id="COD"
-                    value="COD"
-                  />
+                  <input class="mb-2" type="radio" name="payment" id="COD" value="COD" />
                   COD <br />
                   <div class="d-none" id="div_COD">
-                    <button
-                      class="col-md-11 btn btn-lg btn-info mt-4"
-                      id="proceed"
-                    >
+                    <button class="col-md-11 btn btn-lg btn-info mt-4" id="proceed">
                       Proceed
                     </button>
                   </div>
                 </div>
               </div>
-              <a href="{% url 'add_to_cart' %}"
-                ><button
-                  class="col-md-12 btn btn-lg btn-warning mt-5"
-                  id="cancel"
-                >
+              <a href="{% url 'add_to_cart' %}"><button class="col-md-12 btn btn-lg btn-warning mt-5" id="cancel">
                   Back to Cart
-                </button></a
-              >
+                </button></a>
             </center>
           </div>
         </div>
@@ -176,11 +140,14 @@
 </div>
 
 <!-- Include the PayPal JavaScript SDK -->
-<script src="https://www.paypal.com/sdk/js?client-id=AVdP_3k31kUPShXkWZcgyalyo1_QxK33_1RAOAndr51s9S0_Y6tQKEHXuMR_qyF5PpY1QVE63WNy7gLO&currency=USD"></script>
+<script
+  src="https://www.paypal.com/sdk/js?client-id=AVdP_3k31kUPShXkWZcgyalyo1_QxK33_1RAOAndr51s9S0_Y6tQKEHXuMR_qyF5PpY1QVE63WNy7gLO&currency=USD"></script>
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 
 <script>
   // Render the PayPal button into #paypal-button-container
+  var rs_in = parseFloat('{{ order.get_cart_total }}')
+  var total_usd = rs_in / 75
   paypal
     .Buttons({
       // Set up the transaction
@@ -189,7 +156,7 @@
           purchase_units: [
             {
               amount: {
-                value:'{{ order.get_cart_total }}',
+                value: parseFloat(total_usd).toFixed(2),
               },
             },
           ],
@@ -213,45 +180,45 @@
 
 <script>
   var options = {
-      "key": "YOUR_KEY_ID", // Enter the Key ID generated from the Dashboard
-      "amount": "50000", // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
-      "currency": "INR",
-      "name": "Acme Corp",
-      "description": "Test Transaction",
-      "image": "https://example.com/your_logo",
-      "order_id": "order_9A33XWu170gUtm", //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
-      "handler": function (response){
-          alert(response.razorpay_payment_id);
-          alert(response.razorpay_order_id);
-          alert(response.razorpay_signature)
-      },
-      "prefill": {
-          "name": "Gaurav Kumar",
-          "email": "gaurav.kumar@example.com",
-          "contact": "9999999999"
-      },
-      "notes": {
-          "address": "Razorpay Corporate Office"
-      },
-      "theme": {
-          "color": "#3399cc"
-      }
+    "key": "YOUR_KEY_ID", // Enter the Key ID generated from the Dashboard
+    "amount": "50000", // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+    "currency": "INR",
+    "name": "Acme Corp",
+    "description": "Test Transaction",
+    "image": "https://example.com/your_logo",
+    "order_id": "order_9A33XWu170gUtm", //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+    "handler": function (response) {
+      alert(response.razorpay_payment_id);
+      alert(response.razorpay_order_id);
+      alert(response.razorpay_signature)
+    },
+    "prefill": {
+      "name": "Gaurav Kumar",
+      "email": "gaurav.kumar@example.com",
+      "contact": "9999999999"
+    },
+    "notes": {
+      "address": "Razorpay Corporate Office"
+    },
+    "theme": {
+      "color": "#3399cc"
+    }
   };
   var rzp1 = new Razorpay(options);
-  rzp1.on('payment.failed', function (response){
-          alert(response.error.code);
-          alert(response.error.description);
-          alert(response.error.source);
-          alert(response.error.step);
-          alert(response.error.reason);
-          alert(response.error.metadata.order_id);
-          alert(response.error.metadata.payment_id);
+  rzp1.on('payment.failed', function (response) {
+    alert(response.error.code);
+    alert(response.error.description);
+    alert(response.error.source);
+    alert(response.error.step);
+    alert(response.error.reason);
+    alert(response.error.metadata.order_id);
+    alert(response.error.metadata.payment_id);
   });
-  document.getElementById('rzp-button1').onclick = function(e){
-      rzp1.open();
-      e.preventDefault();
+  document.getElementById('rzp-button1').onclick = function (e) {
+    rzp1.open();
+    e.preventDefault();
   }
-  </script>
+</script>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
@@ -262,20 +229,20 @@
   function order_place() {
     var payment = $('input[name="payment"]:checked').val();
     var address = $('input[name="address"]:checked').val();
-      $.ajax({
-        type: "POST",
-        url: "{% url 'proceed' %}",
-        data: {
-          payment: payment,
-          address: address,
-          csrfmiddlewaretoken: "{{ csrf_token }}",
-        },
-        dataType: "json",
-        success: function (response) {
-          location = '{% url "home" %}';
-        },
-      });
-    
+    $.ajax({
+      type: "POST",
+      url: "{% url 'proceed' %}",
+      data: {
+        payment: payment,
+        address: address,
+        csrfmiddlewaretoken: "{{ csrf_token }}",
+      },
+      dataType: "json",
+      success: function (response) {
+        location = '{% url "home" %}';
+      },
+    });
+
   }
 
   $("input[type=radio][name=address]").change(function () {
