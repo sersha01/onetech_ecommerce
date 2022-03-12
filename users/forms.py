@@ -19,7 +19,7 @@ class UserForm(UserCreationForm):
     def __init__(self, *args ,**kwargs):
         super(UserForm, self).__init__(*args ,**kwargs)
         self.fields['name'].widget.attrs.update(
-            {'class':'form-control form-control-lg py-1 rounded', 'placeholder':'Enter your Name', 'id':'name', 'name':'name', 'required':''})
+            {'class':'form-control form-control-lg py-1 rounded', 'placeholder':'Enter your Name', 'id':'name', 'name':'name'})
 
         self.fields['username'].widget.attrs.update(
             {'class':'form-control form-control-lg py-1 rounded', 'placeholder':'Enter your E-mail', 'id':'email', 'name':'email', 'type':'email'})

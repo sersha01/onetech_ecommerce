@@ -7,6 +7,7 @@ class ProductForm(forms.ModelForm):
 
         model = Product
         fields = '__all__'
+        exclude = ['product_off']
 
         labels = {
             'name' : 'Name',

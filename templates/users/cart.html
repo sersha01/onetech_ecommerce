@@ -1,16 +1,10 @@
 {% extends 'users/base.html' %} {% load static %} {% block index %}
 
 <title>Cart</title>
-<link
-  rel="stylesheet"
-  type="text/css"
-  href="{% static 'users/css/gins___fontawesome-free-5.0.1___css___fontawesome-all.css_Mcc.3LqlYnulIa.css.pagespeed.cf.FwyNEhjhjm_huqzz027j2z05hxypbk0yy.css' %}"
-/>
-<link
-  rel="stylesheet"
-  type="text/css"
-  href="{% static 'users/css/A.cart_styles.css_cart_responsive.css_Mcc.DhDKfA-jyL.css.pagespeed.cf.2aZKpMdzfM_n2a6a5d2riu54jn0ozdvxq.css' %}"
-/>
+<link rel="stylesheet" type="text/css"
+  href="{% static 'users/css/gins___fontawesome-free-5.0.1___css___fontawesome-all.css_Mcc.3LqlYnulIa.css.pagespeed.cf.FwyNEhjhjm_huqzz027j2z05hxypbk0yy.css' %}" />
+<link rel="stylesheet" type="text/css"
+  href="{% static 'users/css/A.cart_styles.css_cart_responsive.css_Mcc.DhDKfA-jyL.css.pagespeed.cf.2aZKpMdzfM_n2a6a5d2riu54jn0ozdvxq.css' %}" />
 <link rel="stylesheet" href="{% static 'users/css/style.css' %}" />
 
 <div class="super_container">
@@ -255,50 +249,35 @@ pagespeed.CriticalImages.Run('/mod_pagespeed_beacon','https://preview.colorlib.c
             {% if items %}
             <div class="cart_title">Shopping Cart</div>
             <div class="cart_items">
-              <ul class="cart_list">
+              <ul class="cart_list" id="ul-list">
                 {% for item in items %}
-                <li class="cart_item clearfix hy pb-0"  id="{{item.product.id}}">
+                <li class="cart_item clearfix hy pb-0" id="{{item.product.id}}">
                   <center>
                     <div class="cart_item_image">
-                      <img
-                        src="{{ item.product.images1.url }}"
-                        alt=""
-                        data-pagespeed-url-hash="3506732625"
-                        onload="pagespeed.CriticalImages.checkImageForCriticality(this);"
-                        style="max-width: 60px"
-                      />
+                      <img src="{{ item.product.images1.url }}" alt="" data-pagespeed-url-hash="3506732625"
+                        onload="pagespeed.CriticalImages.checkImageForCriticality(this);" style="max-width: 60px" />
                     </div>
                   </center>
-                  <div
-                    class="cart_item_info d-flex flex-md-row flex-column justify-content-between"
-                  >
+                  <div class="cart_item_info d-flex flex-md-row flex-column justify-content-between">
                     <div class="cart_item_name cart_info_col col-md-4">
                       <div class="cart_item_title">Name</div>
-                      <div class="cart_item_text">{{ item }}</div>
+                      <div class="cart_item_text">{{ item.product }}</div>
                     </div>
                     <!-- <div class="cart_item_color cart_info_col">
                     <div class="cart_item_title">Color</div>
                     <div class="cart_item_text"><span style="background-color:#999999;"></span>Silver</div>
                     </div> -->
-                    <div
-                      class="cart_item_quantity cart_info_col col-md-3"
-                    >
+                    <div class="cart_item_quantity cart_info_col col-md-3">
                       <div class="cart_item_title ml-5">Quantity</div>
-                      <div class="cart_item_text d-flex">
+                      <div class="cart_item_text d-block">
                         <div class="d-flex ml-3">
-                          <button
-                            class="update btn btn-small rounded-circle mr-3 btn-outline-secondary"
-                            value="{{item.product.id}}"
-                            data-action="dicriment"
-                          >
+                          <button class="update btn btn-small rounded-circle mr-3 btn-outline-secondary"
+                            value="{{item.product.id}}" data-action="decrement">
                             &#9866;
                           </button>
                           <div class="mt-1 quantity">{{item.quantity}}</div>
-                          <button
-                            class="update btn btn-small rounded-circle ml-3 btn-outline-secondary"
-                            value="{{item.product.id}}"
-                            data-action="incriment"
-                          >
+                          <button class="update btn btn-small rounded-circle ml-3 btn-outline-secondary"
+                            value="{{item.product.id}}" data-action="increment">
                             &#10010;
                           </button>
                         </div>
@@ -306,7 +285,8 @@ pagespeed.CriticalImages.Run('/mod_pagespeed_beacon','https://preview.colorlib.c
                     </div>
                     <div class="cart_item_price cart_info_col col-md-2">
                       <div class="cart_item_title">Price</div>
-                      <div class="cart_item_text"  style="margin-top: 31px !important;"><span>₹</span><span class="product_price">{{ item.product.price }}</span></div>
+                      <div class="cart_item_text" style="margin-top: 31px !important;"><span>₹</span><span
+                          class="product_price">{{ item.product.last_price }}</span></div>
                     </div>
                     <div class="cart_item_total cart_info_col col-md-3 pr-5">
                       <div class="cart_item_title">Total</div>
@@ -314,13 +294,19 @@ pagespeed.CriticalImages.Run('/mod_pagespeed_beacon','https://preview.colorlib.c
                     </div>
                   </div>
                   <div class="d-flex justify-content-end pr-5 pb-3">
-                    <a
-                      href="{% url 'remove' item.product.id %}"
-                      class="btn btn-outline-dark"
-                      >Remove</a
-                    >
+                    <div class="col-6 d-flex justify-content-between pl-0">
+                      <div class="d-block"><span class="text-danger text-center h6"
+                          id="id_out{{item.product.id}}"></span><br>
+                        <span class="text-success text-center h6" id="id_in{{item.product.id}}"></span>
+                      </div>
+                      {% if user != 'AnonymousUser' %}<button class="btn btn-outline-dark remove"
+                        data-id="{{ item.product.id }}">Remove</button>
+                      {% endif %}
+                    </div>
                   </div>
-                  <center><hr class="m-0 p-0" style="width: 80%" /></center>
+                  <center>
+                    <hr class="m-0 p-0" style="width: 80%" />
+                  </center>
                 </li>
                 {% endfor %}
               </ul>
@@ -334,15 +320,17 @@ pagespeed.CriticalImages.Run('/mod_pagespeed_beacon','https://preview.colorlib.c
 
             <div class="cart_buttons">
               <a href="{% url 'home' %}"><button type="button" class="button cart_button_clear">
-                Back to shop
-              </button></a>
+                  Back to shop
+                </button></a>
               <a href="{% url 'checkout' %}"><button type="button" class="button cart_button_checkout">
-                Check out
-              </button></a>
+                  Check out
+                </button></a>
             </div>
             {% else %}
-            <div class="offset-md-3 col-md-6 py-5 border bg-light text-center"><h4 class="mb-5">Your cart is empty</h4>
-              <a href="{% url 'home' %}"><button class="btn btn-muted btn-lg w-100 py-5">Click here to shop</button></div></a>
+            <div class="offset-md-3 col-md-6 py-5 border bg-light text-center">
+              <h4 class="mb-5">Your cart is empty</h4>
+              <a href="{% url 'home' %}"><button class="btn btn-muted btn-lg w-100 py-5">Click here to shop</button>
+            </div></a>
             {% endif %}
           </div>
         </div>
@@ -466,56 +454,130 @@ Copyright &copy;<script data-cfasync="false" src="{% static 'users/cdn-cgi/scrip
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <!-- decreament increament -->
 <script>
+  console.log('fsdfgsdfgsfdgsf','{{user}}')
   $(".update").on("click", function (e) {
-    $.ajax({
-      type: "GET",
-      url: "{% url 'add_to_cart' %}",
-      data: {
-        id: $(this).val(),
-        action: $(this).data("action"),
-      },
-      dataType: "json",
-      success: function (response) {
-        var quantity = response.quantity
-        var id = '#' + response.id
-        var cart_total = response.cart_total
-        var item_total = response.item_total
-        var total_items = response.total_items
-        var stock = response.stock
-        
-        $(id + ' .quantity').html(quantity)
-        $(id + ' .get_total').html(item_total )
-        $('.get_cart_total').html(cart_total)
-      },
-    });
+    console.log('CART:', cart)
+    if ('{{ user }}' == 'AnonymousUser') {
+      var productId = $(this).val()
+      var action = $(this).data("action")
+      console.log('not logged in')
+      if (action == 'increment') {
+        if (cart[productId] == undefined) {
+          cart[productId] = { 'quantity': 1 }
+        } else {
+          cart[productId]['quantity'] += 1
+        }
+      }
+
+      if (action == 'decrement') {
+        cart[productId]['quantity'] -= 1
+
+        if (cart[productId]['quantity'] <= 0) {
+          delete cart[productId];
+        }
+      }
+      console.log('CART:', cart)
+      document.cookie = 'cart=' + JSON.stringify(cart) + ";domain=;path=/"
+      location.reload()
+    } else {
+      $.ajax({
+        type: "GET",
+        url: "{% url 'add_to_cart' %}",
+        data: {
+          id: $(this).val(),
+          action: $(this).data("action"),
+        },
+        dataType: "json",
+        success: function (response) {
+          if (response.status == 'success') {
+            var quantity = response.quantity
+            var id = '#' + response.id
+            var cart_total = response.cart_total
+            var item_total = response.item_total
+            var total_items = response.total_items
+            var stock = response.stock
+
+            $(id + ' .quantity').html(quantity)
+            $(id + ' .get_total').html(item_total)
+            $('.get_cart_total').html(cart_total)
+            $('#id_out' + response.id).empty()
+            $('#id_in' + response.id).empty()
+          } else {
+            $('#id_out' + response.id).html(response.message)
+            $('#id_in' + response.id).html(response.available + ' in stock')
+          }
+        },
+      });
+    }
   });
+  $('.remove').click(function () {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        $.ajax({
+          method: "GET",
+          url: "{% url 'remove' %}",
+          data: {
+            id: $(this).data('id')
+          },
+          success: function (response) {
+
+            $('#' + response.id).remove()
+            if ($("#ul-list").children().length == 0) {
+              Swal.fire(
+                'Deleted!',
+                'Your file has been deleted.',
+                'success'
+              ).then((result) => {
+                location.reload()
+              })
+            }
+          }
+        })
+      }
+    })
+  })
 </script>
 
-
-                
-
-
-<!--//////////////////////////////////////// 
-=======++++++=SCRIRT=++++++=======
-var action = $(this).data("action")
-var quantity = response.quantity;
-var id = "#" + response.id
-var cls_quantity = id + ' .quantity'
-var prod_price = id + ' .product_price'
-var cls_get_total = id + ' .get_total'
-var cls_get_cart_total = id + ' .product_price'
-var product_price = $(prod_price).html()
-var total = $(cls_get_cart_total).html()
-var get_total = parseFloat(quantity) * parseFloat(product_price)
-$(cls_quantity).html(quantity);
-$(cls_get_total).html(get_total)
-//////////////////////////////////////// -->
+<!-- <script>
+  addCookieItem()
+  function addCookieItem(productId, action){
+    console.log('not logged in')
+    if (action == 'add'){
+      if (cart[productId] == undefined){
+      cart[productId] = {'quantity':1}
+  
+      }else{
+        cart[productId]['quantity'] += 1
+      }
+    }
+  
+    if (action == 'remove'){
+      cart[productId]['quantity'] -= 1
+  
+      if (cart[productId]['quantity'] <= 0){
+        console.log('Item should be deleted')
+        delete cart[productId];
+      }
+    }
+    console.log('CART:', cart)
+    document.cookie ='cart=' + JSON.stringify(cart) + ";domain=;path=/"
+  }
+</script> -->
 
 <script src="{% static 'users/js/jquery-3.3.1.min.js' %}"></script>
 <script src="{% static 'users/styles/bootstrap4/popper.js' %}"></script>
 <script src="{% static 'users/styles/bootstrap4/bootstrap.min.js' %}"></script>
 <script src="{% static 'users/plugins/greensock/TweenMax.min.js' %}"></script>
-<script src="{% static 'users/script/eensock__ScrollToPlugin.min.js_plugins__easing__easing.js_js__cart_custom.js.pagespeed.jc.kqrLQpu_oa_4o7z5em7dhg33rkuf78kbu.js' %}"></script>
+<script
+  src="{% static 'users/script/eensock__ScrollToPlugin.min.js_plugins__easing__easing.js_js__cart_custom.js.pagespeed.jc.kqrLQpu_oa_4o7z5em7dhg33rkuf78kbu.js' %}"></script>
 <script>
   eval(mod_pagespeed_x8CakUBXmJ);
 </script>
@@ -534,10 +596,7 @@ $(cls_get_total).html(get_total)
 <script>
   eval(mod_pagespeed_d6oKc_4rj7);
 </script>
-<script
-  async
-  src="https://www.googletagmanager.com/gtag/js?id=UA-23581568-13"
-></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-23581568-13"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag() {
@@ -546,10 +605,7 @@ $(cls_get_total).html(get_total)
   gtag("js", new Date());
   gtag("config", "UA-23581568-13");
 </script>
-<script
-  defer
-  src="{% static 'users/beacon.min.js' %}"
-  data-cf-beacon='{"rayId":"6d85a09e6e22d153","token":"cd0b4b3a733644fc843ef0b185f98241","version":"2021.12.0","si":100}'
-></script>
+<script defer src="{% static 'users/beacon.min.js' %}"
+  data-cf-beacon='{"rayId":"6d85a09e6e22d153","token":"cd0b4b3a733644fc843ef0b185f98241","version":"2021.12.0","si":100}'></script>
 
 {% endblock %}

@@ -39,15 +39,16 @@
         <div class="card w-25x flex-grow-1 flex-sm-grow-0 m-sm-auto">
             <div class="card-body p-sm-5 m-sm-3 flex-grow-0">
                 <h1 class="mb-0 fs-3">OTP</h1>
-                <form action="{% url 'otp_check' number %}" method="post">
+                <form action="{% url 'otp_check' %}" method="post">
                     {% csrf_token %}
                     <div class="my-4">
                         <label class="form-label">OTP sent to your number +91{{number}}</label>
-                        <input type="text" class="form-control form-control-lg" name="otp"/>
-                        <span class="text-danger">{{message}}</span>
+                        <input type="text" class="d-none" name="number" value={{number}}>   
+                        <input type="number" class="form-control form-control-lg" name="otp" id="otp"/>
+                        <span class="text-danger" id="error">{{message}}</span>
                     </div>
                     <div>
-                        <button type="submit" class="btn btn-primary btn-lg w-100 text-white">
+                        <button type="submit" id="submit" class="btn btn-primary btn-lg w-100 text-white">
                             sent
                         </button>
                     </div>
@@ -56,6 +57,8 @@
         </div>
     </div>
     <!-- scripts -->
+
+
     
     <script src="{% static 'auth/vendor/jquery/jquery.min.js' %}"></script>
     <script src="{% static 'auth/vendor/feather-icons/feather.min.js' %}"></script>

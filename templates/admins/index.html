@@ -146,15 +146,15 @@
                         <div class="col">
                             <h1 class="h3 m-0">Dashboard</h1>
                         </div>
-                        <div class="col-auto d-flex">
+                        <!-- <div class="col-auto d-flex">
                             <select class="form-select me-3">
                                 <option selected="">7 October, 2021</option>
                             </select><a href="#" class="btn btn-primary">Export</a>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
                 <div class="row g-4 g-xl-5">
-                    <div class="col-12 col-md-4 d-flex">
+                    <!-- <div class="col-12 col-md-4 d-flex">
                         <div class="card saw-indicator flex-grow-1"
                             data-sa-container-query='{"340":"saw-indicator--size--lg"}'>
                             <div class="sa-widget-header saw-indicator__header">
@@ -309,8 +309,8 @@
                                 <div class="saw-indicator__caption">Compared to April 2021</div>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-12 col-lg-4 col-xxl-3 d-flex">
+                    </div> -->
+                    <!-- <div class="col-12 col-lg-4 col-xxl-3 d-flex">
                         <div class="card flex-grow-1 saw-pulse" data-sa-container-query='{"560":"saw-pulse--size--lg"}'>
                             <div class="sa-widget-header saw-pulse__header">
                                 <h2 class="sa-widget-header__title">Active users</h2>
@@ -394,14 +394,16 @@
                                 </table>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                     <div class="col-12 col-lg-8 col-xxl-9 d-flex">
+                        <div class="card col-12"><canvas id="myChart3"></canvas></div>
+
                         <div class="card flex-grow-1 saw-chart"
                             data-sa-data='[{"label":"Jan","value":50},{"label":"Feb","value":130},{"label":"Mar","value":525},{"label":"Apr","value":285},{"label":"May","value":470},{"label":"Jun","value":130},{"label":"Jul","value":285},{"label":"Aug","value":240},{"label":"Sep","value":710},{"label":"Oct","value":470},{"label":"Nov","value":640},{"label":"Dec","value":1110}]'>
                             <div class="sa-widget-header saw-chart__header">
-                                <h2 class="sa-widget-header__title">Income statistics</h2>
+                                <!-- <h2 class="sa-widget-header__title">Income statistics</h2> -->
                                 <div class="sa-widget-header__actions">
-                                    <div class="dropdown">
+                                    <!-- <div class="dropdown">
                                         <button type="button" class="btn btn-sm btn-sa-muted d-block"
                                             id="widget-context-menu-5" data-bs-toggle="dropdown" aria-expanded="false"
                                             aria-label="More">
@@ -425,15 +427,16 @@
                                                 <a class="dropdown-item text-danger" href="#">Remove</a>
                                             </li>
                                         </ul>
-                                    </div>
+                                    </div> -->
                                 </div>
                             </div>
                             <div class="saw-chart__body">
                                 <div class="saw-chart__container"><canvas></canvas></div>
                             </div>
                         </div>
+                        
                     </div>
-                    <div class="col-12 col-xxl-9 d-flex">
+                    <!-- <div class="col-12 col-xxl-9 d-flex">
                         <div class="card flex-grow-1 saw-table">
                             <div class="sa-widget-header saw-table__header">
                                 <h2 class="sa-widget-header__title">Recent orders</h2>
@@ -702,8 +705,10 @@
                                 </table>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                     <div class="col-12 col-xxl-3 d-flex">
+                        <div class="card"><canvas class="p-4" id="myChart"></canvas></div>
+<!-- 
                         <div class="card flex-grow-1 saw-chart-circle"
                             data-sa-data='[{"label":"Yandex","value":2742,"color":"#ffd333","orders":12},{"label":"YouTube","value":3272,"color":"#e62e2e","orders":51},{"label":"Google","value":2303,"color":"#3377ff","orders":4},{"label":"Facebook","value":1434,"color":"#29cccc","orders":10},{"label":"Instagram","value":799,"color":"#5dc728","orders":1}]'
                             data-sa-container-query='{"600":"saw-chart-circle--size--lg"}'>
@@ -846,10 +851,153 @@
                                 </table>
                             </div>
                         </div>
+                         -->
                     </div>
+                    <div class="col-3 p-4"><div class="card p-3 pb-5"><canvas id="myChart1"></canvas></div></div>
+                    <div class="p-4 col-3"><div class="card p-3 pb-5"><canvas id="myChart2"></canvas></div></div>
+                    <!-- <div class="col-3 p-4"><div class="card p-3"><canvas id="myChart5"></canvas></div></div> -->
+                    <div class="p-4 col-6"><div class="card p-3"><canvas id="myChart4"></canvas></div></div>
                 </div>
             </div>
         </div>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+  var defualtData = []
+  var labels = []
+  var endpoint = 'get_data' //'{% url "get_data" %}'
+  $.ajax({
+    method: "GET",
+    url: endpoint,
+    success: function (response) {
+      const bar_data = {
+        labels: response.by_day.labels,
+        datasets: [{
+          label: '',
+          data: response.by_day.data,
+          backgroundColor: [
+            'rgb(255, 0, 0)',
+            'rgb(255,165,0)',
+            'rgb(255,255,0)',
+            'rgb(0,255,0)',
+            'rgb(0,255,255)',
+            'rgb(0, 0, 255)',
+            'rgb(255, 0, 255)',
+          ],
+          hoverOffset: 4
+        }]
+      };
+
+      const brand_data = {
+        labels: response.brand.labels,
+        datasets: [{
+          label: '',
+          data: response.brand.data,
+          backgroundColor: [
+            'rgb(255, 0, 0)',
+            'rgb(255,165,0)',
+            'rgb(255,255,0)',
+            'rgb(0,255,0)',
+            'rgb(0,255,255)',
+            'rgb(0, 0, 255)',
+            'rgb(255, 0, 255)',
+          ],
+          hoverOffset: 4
+        }]
+      };
+
+      const pending_data = {
+        labels: response.pending.labels,
+        datasets: [{
+          label: '',
+          data: response.pending.data,
+          backgroundColor: [
+            'rgb(255, 0, 0)',
+            'rgb(255,165,0)',
+            'rgb(255,255,0)',
+            'rgb(0,255,0)',
+            'rgb(0,255,255)',
+            'rgb(0, 0, 255)',
+            'rgb(255, 0, 255)',
+          ],
+          hoverOffset: 4
+        }]
+      };
+
+      const notPending_data = {
+        labels: response.notPending.labels,
+        datasets: [{
+          label: '',
+          data: response.notPending.data,
+          backgroundColor: [
+            'rgb(255, 0, 0)',
+            'rgb(255,165,0)',
+            'rgb(255,255,0)',
+            'rgb(0,255,0)',
+            'rgb(0,255,255)',
+            'rgb(0, 0, 255)',
+            'rgb(255, 0, 255)',
+          ],
+          hoverOffset: 4
+        }]
+      };
+      
+    const bar = {
+        type: 'bar',
+        data: bar_data,
+    };
+    var myChart = new Chart(
+      document.getElementById('myChart3'),
+      bar
+    );
+    
+    const brand = {
+      type: 'doughnut',
+      data: brand_data,
+    };
+    var myChart = new Chart(
+      document.getElementById('myChart'),
+      brand
+    );
+    
+    const pending = {
+        type: 'doughnut',
+        data: pending_data,
+    };
+    var myChart = new Chart(
+      document.getElementById('myChart1'),
+      pending
+    );
+
+    const notPending = {
+        type: 'pie',
+        data: notPending_data,
+    };
+    var myChart = new Chart(
+      document.getElementById('myChart2'),
+      notPending
+    );
+
+    const line = {
+        type: 'line',
+        data: bar_data,
+    };
+
+    var myChart = new Chart(
+      document.getElementById('myChart4'),
+      line
+    );
+    },
+    error: function (error_data) {
+      console.log('error')
+      console.log(error_data)
+    }
+    
+  })
+  setInterval(function(){
+    $('body').load('/admin/');
+ }, 50000)
+</script>
 {% endblock %}

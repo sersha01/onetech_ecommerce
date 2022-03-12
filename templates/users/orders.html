@@ -6,10 +6,15 @@
             <div class="col-2"><h4>Total Items : {{ order.get_cart_items }}</h4></div>
             <div class="col-3"><h4>Total Price : {{ order.get_cart_total }}</h4></div>
             <div class="col-2"><h4>{%if order.payment == 'Pending'%}Not {% endif %}Paid</h4></div>
-            {% if order.status == 'New' or order.status == 'Pending' %}<div class="col-2 p-0"><a href="{% url 'cancel' order.id %}" class="btn btn-info w-100">Cancel order</a></div>{% elif order.status == 'Delivered' %}
-            <div class="col-2 p-0"><a href="" class="btn btn-warning w-100">Return</a></div>
-            {% elif order.status == 'Shipped' %}<div class="col-2 h-50 btn w-100" style="background-color: #e0a800;">Return</div>
-            {% else %}<div class="col-2 h-50 btn w-100 " style="background-color: #f05c5c;color: #fff;">Order cancelled</div>{% endif %}
+            {% if order.status == 'New' or order.status == 'Pending' %}
+            <div class="col-2 p-0"><a href="{% url 'cancel' order.id %}" class="btn btn-info w-100">Cancel order</a></div>
+            {% elif order.status == 'Delivered' %}
+            <div class="col-2 p-0"><a href="{% url 'order_return' order.id %}" class="btn btn-warning w-100">Return</a></div>
+            {% elif order.status == 'Shipped' %}
+            <div class="col-2 h-50 btn w-100" style="background-color: #e0a800;">Return</div>
+            {% elif  order.status == 'Return' %}
+            <div class="col-2 h-50 btn w-100" style="background-color: #e0a800;">Returned</div>
+            {% else %}<div class="col-2 h-50 btn w-100 " style="background-color: #f05c5c;color: #fff;">Cancelled</div>{% endif %}
         </div>
     </div>
     <div class="col-12"><hr class="py-0 my-0"></div>

@@ -257,15 +257,15 @@
                 <h1 class="h3 m-0">{% if edit %} Edit {% endif %} Product</h1>
               </div>
               <div class="col-auto d-flex">
+                
                 {% if edit %}
                 <!-- <div form="form" type="submit" class="btn btn-primary me-3"><i class="fas fa-save pe-3"></i>Save</div> -->
                 <button class="btn btn-primary me-3"><i class="fas fa-save pe-3"></i><input type="submit" form="form"
                     value="Save" class="btn btn-primary"></button>
                 <!-- <button type="submit" form="from" class="btn btn-primary me-3"><i class="fas fa-save pe-3"></i>Save</button> -->
                 {% else %}
-                <a href="{% url 'product' product.id edit %}" class="btn btn-primary me-3"><i
-                    class="fas fa-edit pe-3"></i>Edit</a><a href="{% url 'delete' product.id %}"
-                  class="btn btn-danger"><i class="fas fa-trash pe-3"></i>Delete</a>
+                <a href="{% url 'product' product.id edit %}" class="btn btn-primary me-3"><i class="fas fa-edit pe-3"></i>Edit</a>
+                    <a href="{% url 'delete' product.id %}" class="btn btn-danger"><i class="fas fa-trash pe-3"></i>Delete</a>
                 {% endif %}
               </div>
             </div>
@@ -274,7 +274,7 @@
             data-sa-container-query='{"920":"sa-entity-layout--size--md","1100":"sa-entity-layout--size--lg"}'>
             <div class="sa-entity-layout__body">
               <div class="sa-entity-layout__main">
-                <div class="card">
+                <div class="card">  
                   {% if not edit %}
                   <div class="card-body p-5">
                     <div class="mb-5">
@@ -287,7 +287,7 @@
                     </div>
                     <div class="mb-4">
                       <label for="form-product/name" class="form-label">Price</label>
-                      <input type="text" class="form-control" id="form-product/name" value="{{product.price}}"
+                      <input type="text" class="form-control" id="form-product/name" value="{{product.last_price}}"
                         readonly />
                     </div>
                     <div class="mb-4">

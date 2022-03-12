@@ -2,18 +2,22 @@
 {% load static %}
 {% block index %}
 
-	<title>Blog</title>
-<link rel="stylesheet" type="text/css" href="{% static 'users/css/me.default.css_plugins___OwlCarousel2-2.2.1___animate.css_Mcc.TwOp1rfcfq.css.pagespeed.cf.upjTNQY0br_w2dwz3nseuq3m43igx7waw.css' %}" />
-<link rel="stylesheet" type="text/css" href="{% static 'users/css/A.blog_styles.css_blog_responsive.css_Mcc.1neb8KJ4JD.css.pagespeed.cf.r5l4k3Ly8p_8pi75swx7g2qyav0iadg63.css' %}" />
+<title>Blog</title>
+<link rel="stylesheet" type="text/css"
+	href="{% static 'users/css/me.default.css_plugins___OwlCarousel2-2.2.1___animate.css_Mcc.TwOp1rfcfq.css.pagespeed.cf.upjTNQY0br_w2dwz3nseuq3m43igx7waw.css' %}" />
+<link rel="stylesheet" type="text/css"
+	href="{% static 'users/css/A.blog_styles.css_blog_responsive.css_Mcc.1neb8KJ4JD.css.pagespeed.cf.r5l4k3Ly8p_8pi75swx7g2qyav0iadg63.css' %}" />
 
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
 <style>
-	.img{
+	.img {
 		max-width: 150px;
 		width: auto;
 	}
-	.max-ht-500{
+
+	.max-ht-500 {
 		height: 350px;
 	}
 </style>
@@ -303,17 +307,76 @@ pagespeed.CriticalImages.Run('/mod_pagespeed_beacon','https://preview.colorlib.c
 <div class="blog_text">13 Reasons You Are Failing At Life And Becoming A Bum</div>
 <div class="blog_button"><a href="{% static 'users/blog_single.html' %}">Continue Reading</a></div>
 </div> -->
+
 <div class="container">
 	<div class="row">
-		{% for product in products %}
-		<div class="col-sm-6 col-md-4 col-lg-3">
-			<a href="{% url 'single_product' product.id %}"><div class="card text-center m-3 w-100">
-			<center class="max-ht-500"><img src="{{product.images1.url}}" alt="" class="card-img-top img"></center>
-			<h5 class="card-title">{{product.name}}</h5>
-			<p class="card-text">{{product.ram}} | {{product.storage}}</p>
-		</div></a>
-	</div>
-		{% endfor %}
+		<div class="col-md-3">
+			<form class="row justify-content-center sticky-top" action="{% url 'home' %}" method="post">
+				{% csrf_token %}
+				<div class="col-10 card my-3 py-1">
+					<div>
+						<h4>Brand</h4>
+						{% for brand in brands %}
+						<input type="checkbox" id="apple" data-filter="brand" value="{{ brand.id }}" class="Checkbox">
+						<label for="apple"> {{ brand }}</label><br>
+						{% endfor %}
+					</div>
+				</div>
+				<div class="col-10 card mb-3 py-1">
+					<div>
+						<h4>Ram</h4>
+						<input type="checkbox" id="1GB" data-filter="ram" value="1GB" class="Checkbox">
+						<label for="1GB"> 1GB</label><br>
+						<input type="checkbox" id="2GB" data-filter="ram" value="2GB" class="Checkbox">
+						<label for="2GB"> 2GB</label><br>
+						<input type="checkbox" id="4GB" data-filter="ram" value="4GB" class="Checkbox">
+						<label for="4GB"> 4GB</label><br>
+						<input type="checkbox" id="6GB" data-filter="ram" value="6GB" class="Checkbox">
+						<label for="6GB"> 6GB</label><br>
+						<input type="checkbox" id="8GB" data-filter="ram" value="8GB" class="Checkbox">
+						<label for="8GB"> 8GB</label><br>
+					</div>
+				</div>
+				<div class="col-10 card mb-3 py-1">
+					<div>
+						<h4>Storage</h4>
+						<input type="checkbox" id="16GB" data-filter="rom" value="16GB" class="Checkbox">
+						<label for="16GB"> 16GB</label><br>
+						<input type="checkbox" id="32GB" data-filter="rom" value="32GB" class="Checkbox">
+						<label for="32GB"> 32GB</label><br>
+						<input type="checkbox" id="64GB" data-filter="rom" value="64GB" class="Checkbox">
+						<label for="64GB"> 64GB</label><br>
+						<input type="checkbox" id="128GB" data-filter="rom" value="128GB" class="Checkbox">
+						<label for="128GB"> 128GB</label><br>
+						<input type="checkbox" id="256GB" data-filter="rom" value="256GB" class="Checkbox">
+						<label for="256GB"> 256GB</label><br>
+					</div>
+				</div>
+				<button class="btn btn-primary">apply</button>
+			</form>
+		</div>
+		<div class="col-md-9 row" id="filteredProducts">
+			{% for product in products %}
+			<div class="col-sm-6 col-lg-4">
+				<div class="card text-center m-3 w-100">
+					<a href="{% url 'single_product' product.id %}" style="text-decoration: none;">
+						<center class="max-ht-500 mt-3 d-flex align-items-center justify-content-center"><img
+								src="{{product.images1.url}}" alt="" class="card-img-top img"></center>
+					</a>
+					<a href="{% url 'single_product' product.id %}" style="text-decoration: none;">
+						<h5 class="card-title">{{product.name}}</h5>
+					</a>
+					<a href="{% url 'single_product' product.id %}" style="text-decoration: none;">
+						<p class="card-text">{{product.ram}} | {{product.storage}}</p>
+					</a>
+					<div class="d-flex justify-content-around py-3"><button class="btn btn-info px-4 add_cart"
+							data-id="{{ product.id }}"><i class="fas fa-shopping-cart"></i> Cart</button><a
+							href="{% url 'buyNow' product.id %}">
+							<button class="btn btn-info "><i class="fa-solid fa-bolt"></i> Buy Now</button></a></div>
+				</div>
+			</div>
+			{% endfor %}
+		</div>
 	</div>
 </div>
 <!-- <div class="blog_image" style="background-image:url(../../static/users/images/blog_9.jpg)"></div> -->
@@ -435,22 +498,95 @@ Copyright &copy;<script data-cfasync="false" src="{% static 'users/cdn-cgi/scrip
 </div>
 </div>
 </div> -->
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+{% if check %}
+<script>
+	cart = {}
+	document.cookie = 'cart=' + JSON.stringify(cart) + ";domain=;path=/"
+</script>
+{% endif %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+	$(document).ready(function () {
+		$('.add_cart').click(function () {
+			if ('{{ user }}' == 'AnonymousUser') {
+				var productId = $(this).data('id')
+				var action = 'add'
+				if (action == 'add') {
+					if (cart[productId] == undefined) {
+						cart[productId] = { 'quantity': 1 }
+					} else {
+						cart[productId]['quantity'] += 1
+					}
+				}
+				console.log('CART:', cart)
+				document.cookie = 'cart=' + JSON.stringify(cart) + ";domain=;path=/"
+				location.reload()
+
+			} else {
+				$.ajax({
+					type: "POST",
+					url: '{% url "add_to_cart" %}',
+					data: {
+						product_id: $(this).data('id'),
+						csrfmiddlewaretoken: "{{csrf_token}}",
+					},
+					success: function () { },
+				});
+			}
+		})
+		$(".Checkbox").on('click',function(){
+			var _filterObj={};
+			$(".Checkbox").each(function(index,ele){
+				var _filterVal=$(this).val();
+				var _filterKey=$(this).data('filter');
+				_filterObj[_filterKey]=Array.from(document.querySelectorAll('input[data-filter='+_filterKey+']:checked')).map(function(el){
+					 return el.value;
+				});
+			});
+			console.log(_filterObj)
+	
+			// Run Ajax
+			$.ajax({
+				url:'{% url "filter" %}',
+				data:_filterObj,
+				dataType:'json',
+				success:function(res){
+					console.log(res.data)
+					$("#filteredProducts").html(res.data);
+				}
+			});
+		});
+	})
+</script>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+	integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+	crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+	integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+	crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+	integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+	crossorigin="anonymous"></script>
 
 <script src="{% static 'users/js/jquery-3.3.1.min.js' %}"></script>
 <script src="{% static 'users/styles/bootstrap4/popper.js' %}"></script>
 <script src="{% static 'users/styles/bootstrap4/bootstrap.min.js' %}"></script>
 <script src="{% static 'users/plugins/greensock/TweenMax.min.js' %}"></script>
-<script src="{% static 'users/script/gic.min.js_greensock__animation.gsap.min.js_greensock__ScrollToPlugin.min.js.pagespeed.jc.TWF3tvWfFP_uq54o8ryknqgh43bdqx05g.js' %}"></script><script>eval(mod_pagespeed_x8CakUBXmJ);</script>
+<script
+	src="{% static 'users/script/gic.min.js_greensock__animation.gsap.min.js_greensock__ScrollToPlugin.min.js.pagespeed.jc.TWF3tvWfFP_uq54o8ryknqgh43bdqx05g.js' %}"></script>
+<script>eval(mod_pagespeed_x8CakUBXmJ);</script>
 <script>eval(mod_pagespeed_$y3A$Lt1kj);</script>
 <script>eval(mod_pagespeed_P1Sh7qjcF9);</script>
 <script>eval(mod_pagespeed_z5qXXkaQ_q);</script>
 <script src="{% static 'users/plugins/OwlCarousel2-2.2.1/owl.carousel.js' %}"></script>
-<script src="{% static 'users/script/lax-js-master__parallax.min.js_plugins__easing__easing.js_js__blog_custom.js.pagespeed.jc.If9P5izxX2_gtz8weqno7o5ysbxcse8xs.js' %}"></script><script>eval(mod_pagespeed_3A6wRQMZMx);</script>
+<script
+	src="{% static 'users/script/lax-js-master__parallax.min.js_plugins__easing__easing.js_js__blog_custom.js.pagespeed.jc.If9P5izxX2_gtz8weqno7o5ysbxcse8xs.js' %}"></script>
+<script>eval(mod_pagespeed_3A6wRQMZMx);</script>
 <script>eval(mod_pagespeed_VosBi8xjjG);</script>
 <script>eval(mod_pagespeed_lY2mQ4jSQy);</script>
-<script defer src="{% static 'users/beacon.min.js' %}" data-cf-beacon='{"rayId":"6d85a09ad804d157","token":"cd0b4b3a733644fc843ef0b185f98241","version":"2021.12.0","si":100}' ></script>
+<script defer src="{% static 'users/beacon.min.js' %}"
+	data-cf-beacon='{"rayId":"6d85a09ad804d157","token":"cd0b4b3a733644fc843ef0b185f98241","version":"2021.12.0","si":100}'></script>
 
 {% endblock %}

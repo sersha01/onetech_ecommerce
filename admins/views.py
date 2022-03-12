@@ -1,8 +1,17 @@
+from ast import Or
+from base64 import encode
+from cProfile import label
+from datetime import datetime, timedelta
+from tracemalloc import start
+from urllib import response
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import redirect, render
+from numpy import array
 from users.models import User
 from .models import *
 from .forms import ProductForm
-
+import xlwt
+import csv
 # Create your views here.
 def sup_home(request):
     if request.session.has_key('admin'):
@@ -21,6 +30,8 @@ def test(request):
 def products(request):
     if request.session.has_key('admin'):
         products = Product.objects.all().order_by('id')
+        for p in products:
+            p.last_price
         return render(request, 'admins/products-list.html',{'products':products})
     else:
         return redirect('login')
@@ -29,17 +40,6 @@ def products(request):
 
 def orders(request):
     orders = Order.objects.filter(order_status=True)
-    # items = []
-    # array = []
-    # for order in orders:
-    #     item = order.orderitem_set.all()
-    #     array.append(item)
-    #     items.append(array)
-    #     array = []
-    # print(items)
-    # for item in items:
-    #     for i in item:
-    #         print(i)
     return render(request, 'admins/orders_list.html',{'orders':orders})
 
 
@@ -60,17 +60,65 @@ def product(request,id,edit=None):
             print(form.errors)
     else:
         form = ProductForm( instance=product)
-    return render(request, 'admins/product.html', {'form':form, 'product':product, 'edit':edit})
+    return render(request, 'admins/dd.html', {'form':form, 'product':product, 'edit':edit})
 
 def add_product(request):
     form = ProductForm()
     if request.method == 'POST':
+        rams = ['','1GB','2GB','4GB','6GB','8GB']
+        roms = ['16GB','32GB','64GB','128GB','256GB']
         form = ProductForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
             return redirect('products')
+    return render(request, 'admins/add_product.html', {'form':form})
 
-    return render(request, 'admins/tt.html', {'form':form})
+def copy(request,id):
+    product = Product.objects.get(id=id)
+    rams = ['','1GB','2GB','4GB','6GB','8GB']
+    roms = ['16GB','32GB','64GB','128GB','256GB']
+    last_price = product.last_price
+    for ram in rams:
+        for rom in roms:
+            if ram == '':
+                last_price += 1000
+            elif ram == '1GB':
+                last_price += 2000
+            elif ram == '2GB':
+                last_price += 3000
+            elif ram == '4GB':
+                last_price += 4000
+            elif ram == '6GB':
+                last_price += 5000
+            elif ram == '8GB':
+                last_price += 7000
+            if rom == '16GB':
+                last_price += 1000
+            elif rom == '32GB':
+                last_price += 2000
+            elif rom == '64GB':
+                last_price += 3000
+            elif rom == '128GB':
+                last_price += 4000
+            elif rom == '256GB':
+                last_price += 6000
+            Product.objects.create(
+                name = product.name,
+                price = last_price,
+                images1 = product.images1,
+                images2 = product.images2,
+                images3 = product.images3,
+                ram = ram,
+                storage = rom,
+                camara = product.camara,
+                battery = product.battery,
+                processor = product.processor,
+                display = product.display,
+                stock = product.stock,
+                brand = product.brand,
+                date = product.date,
+            )
+    return redirect('products')
 
 def customers(request):
     if request.session.has_key('admin'):
@@ -80,15 +128,18 @@ def customers(request):
         return redirect('login')
     return render(request, 'admins/customers-list.html')
 
-def customers_sts(request,id):
+def customers_sts(request):
+    id = request.GET.get('id')
+    print(id)
     if request.session.has_key('admin'):
+        print('hy')
         user = User.objects.get(id=id)
+        print(user)
         if user.status == True:
             User.objects.filter(id=id).update(status=False)
-            return redirect('customers')
         else:
             User.objects.filter(id=id).update(status=True)
-            return redirect('customers')
+        return JsonResponse({'id':id})
     else:
         return redirect('login')
     return render(request, 'admins/customers-list.html')
@@ -111,7 +162,8 @@ def sup_logout(request):
         pass
     return redirect('login')
 
-def delete(request, id):
+def delete(request):
+    id = request.GET.get('id')
     product = Product.objects.get(id=id)
     product.delete()
     return redirect('products')
@@ -132,3 +184,152 @@ def order_update(request):
         order.update(status=status)
         print(status)
     return redirect('orders')
+
+def get_data(request, *args, **kwargs):
+    # pending and not pending orders
+    orders = Order.objects.filter(order_status=True)
+    status = ["New","Pending","Shipped","Delivered","Cancelled","Return","UserCancelled"]
+    pending = []
+    pending_label = ["New","Pending","Shipped"]
+    notPending = []
+    notPending_label = ["Delivered","Cancelled","Return","UserCancelled"]
+    for status in status:
+        count = orders.filter(status=status).count()
+        if status == "New" or status == "Pending" or status == "Shipped":
+            pending.append(count)
+        else:
+            notPending.append(count)
+
+    # soled items by brand
+    brands = Brand.objects.all()
+    sold = []
+    product_arr =[]
+    for brand in brands:
+        products = brand.product_set.all()
+        oders = Order.objects.filter(order_status=True)
+        count = OrderItem.objects.filter(product__id__in=products, order__id__in=oders).count()
+        print(count)
+        sold.append(count)
+        product_arr.append(str(brand))
+
+    # whole solde by day
+    counts = []
+    days = []
+    day = datetime.now() - timedelta(weeks=2)
+    for i in range(14):
+        start = day
+        end = day + timedelta(days=1)
+        count = Order.objects.filter(order_status=True,date_order__range=(start, end)).order_by('-date_order').count()
+        days.append((day + timedelta(days=1)).strftime("%A"))
+        counts.append(count)
+        day += timedelta(days=1)
+
+    count = User.objects.filter(last_login__startswith=datetime.now().date()).count()
+    # passing whole data
+    data = {
+        'pending':{
+            'data':pending,
+            'labels':pending_label
+        },
+        'notPending':{
+            'data':notPending,
+            'labels':notPending_label
+        },
+        'brand':{
+            'data':sold,
+            'labels':product_arr
+        },
+        'by_day':{
+            'data':counts,
+            'labels':days
+        }
+    }
+    return JsonResponse(data)
+
+def coupens(request):
+    products = Product.objects.all().order_by('-product_off')
+    brands = Brand.objects.all().order_by('-category_off')
+    for brand in brands:
+        brand.items = products.filter(brand=brand).count()
+    return render(request, 'admins/offers.html',{'products':products,'brands':brands})
+
+def test1(request, *args, **kwargs):
+    return render(request, 'admins/test1.html')
+
+
+def offers(request):
+    type = request.POST.get('type')
+    id = request.POST.get('typeId')
+    val = request.POST.get('val')
+    if type == "brand":
+        Brand.objects.filter(id=id).update(category_off=val)
+    elif type == "product":
+        Product.objects.filter(id=id).update(product_off=val)
+    products = Product.objects.all().order_by('-product_off')
+    brands = Brand.objects.all().order_by('-category_off')
+    for brand in brands:
+        brand.items = products.filter(brand=brand).count()
+    print(type,id,val)
+    return redirect('coupens')
+
+
+def sales(request):
+    orders = Order.objects.all()
+    years = []
+    for i in range(15):
+        val = 2010 + i
+        years.append(val)
+    if request.method == "POST":
+        start = request.POST.get('from1')
+        end = request.POST.get('from2')
+        month = request.POST.get('from3')[-2:]
+        year = request.POST.get('from4')
+        if start != '':
+            orders = Order.objects.filter(date_order__range=[start,end] ,order_status=True)
+        elif month != '':
+            orders = Order.objects.filter(date_order__month=month ,order_status=True)
+        elif year != '':
+            orders = Order.objects.filter(date_order__year=year ,order_status=True)
+    return render(request, 'admins/sales.html', {'orders':orders,'years':years})
+
+
+def exel(request):
+    response = HttpResponse(content_type='application/ms-excel')
+    response['Content-Disposition'] = 'attachment; filename=SalesReport' + \
+        str(datetime.now())+'.xls'
+    wb = xlwt.Workbook(encoding='utf-8')
+    ws = wb.add_sheet('SalesReport')
+    row_num = 0
+    font_style = xlwt.XFStyle()
+    font_style.font.bold = True
+    columns = ['Order Id','Date Order','Payment Method','Total Amount']
+    for col_num in range(len(columns)):
+        ws.write(row_num,col_num,columns[col_num],font_style)
+    font_style = xlwt.XFStyle()
+    rows =  Order.objects.filter(order_status=True).values_list('id','date_order','payment_method','total')
+    print(rows)
+    for row in rows:
+        print(row)
+        row_num += 1
+        for col_num in range(len(row)):
+            ws.write(row_num,col_num,str(row[col_num]),font_style)
+    wb.save(response)
+    return response
+
+def exportCsv(request):
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename=SalesReport'+str(datetime.now())+'.csv'
+    order = Order.objects.filter(date_order__month= 3 ,order_status=True)
+    writer = csv.writer(response)
+    writer.writerow(['Order Id','Date','Payment Method','Items','Total Amount'])
+    try:
+        report_total = 0
+        print(order)
+        for order in order:
+            writer.writerow([order.id,order.date_order,order.payment_method,order.get_cart_items,order.get_cart_total])
+            report_total = report_total + order.get_cart_total
+        writer.writerow(['Total:-',report_total])
+    except:
+        # messages.error(request,'Empty Order')
+        pass
+    return response

@@ -9,6 +9,7 @@ class User(AbstractUser):
     status = models.BooleanField(default=True, null=True)
     date = models.DateTimeField(auto_now_add=True, null=True)
     image = models.ImageField(upload_to='profile_pic', default='profile_pic/male-avatar.jpg')
+    ref_id = models.CharField(max_length=50, null=True)
 
 
 class Address(models.Model):
