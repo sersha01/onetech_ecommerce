@@ -59,6 +59,11 @@ class Product(models.Model):
         return url
 
     @property
+    def offer(self):
+        if self.product_off != 0 or self.brand.category_off != 0:
+            return self.brand.category_off if self.product_off < self.brand.category_off else self.product_off
+
+    @property
     def last_price(self):
         if self.product_off != 0 and self.brand.category_off != 0:
             if self.product_off < self.brand.category_off:
@@ -84,6 +89,7 @@ class SignupCoupon(models.Model):
 
     def __str__(self):
         return self.name
+
 
 class Order(models.Model):
     STATUS = (('New','New'),('Pending','Pending'),('Shipped','Shipped'),('Delivered','Delivered'),('Cancelled','Cancelled'),('Return','Return'),('UserCancelled','UserCancelled'))
@@ -133,3 +139,17 @@ class OrderItem(models.Model):
         total = self.product.last_price * self.quantity
         return total
 
+class Banner(models.Model):
+    image = models.ImageField(upload_to='images/')
+    status = models.BooleanField(default=True)
+
+class Coupen(models.Model):
+    name = models.CharField(max_length=200, null=True)
+    price = models.CharField(max_length=200, null=True)
+    available = models.BooleanField(null=True, default = True)
+    proceed = models.BooleanField(null=True, default = False)
+    remaining = models.IntegerField()
+
+class WishList(models.Model):
+    user = models.ForeignKey(User,on_delete=models.CASCADE, null=True)
+    product = models.ForeignKey(Product,on_delete=models.SET_NULL, null=True)

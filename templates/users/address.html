@@ -7,5 +7,24 @@
 <tr><td>STATE </td><td>:</td><td> {{ address.state }}</td></tr>
 <tr><td>PIN CODE </td><td>:</td><td> {{ address.pincode }}</td></tr>
 <tr><td>PHONE </td><td>:</td><td> {{ address.number }}</td></tr></table>
+<tr><div class="d-flex justify-content-around mt-2"><a href="{% url 'edit_address' address.id %}"><div class="col-5 btn btn-warning" id="edit">Edit</div></a>
+    <div class="col-5 btn btn-danger" id="delete" data-address="{{ address.id }}">Delete</div></div></tr>
 </div></div>
+
+<script>
+    $(document).ready(function(){
+        $('#delete').click(function(){
+            $.ajax({
+                url: '{% url  "dlt_address" %}',
+                data:{
+                    add_id : $(this).data('address')
+                },
+                success: function(response){
+                    alert(response.id)
+                }
+            })
+        })
+    })
+</script>
+
 {% endfor %}

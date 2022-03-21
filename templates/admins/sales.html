@@ -1,5 +1,10 @@
 {% extends 'admins/admin-base.html' %} {% block content %} {% load static %}
 
+<!-- <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" /> -->
+
 <!-- <link rel="stylesheet" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">
 <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.7.0/css/buttons.dataTables.min.css">
 
@@ -666,10 +671,23 @@
     
     html2pdf(element, opt)
   };
+
+  var today = new Date();
+  var dd = today.getDate();
+  var mm = today.getMonth()+1; //January is 0 so need to add 1 to make it 1!
+  var yyyy = today.getFullYear();
+  if(dd<10){ dd='0'+dd } 
+  if(mm<10){ mm='0'+mm } 
+  today = yyyy+'-'+mm+'-'+dd;
+  document.getElementById("exp_date1").setAttribute("max", today)
+  document.getElementById("exp_date2").setAttribute("max", today)
 </script>
 
 <script>
   $(document).ready(function(){
+    $('#exp_date1').change(function(){
+      $('#exp_date2').attr('min',$(this).val())
+    })
     $('#status_sales').change(function(){
       $('.date').val('')
       $('.date').removeClass('d-none')

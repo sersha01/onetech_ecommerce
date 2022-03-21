@@ -1,5 +1,5 @@
 from django import forms
-from .models import Product
+from .models import Banner, Product
 
 
 class ProductForm(forms.ModelForm):
@@ -68,15 +68,18 @@ class ProductForm(forms.ModelForm):
         self.fields['brand'].widget.attrs.update(
             {'class':'form-control'})
         
-# class Productf(forms.ModelForm):
-#     img1=forms.ImageField(widget=forms.FileInput,)
-#     img2=forms.ImageField(widget=forms.FileInput,)
-#     img3=forms.ImageField(widget=forms.FileInput,)
-#     class Meta:
-#         model=Product
-#         fields = ('img1','img2','img3')
-#         exclude = ('')        
+
+class BannerForm(forms.ModelForm):
+    class Meta:
+        model=Banner
+        fields = '__all__'  
+        exclude = ['status']
             
+    def __init__(self, *args ,**kwargs):
+        super(BannerForm, self).__init__(*args ,**kwargs)
+
+        self.fields['image'].widget.attrs.update(
+            {'class':'form-control','id':'id_images1'})
 
 
 #  form-control-lg py-1 rounded

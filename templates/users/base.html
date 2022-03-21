@@ -19,7 +19,7 @@
 <link rel="stylesheet" type="text/css"
   href="{% static 'users/css/A.cart_styles.css_cart_responsive.css_Mcc.DhDKfA-jyL.css.pagespeed.cf.2aZKpMdzfM_n2a6a5d2riu54jn0ozdvxq.css' %}" />
 <link rel="stylesheet" href="{% static 'users/css/style.css' %}" />
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
 
 
@@ -104,8 +104,8 @@
                   data-pagespeed-url-hash="1440773528"
                   onload="pagespeed.CriticalImages.checkImageForCriticality(this);"></div>
               <div class="wishlist_content">
-                <div class="wishlist_text"><a href="#">Wishlist</a></div>
-                <div class="wishlist_count">115</div>
+                <div class="wishlist_text"><a href="{% url 'wishitem' %}">Wishlist</a></div>
+                <div class="wishlist_count">{{ count }}</div>
               </div>
             </div>
             <div class="cart">

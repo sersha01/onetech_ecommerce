@@ -299,7 +299,7 @@ pagespeed.CriticalImages.Run('/mod_pagespeed_beacon','https://preview.colorlib.c
                           id="id_out{{item.product.id}}"></span><br>
                         <span class="text-success text-center h6" id="id_in{{item.product.id}}"></span>
                       </div>
-                      {% if user != 'AnonymousUser' %}<button class="btn btn-outline-dark remove"
+                      {% if user.is_authenticated %}<button class="btn btn-outline-dark remove"
                         data-id="{{ item.product.id }}">Remove</button>
                       {% endif %}
                     </div>
@@ -330,7 +330,7 @@ pagespeed.CriticalImages.Run('/mod_pagespeed_beacon','https://preview.colorlib.c
             <div class="offset-md-3 col-md-6 py-5 border bg-light text-center">
               <h4 class="mb-5">Your cart is empty</h4>
               <a href="{% url 'home' %}"><button class="btn btn-muted btn-lg w-100 py-5">Click here to shop</button>
-            </div></a>
+              </a></div>
             {% endif %}
           </div>
         </div>
@@ -454,13 +454,10 @@ Copyright &copy;<script data-cfasync="false" src="{% static 'users/cdn-cgi/scrip
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <!-- decreament increament -->
 <script>
-  console.log('fsdfgsdfgsfdgsf','{{user}}')
   $(".update").on("click", function (e) {
-    console.log('CART:', cart)
     if ('{{ user }}' == 'AnonymousUser') {
       var productId = $(this).val()
       var action = $(this).data("action")
-      console.log('not logged in')
       if (action == 'increment') {
         if (cart[productId] == undefined) {
           cart[productId] = { 'quantity': 1 }

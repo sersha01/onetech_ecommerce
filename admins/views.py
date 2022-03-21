@@ -1,4 +1,5 @@
 from ast import Or
+from django.db.models import Q
 from base64 import encode
 from cProfile import label
 from datetime import datetime, timedelta
@@ -9,9 +10,10 @@ from django.shortcuts import redirect, render
 from numpy import array
 from users.models import User
 from .models import *
-from .forms import ProductForm
+from .forms import BannerForm, ProductForm
 import xlwt
 import csv
+from django.template.loader import render_to_string
 # Create your views here.
 def sup_home(request):
     if request.session.has_key('admin'):
@@ -248,28 +250,45 @@ def get_data(request, *args, **kwargs):
 
 def coupens(request):
     products = Product.objects.all().order_by('-product_off')
-    brands = Brand.objects.all().order_by('-category_off')
+    brands = Brand.objects.all().order_by('-category_off','id')
     for brand in brands:
         brand.items = products.filter(brand=brand).count()
-    return render(request, 'admins/offers.html',{'products':products,'brands':brands})
+    coupens = Coupen.objects.all()
+    return render(request, 'admins/offers.html',{'products':products,'brands':brands,'coupons':coupens})
 
 def test1(request, *args, **kwargs):
     return render(request, 'admins/test1.html')
 
+def br_delete(request,id):
+    Brand.objects.filter(id=id).delete()
+    return redirect('brands')
 
-def offers(request):
-    type = request.POST.get('type')
-    id = request.POST.get('typeId')
-    val = request.POST.get('val')
-    if type == "brand":
-        Brand.objects.filter(id=id).update(category_off=val)
-    elif type == "product":
-        Product.objects.filter(id=id).update(product_off=val)
-    products = Product.objects.all().order_by('-product_off')
-    brands = Brand.objects.all().order_by('-category_off')
+def br_add(request):
+    name = request.POST.get('name')
+    offer = request.POST.get('offer')
+    Brand.objects.create(name=name,category_off=offer)
+    return redirect('brands')
+
+def brands(request):
+    products = Product.objects.all()
+    brands = Brand.objects.all().order_by('id')
     for brand in brands:
         brand.items = products.filter(brand=brand).count()
-    print(type,id,val)
+    return render(request, 'admins/brand.html',{'brands':brands})
+
+def offers(request):
+    if request.method == "POST":
+        type = request.POST.get('type')
+        id = request.POST.get('typeId')
+        val = request.POST.get('val')
+        if type == "brand":
+            Brand.objects.filter(id=id).update(category_off=val)
+        elif type == "product":
+            Product.objects.filter(id=id).update(product_off=val)
+    # products = Product.objects.all().order_by('-product_off')
+    # brands = Brand.objects.all().order_by('-category_off')
+    # for brand in brands:
+    #     brand.items = products.filter(brand=brand).count()
     return redirect('coupens')
 
 
@@ -307,9 +326,7 @@ def exel(request):
         ws.write(row_num,col_num,columns[col_num],font_style)
     font_style = xlwt.XFStyle()
     rows =  Order.objects.filter(order_status=True).values_list('id','date_order','payment_method','total')
-    print(rows)
     for row in rows:
-        print(row)
         row_num += 1
         for col_num in range(len(row)):
             ws.write(row_num,col_num,str(row[col_num]),font_style)
@@ -324,7 +341,6 @@ def exportCsv(request):
     writer.writerow(['Order Id','Date','Payment Method','Items','Total Amount'])
     try:
         report_total = 0
-        print(order)
         for order in order:
             writer.writerow([order.id,order.date_order,order.payment_method,order.get_cart_items,order.get_cart_total])
             report_total = report_total + order.get_cart_total
@@ -333,3 +349,42 @@ def exportCsv(request):
         # messages.error(request,'Empty Order')
         pass
     return response
+
+def banner(request):
+    if request.method == 'POST':
+        form = BannerForm(request.POST, request.FILES)
+        if form.is_valid:
+            form.save()
+    form = BannerForm()
+    banner = Banner.objects.all()
+    return render(request, 'admins/banner.html',{'form':form, 'banners':banner})
+
+def searchCoustumor(request):
+    value = request.GET.get('value')
+    users = User.objects.filter(Q(name__icontains = value))
+    t = render_to_string('admins/search-coustumor.html',{'users': users})
+    return JsonResponse({'data':t})
+
+def coupenManage(request):
+    coupens = Coupen.objects.all()
+    return render(request, 'admins/coupons.html',{'coupons':coupens})
+
+def cpn_add(request):
+    if request.method == "POST":
+        name = request.POST['name']
+        offer = request.POST['offer']
+        stock = request.POST['stock']
+        Coupen.objects.create(name = name,price = offer, remaining = 0)
+    return redirect('coupen-manage')
+
+def cpn_edit(request):
+    if request.method == "POST":
+        id = request.POST.get('typeId')
+        val = request.POST.get('val')
+        Coupen.objects.filter(id = id).update(price=val)
+    return redirect('coupen-manage')
+
+
+def cpn_dlt(request,id):
+    Coupen.objects.filter(id=id).delete()
+    return redirect('coupen-manage')

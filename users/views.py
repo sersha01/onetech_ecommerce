@@ -1,5 +1,5 @@
 from http.client import responses
-from django.db.models import Q
+from django.db.models import Q,Min,Max
 from tkinter import S
 from pconst import const
 import json
@@ -11,7 +11,7 @@ from twilio.rest import Client
 from django.shortcuts import redirect, render
 from admins.models import *
 from django.contrib.auth import logout, login, authenticate
-from admins.views import product
+from admins.views import offers, product
 from .models import Address, User
 from .forms import AddressForm, UserForm
 from .utils import *
@@ -23,13 +23,14 @@ def home(request):
     check = False
     products = Product.objects.all().order_by('?')
     brands = Brand.objects.all()
+    wishList = []
     if request.user.is_authenticated:
         try:
             cart = json.loads(request.COOKIES['cart'])
         except:
             cart ={}
+        user = request.user
         if bool(cart):
-            user = request.user
             order , created = Order.objects.get_or_create(user=user,order_status=False,buy_now=False)
             for i in cart:
                 product = Product.objects.get(id=i)
@@ -40,7 +41,11 @@ def home(request):
                 quantity = int(item.quantity) + cart[i]['quantity']
                 OrderItem.objects.filter(product=product, order=order).update(quantity=quantity)
             check = True
-    return render(request, 'users/blog.html', {'products':products,'check':check,'brands':brands})
+        wishList = [item.product.id for item in WishList.objects.filter(user=user)]
+    minPrice = Product.objects.aggregate(Min('price'))
+    maxPrice = Product.objects.aggregate(Max('price'))
+    return render(request, 'users/blog.html', {'products':products,'check':check,'brands':brands,'minPrice':minPrice['price__min'],
+    'maxPrice':maxPrice['price__max'], 'wishList':wishList})
 
 @never_cache
 def sign_up(request, **kwargs):
@@ -297,23 +302,36 @@ def remove(request):
 def checkout(request):
     if request.user.is_authenticated:
         user = request.user
-        coupens = user.signupcoupon_set.filter(available = False, proceed=False)
-        for coupen in coupens:
+        signupCoupens = user.signupcoupon_set.filter(available = False, proceed=False)
+        for coupen in signupCoupens:
             SignupCoupon.objects.filter(id=coupen.id).update(available = True)
         order = Order.objects.get(user=user,order_status=False,buy_now=False)
         items = order.orderitem_set.all()
         address = Address.objects.filter(user=user)
-        coupens = user.signupcoupon_set.filter(available = True)
-        return render(request, 'users/checkout.html', {'order':order,'items':items,'address':address,'coupens':coupens})
+        signupCoupens = user.signupcoupon_set.filter(available = True)
+        coupens = Coupen.objects.filter(remaining__gt=0)
+        return render(request, 'users/checkout.html', {'order':order,'items':items,'address':address,'coupens':coupens, 'signupCoupens':signupCoupens})
     else:
         return redirect('email_login')
+
+def wishItems(request):
+    wishList = []
+    order = {}
+    if request.user.is_authenticated:
+        user = request.user
+        wishList = [item.product for item in WishList.objects.filter(user=user)]
+        order = Order.objects.get(user=user,order_status=False,buy_now=False)
+    count = len(wishList)
+    return render(request, 'users/wish-list.html', {'products':wishList,'order':order,'count':count})
+
 
 @never_cache
 def proceed(request):
     if request.method == 'POST':
         payment = request.POST.get('payment')
         address_id = request.POST.get('address')
-        coupen_id = request.POST.get('coupen') #
+        coupen_type = request.POST.get('coupen')[:4]
+        coupen_id = request.POST.get('coupen')[4:]
         status = True if str(payment) != 'COD' else False
         address = Address.objects.get(id=address_id)
         user = request.user
@@ -333,10 +351,22 @@ def proceed(request):
         if quantity_status is True:
             if order.buy_now == True:
                 Order.objects.filter(user=user,order_status=False,buy_now=True).update(order_status=True, address=address, payment=status, payment_method=payment, total=order.get_cart_total)
-                SignupCoupon.objects.filter(id=coupen_id).update(proceed=True) #
+                if coupen_type == 'scpn':
+                    SignupCoupon.objects.filter(id=coupen_id).update(proceed=True) #
+                elif coupen_type == 'cupn':
+                    coupen = Coupen.objects.filter(id=coupen_id)
+                    print(coupen)
+                    getCoupen = coupen.get(id=coupen_id)
+                    coupen.update(remaining=int(getCoupen.remaining)-1) #
             else:
                 Order.objects.filter(user=user,order_status=False,buy_now=False).update(order_status=True, address=address, payment=status, payment_method=payment, total=order.get_cart_total)
-                SignupCoupon.objects.filter(id=coupen_id).update(proceed=True) #
+                if coupen_type == 'scpn':
+                    SignupCoupon.objects.filter(id=coupen_id).update(proceed=True) #
+                elif coupen_type == 'cupn':
+                    coupen = Coupen.objects.filter(id=coupen_id)
+                    print(coupen)
+                    getCoupen = coupen.get(id=coupen_id)
+                    coupen.update(remaining=int(getCoupen.remaining)-1) #
             for item in items :
                 ordered = item.quantity
                 prestocks = item.product.stock
@@ -358,24 +388,31 @@ def cancel(request,id):
 
 def coupen(request):
     if request.method == "POST":
-        coupenId = request.POST.get('coupenId')
+        coupenId = request.POST.get('coupenId')[4:]
+        coupenType = request.POST.get('coupenId')[:4]
         orderId = request.POST.get('orderId')
         action = request.POST.get('action')
-        coupen = SignupCoupon.objects.get(id=coupenId)
+        if coupenType == 'scpn':
+            coupen = SignupCoupon.objects.get(id=coupenId)
+        elif coupenType == 'cupn':
+            coupen = Coupen.objects.get(id=coupenId)
         if action == 'apply':
             Order.objects.filter(id=orderId).update(coupen=int(coupen.price[:-1]))
-            coupen = SignupCoupon.objects.filter(id=coupenId)
-            coupen.update(available = False)
+            if coupenType == 'scpn':
+                coupen = SignupCoupon.objects.filter(id=coupenId)
+                coupen.update(available = False)
         else:
             Order.objects.filter(id=orderId).update(coupen=None)
-            coupen = SignupCoupon.objects.filter(id=coupenId)
-            coupen.update(available = True)
+            if coupenType == 'scpn':
+                coupen = SignupCoupon.objects.filter(id=coupenId)
+                coupen.update(available = True)
         order = Order.objects.get(id=orderId)
         return JsonResponse({'total':order.get_cart_total})
 
 
 def filter_shop_products(request):
-    print('hy')
+    minPrice = request.GET.get('range[minVal]')
+    maxPrice = request.GET.get('range[maxVal]')
     brands=request.GET.getlist('brand[]')
     rams = request.GET.getlist('ram[]')
     roms = request.GET.getlist('rom[]')
@@ -386,12 +423,46 @@ def filter_shop_products(request):
         allProducts = allProducts.filter(ram__in=rams).distinct()
     if len(roms)>0:
         allProducts = allProducts.filter(storage__in=roms).distinct()
-    
-    t = render_to_string('users/filtered_product.html',{'products':allProducts})
-    print('ya')
+    allProducts = allProducts.filter(Q(price__gt=minPrice, price__lt=maxPrice)).distinct()
+    wishList = []
+    if request.user.is_authenticated:
+        user = request.user
+        wishList = [item.product.id for item in WishList.objects.filter(user=user)]
+
+    t = render_to_string('users/filtered_product.html',{'products':allProducts,'wishList':wishList})
     
     return JsonResponse({'data': t})
 
+def dlt_address(request):
+    add_id = request.GET.get('add_id')
+    Address.objects.filter(id=add_id).delete()
+    return JsonResponse({'id':add_id})
+
+def edit_address(request,add_id):
+    address = Address.objects.get(id=add_id)
+    form = AddressForm(instance=address)
+    if request.method == 'POST':
+        form = AddressForm(request.POST,instance=address)
+        if form.is_valid():
+            address = form.save(commit=False)
+            address.user = request.user
+            address.save()
+            return redirect("profile")
+    return render(request, 'users/edit_address.html', {'form':form,'id':add_id})
+
+def homeBanner(request):
+    banner = Banner.objects.all()
+    products = Product.objects.all()
+    orders = Order.objects.filter(order_status=True)
+    arrivals = products.order_by('-date')[:4]
+    sellingCound = OrderItem.objects.values('product').annotate(
+        products_count=models.Count("product")
+        ).filter(product__id__in=products, order__id__in=orders).order_by('-products_count')[:4]
+    sellinglist = []
+    for item in sellingCound:
+        sellinglist.append(item['product'])
+    selling = products.filter(id__in=sellinglist)
+    return render(request, 'users/home.html', {'banners':banner, 'arrivals':arrivals, 'selling':selling})
 
 # def removeCoupen(request):
 #     if request.method == "POST":
@@ -406,16 +477,18 @@ def filter_shop_products(request):
 def buyNow(request,id):
     if request.user.is_authenticated:
         user = request.user
-        coupens = user.signupcoupon_set.filter(available = False, proceed=False)
-        for coupen in coupens:
+        signupCoupens = user.signupcoupon_set.filter(available = False, proceed=False)
+        for coupen in signupCoupens:
             SignupCoupon.objects.filter(id=coupen.id).update(available = True)
         Order.objects.filter(user=user,order_status=False,buy_now=True).delete()
         order  = Order.objects.create(user=user,order_status=False,buy_now=True)
         product = Product.objects.get(id=id)
         OrderItem.objects.create(order=order,product=product)
         address = Address.objects.filter(user=user)
-        coupens = user.signupcoupon_set.filter(available = True)
-        return render(request, 'users/checkout.html', {'order':order,'product':product,'address':address,'coupens':coupens})
+        signupCoupens = user.signupcoupon_set.filter(available = True)
+        coupens = Coupen.objects.filter(remaining__gt=0)
+        return render(request, 'users/checkout.html', {'order':order,'product':product,'address':address,
+        'coupens':coupens, 'signupCoupens':signupCoupens})
     else:
         return redirect('email_login') 
 # @never_cache
@@ -505,3 +578,20 @@ def texting(request):
             print('valid')
             form.save()
     return render(request, 'users/sign_up.html')
+
+def wishList(request):
+    productId = request.GET.get('product_id')
+    product = Product.objects.get(id=productId)
+    user = request.user
+    products = WishList.objects.filter(user=user,product=product)
+    wishList = [item.product for item in WishList.objects.filter(user=user)]
+    print(len(wishList))
+    if len(products) == 0 :
+        WishList.objects.create(user=user,product=product)
+        action = 'add'
+        count = int(len(wishList)) + 1
+    else:
+        products.delete()
+        action = 'remove'
+        count = int(len(wishList)) - 1
+    return JsonResponse({'id':productId,'action':action,'count':count})

@@ -154,11 +154,13 @@
               </div>
               <div class="col-12">
               <div class="col-12 d-flex border-2 border border-dark mt-2 py-1" id="coupen_status">
-                {% if coupens %}
+                {% if signupCoupens or coupens %}
                 <p class="col-12 d-none p-0 m-0 text-success" id="applied">Coupen Applied</p>
                 <select name="coupen" class="border-0 w-100 mx-0 text-decoration-none text-center text-dark" id="coupen">
-                  <option value="">Available Coupens</option>{% for coupen in coupens %} 
-                  <option value="{{ coupen.id }}">{{ coupen.price }}off coupen</option> {% endfor %}</select>
+                  <option value="">Available Coupens</option>
+                  {% for coupen in signupCoupens %} <option value="scpn{{ coupen.id }}">{{ coupen.price }}off coupen</option> {% endfor %}
+                  {% for coupen in coupens %} <option value="cupn{{ coupen.id }}">{{ coupen.price }}off coupen</option> {% endfor %}
+                </select>
                   {% else %}
                   <p class="col-12 p-0 m-0 text-dark" id="applied">No Coupens</p>
                   {% endif %}
@@ -204,8 +206,9 @@
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 <script>
+  function pay_valu(cash){
   // Render the PayPal button into #paypal-button-container
-  var rs_in = parseFloat('{{ order.get_cart_total }}')
+  var rs_in = parseFloat(cash)
   var total_usd = rs_in / 75
   paypal
     .Buttons({
@@ -242,6 +245,9 @@
       },
     })
     .render("#paypal-button-container");
+  }
+  pay_valu('{{ order.get_cart_total }}')
+  
 </script>
 
 <script>
@@ -348,13 +354,13 @@
           csrfmiddlewaretoken: '{{ csrf_token }}'
         },
         success: function(response){
+          $('#paypal-button-container').empty()
+          pay_valu(response.total)
           $('#cart_total').html(response.total)
           $('#apply').toggleClass('d-none')
           $('#remove').toggleClass('d-none')
           $('#applied').toggleClass('d-none')
           $('#coupen').toggleClass('d-none')
-          alert(response.total)
-          // location.reload()
         }
       })
     }

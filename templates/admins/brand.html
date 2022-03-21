@@ -140,56 +140,10 @@
     <!-- sa-app__body -->
     <div id="top" class="sa-app__body px-2 px-lg-4">
         <div class="container pb-6" id="items">
-            <div class="py-5">
-                <div class="row g-4 align-items-center">
-                    <div class="col">
-                        <h1 class="h3 m-0">Coupenes and Offers</h1>
-                    </div>
-                </div>
-            </div>
-            <!-- <style>
-                /* Hide scrollbar for Chrome, Safari and Opera */
-                body::-webkit-scrollbar {
-                    display: none;
-                }
-                
-                /* Hide scrollbar for IE, Edge and Firefox */
-                .example {
-                  -ms-overflow-style: none;  /* IE and Edge */
-                  scrollbar-width: none;  /* Firefox */
-                }
-            </style> -->
-            <div class="row">
-
-                <div class="col-md-6 p-3 example border">
+            <div class="row justify-content-center">
+                <div class="col-md-6 p-3 border">
                     <div class="text-center">
-                        <h3>Coupon</h3>
-                    </div>
-                    <div class="d-flex my-2 align-items-center border shadow py-3 mb-3">
-                        <div class="col-2"><strong>ID</strong></div>
-                        <div class="col-3"><strong>Name</strong></div>
-                        <div class="col-2"><strong>Remaining</strong></div>
-                        <div class="col-2"><strong>Offer</strong></div>
-                        <div class="col-3 d-flex justify-content-center bg-light p-2"></div>
-                    </div>
-                    {% for coupon in coupons %}
-                    <div class="d-flex my-2 align-items-center shadow-sm">
-                        <div class="col-2">#00{{ coupon.id }}</div>
-                        <div class="col-3">{{ coupon.name }}</div>
-                        <div class="col-2">{{ coupon.remaining }}</div>
-                        <div class="col-2">{{ coupon.price }}</div>
-                        <div class="col-3 d-flex justify-content-center">
-                            <button class="cpn_btn btn btn-primary w-75" data-val="{{ coupon.price }}" data-name="{{ coupon.name }}"
-                             id="{{ coupon.id }}">Edit</button>
-                        </div>
-                    </div>
-                    {% endfor %}
-                </div>
-
-
-                <div class="col-md-6 p-3 example border">
-                    <div class="text-center">
-                        <h3>Category Offers</h3>
+                        <h3>Brand Offers</h3>
                     </div>
                     <div class="d-flex my-2 align-items-center border shadow py-3 mb-3">
                         <div class="col-2"><strong>ID</strong></div>
@@ -205,129 +159,38 @@
                         <div class="col-2">{{ brand.items }}</div>
                         <div class="col-2">{{ brand.category_off }}</div>
                         <div class="col-3 d-flex justify-content-center">
-                            <button class="br_btn btn btn-primary w-75" data-val="{{ brand.category_off }}" data-name="{{ brand.name }}" 
-                            id="{{ brand.id }}">Edit</button>
+                            <a href="{% url 'br_dlt' brand.id %}" class="btn btn-danger w-75">Delete</a>
                         </div>
                     </div>
                     {% endfor %}
+                    <div class="d-flex my-2 shadow my-3">
+                        <div class="offset-2 col-8 btn btn-primary" id="btn-for-form">Add New Brand</div>
+                    </div>
                 </div>
-
-
-                <div class="col-md-6 p-3 vh-100 overflow-auto example border">
-                    <div class="text-center">
-                        <h3>Product Offers</h3>
-                    </div>
-                    <div class="d-flex my-3 align-items-center border shadow py-3 mb-3">
-                        <div class="col-1"><strong>ID</strong></div>
-                        <div class="col-2 d-flex justify-content-center"><strong>Product</strong></div>
-                        <div class="col-3"><strong>Name</strong></div>
-                        <div class="col-2"><strong>Ram & Storage</strong></div>
-                        <div class="col-2"><strong>Product Off</strong></div>
-                        <div class="col-2 d-flex justify-content-center"></div>
-                    </div>
-                    {% for product in products %}
-                    <div class="d-flex my-3 align-items-center shadow-sm">
-                        <div class="col-1">#00{{ product.id }}</div>
-                        <div class="col-2 d-flex justify-content-center"><img src="{{ product.image1Url }}" alt=""
-                                class="w-25"></div>
-                        <div class="col-3">{{ product.name }}</div>
-                        <div class="col-2">{{ product.ram }} | {{ product.storage }}</div>
-                        <div class="col-2">{{ product.product_off }}</div>
-                        <div class="col-2 d-flex justify-content-center">
-                            <button class="pro_btn btn btn-primary w-75" data-val="{{ product.product_off }}" data-name="{{ product.name }}"
-                             id="{{ product.id }}">Edit</button>
+                <div class="col-md-6 d-flex align-items-center d-none" id="form">
+                    <form action="{% url 'br_add' %}" method="post" class="card col-12 px-3">
+                        {% csrf_token %}
+                        <input class="form-control my-3" type="text" name="name" placeholder="New Brand Name" required>
+                        <div class="d-flex justify-content-around my-3">
+                            <div class="col-md-5"><input type="number" value="0" class="form-control" name="offer"></div>
+                            <input type="submit" class="col-md-5 btn btn-primary" id="submit-btn">
                         </div>
-                    </div>
-                    {% endfor %}
+                    </form>
                 </div>
             </div>
-        </div>
-        <div class="container pb-6" id="forms">
-        <div class="row d-flex justify-content-cente align-items-center vh-100 pb-5">
-            <div class="offset-3 col-md-6 p-5 bg-white form card shadow">
-                <form action="" method="post" class="row">
-                    {% csrf_token %}
-                    <div class="col-md-3" id="this_id"></div>
-                    <div class="col-md-4" id="this_name"></div>
-                    <input type="number" class="col-md-5" id="this_input">
-                    <div class="col-md-6 px-2 d-flex justify-content-center my-3"><button class="btn btn-primary w-75" id="back">Back</button></div>
-                    <div class="col-md-6 px-2 d-flex justify-content-center my-3"><button class="btn btn-primary w-75" id="this_btn">Save</button></div>
-                </form>
-            </div>
-        </div>
         </div>
     </div>
 </div>
 
 <script>
     $(document).ready(function(){
-        $('#forms').hide()
-        $('.br_btn').click(function(){
-            var id_s = $(this).attr('id')
-            var name = $(this).data('name')
-            var val = $(this).data('val')
-            $('#this_id').html(id_s)
-            $('#this_name').html(name)
-            $('#this_input').val(val)
-            $('#this_btn').attr('data-type','brand')
-            $('#this_btn').attr('data-val',id_s)
-            $('#items').hide()
-            $('#forms').show()
-            
+        $('#btn-for-form').click(function(){
+            $('#form').removeClass('d-none')
+            $('#btn-for-form').hide()
         })
-        $('.cpn_btn').click(function(){
-            var id_s = $(this).attr('id')
-            var name = $(this).data('name')
-            var val = $(this).data('val').replace('%','')
-            $('#this_id').html(id_s)
-            $('#this_name').html(name)
-            $('#this_input').val(val) 
-            $('#this_btn').attr('data-type','coupon')
-            $('#this_btn').attr('data-val',id_s)
-            $('#items').hide()
-            $('#forms').show()
-            
-        })
-        $('.pro_btn').click(function(){
-            var id_s = $(this).attr('id')
-            var name = $(this).data('name')
-            var val = $(this).data('val')
-            $('#this_id').html(id_s)
-            $('#this_name').html(name)
-            $('#this_input').val(val)
-            $('#this_btn').attr('data-type','product')
-            $('#this_btn').attr('data-val',id_s)
-            $('#items').hide()
-            $('#forms').show()
-        })
-        $('#this_btn').click(function(){
-            var type = $(this).data('type')
-            var typeId = $(this).data('val')
-            var val = $('#this_input').val()
-            if (type == 'coupon'){
-                url = "{% url 'cpn_edit' %}"
-            }else{
-                url = "{% url 'offers' %}"
-            }
-            $.ajax({
-                method:"POST",
-                url: url,
-                data:{
-                    type:type,
-                    typeId:typeId,
-                    val:val,
-                    csrfmiddlewaretoken: '{{ csrf_token }}'
-                },
-                success: function(){
-                    location.reload()
-                    // $('#forms').hide()
-                    // $('#items').show()
-                }
-            })
-        })
-        $('#back').click(function(){
-            $('#forms').hide()
-            $('#items').show()
+        $('#submit-btn').click(function(){
+            $('#form').addClass('d-none')
+            $('#btn-for-form').show()
         })
     })
 </script>

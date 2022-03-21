@@ -408,12 +408,12 @@
                     <th class="w-min" data-orderable="false"></th>
                   </tr>
                 </thead>
+                <style>
+                  .sa-symbol img {
+                    width: 50% !important;
+                  }
+                </style>
                 <tbody>
-                  <style>
-                    .sa-symbol img {
-                      width: 50% !important;
-                    }
-                  </style>
                   <!-- start loop -->
                   {% for product in products %}
                   <tr>
@@ -2169,4 +2169,6 @@
     <!-- sa-app__footer / end -->
   </div>
   <div class="sa-app__toasts toast-container bottom-0 end-0"></div>
+
+
 {% endblock %}

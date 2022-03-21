@@ -9,7 +9,7 @@
             {% if order.status == 'New' or order.status == 'Pending' %}
             <div class="col-2 p-0"><a href="{% url 'cancel' order.id %}" class="btn btn-info w-100">Cancel order</a></div>
             {% elif order.status == 'Delivered' %}
-            <div class="col-2 p-0"><a href="{% url 'order_return' order.id %}" class="btn btn-warning w-100">Return</a></div>
+            <div class="col-2 p-0"><a href="{% url 'order_return' order.id %}" onclick="return confirmReturn(this,event)" class="btn btn-warning w-100" id="return">Return</a></div>
             {% elif order.status == 'Shipped' %}
             <div class="col-2 h-50 btn w-100" style="background-color: #e0a800;">Return</div>
             {% elif  order.status == 'Return' %}
@@ -20,3 +20,26 @@
     <div class="col-12"><hr class="py-0 my-0"></div>
     {% endfor %}
 </div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    function confirmReturn(url,e){
+        e.preventDefault()
+        alert('hy')
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "Do you return this order",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Return'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href= url.href
+            } else {
+                Swal.fire('your order is not returned')
+            }
+        })
+    }
+</script>

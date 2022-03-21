@@ -1,0 +1,103 @@
+{% extends 'users/base.html' %}
+{% load static %}
+{% block index %}
+
+<div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
+    <div class="carousel-inner">
+        <!-- <div class="carousel-item active">
+            <img class="d-block w-100" src="https://i.pinimg.com/564x/a5/4a/2a/a54a2a4e19b041b6a7d4023322ad7fbe.jpg"
+                alt="First slide">
+        </div>
+        <div class="carousel-item">
+            <img class="d-block w-100" src="https://i.pinimg.com/564x/a5/4a/2a/a54a2a4e19b041b6a7d4023322ad7fbe.jpg"
+                alt="Second slide">
+        </div>
+        <div class="carousel-item">
+            <img class="d-block w-100" src="https://i.pinimg.com/564x/a5/4a/2a/a54a2a4e19b041b6a7d4023322ad7fbe.jpg"
+                alt="Third slide">
+        </div> -->
+        {% for banner in banners %}
+        <div class="carousel-item" id="carousel">
+            <img class="d-block w-100" src="{{ banner.image.url }}" alt="">
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+
+<div class="container mt-3">
+    <h2>New Arrivals</h2>
+    <div class="row justify-content-between">
+        {% for product in arrivals %}
+        <div class="card col-sm-6 col-lg-3">
+            <div class="text-center m-3">
+                <a href="{% url 'single_product' product.id %}" style="text-decoration: none;">
+                    <center class="max-ht-500 mt-3 d-flex align-items-center justify-content-center"><img
+                            src="{{product.images1.url}}" alt="" class="card-img-top img"></center>
+                </a>
+                <a href="{% url 'single_product' product.id %}" style="text-decoration: none;">
+                    <h5 class="card-title">{{product.name}}</h5>
+                </a>
+                <a href="{% url 'single_product' product.id %}" style="text-decoration: none;">
+                    <p class="card-text">{{product.ram}} | {{product.storage}}</p>
+                </a>
+                <a href="{% url 'single_product' product.id %}" style="text-decoration: none;" class="d-flex justify-content-around">
+                    {% if product.price == product.last_price %}
+                    <h5>₹ {{ product.price }}</h5>
+                    {% else %}
+                    <h5>₹ {{ product.last_price }}</h5> <strike><p>₹ {{ product.price }}</p></strike> <p class="text-success">
+                        {{ product.offer }}% off</p>
+                    {% endif %}
+                </a>
+                <div class="d-flex justify-content-around pb-3"><button class="btn btn-info px-4 add_cart"
+                        data-id="{{ product.id }}"><i class="fas fa-shopping-cart"></i> Cart</button>
+                        <a href="{% url 'buyNow' product.id %}">
+                        <button class="btn btn-info "><i class="fa-solid fa-bolt"></i> Buy Now</button></a></div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+
+<div class="container mt-3">
+    <h2>Best Selling</h2>
+    <div class="row">
+        {% for product in selling %}
+        <div class="card col-sm-6 col-lg-3">
+            <div class="text-center m-3">
+                <a href="{% url 'single_product' product.id %}" style="text-decoration: none;">
+                    <center class="max-ht-500 mt-3 d-flex align-items-center justify-content-center"><img
+                            src="{{product.images1.url}}" alt="" class="card-img-top img"></center>
+                </a>
+                <a href="{% url 'single_product' product.id %}" style="text-decoration: none;">
+                    <h5 class="card-title">{{product.name}}</h5>
+                </a>
+                <a href="{% url 'single_product' product.id %}" style="text-decoration: none;">
+                    <p class="card-text">{{product.ram}} | {{product.storage}}</p>
+                </a>
+                <a href="{% url 'single_product' product.id %}" style="text-decoration: none;" class="d-flex justify-content-around">
+                    {% if product.price == product.last_price %}
+                    <h5>₹ {{ product.price }}</h5>
+                    {% else %}
+                    <h5>₹ {{ product.last_price }}</h5> <strike><p>₹ {{ product.price }}</p></strike> <p class="text-success">
+                        {{ product.offer }}% off</p>
+                    {% endif %}
+                </a>
+                <div class="d-flex justify-content-around pb-3"><button class="btn btn-info px-4 add_cart"
+                        data-id="{{ product.id }}"><i class="fas fa-shopping-cart"></i> Cart</button>
+                        <a href="{% url 'buyNow' product.id %}">
+                        <button class="btn btn-info "><i class="fa-solid fa-bolt"></i> Buy Now</button></a></div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<script>
+    $(document).ready(function(){
+        $('#carousel').addClass('active')
+    })
+</script>
+
+{% endblock %}

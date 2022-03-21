@@ -457,12 +457,11 @@
     }
   });
 </script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
   $(document).ready(function () {
-    $('<center><img src="" id="image1" style="width:300px;"></center>').insertAfter("input[type=file][id=id_images1]")
-    $('<center><img src="" id="image2" style="width:300px;"></center>').insertAfter("input[type=file][id=id_images2]")
-    $('<center><img src="" id="image3" style="width:300px;"></center>').insertAfter("input[type=file][id=id_images3]")
+    $('<center><img src="" id="image1" style="max-width:300px;"></center>').insertAfter("input[type=file][id=id_images1]")
+    $('<center><img src="" id="image2" style="max-width:300px;"></center>').insertAfter("input[type=file][id=id_images2]")
+    $('<center><img src="" id="image3" style="max-width:300px;"></center>').insertAfter("input[type=file][id=id_images3]")
   })
 </script>
 {% endblock %}
