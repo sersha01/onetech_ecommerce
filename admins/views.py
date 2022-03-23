@@ -1,4 +1,4 @@
-from ast import Or
+
 from django.db.models import Q
 from base64 import encode
 from cProfile import label

@@ -1,9 +1,7 @@
 from http.client import responses
 from django.db.models import Q,Min,Max
-from tkinter import S
 from pconst import const
 import json
-from re import T
 from django.views.decorators.cache import never_cache
 from decouple import config
 from django.http import JsonResponse
@@ -585,7 +583,6 @@ def wishList(request):
     user = request.user
     products = WishList.objects.filter(user=user,product=product)
     wishList = [item.product for item in WishList.objects.filter(user=user)]
-    print(len(wishList))
     if len(products) == 0 :
         WishList.objects.create(user=user,product=product)
         action = 'add'

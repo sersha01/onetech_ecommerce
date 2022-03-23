@@ -1,4 +1,3 @@
-from asyncio.windows_events import NULL
 from django.db import models
 from numpy import product
 from users.models import Address, User
