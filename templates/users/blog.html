@@ -330,6 +330,7 @@
 				dataType:'json',
 				success:function(res){
 					$("#filteredProducts").html(res.data);
+					console.log(res.product)
 				}
 			});
 		});
