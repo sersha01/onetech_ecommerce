@@ -1,13 +1,8 @@
 
 from django.db.models import Q
-from base64 import encode
-from cProfile import label
 from datetime import datetime, timedelta
-from tracemalloc import start
-from urllib import response
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import redirect, render
-from numpy import array
 from users.models import User
 from .models import *
 from .forms import BannerForm, ProductForm

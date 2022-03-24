@@ -9,7 +9,6 @@ from twilio.rest import Client
 from django.shortcuts import redirect, render
 from admins.models import *
 from django.contrib.auth import logout, login, authenticate
-from admins.views import offers, product
 from .models import Address, User
 from .forms import AddressForm, UserForm
 from .utils import *
@@ -314,11 +313,13 @@ def checkout(request):
 
 def wishItems(request):
     wishList = []
-    order = {}
     if request.user.is_authenticated:
         user = request.user
         wishList = [item.product for item in WishList.objects.filter(user=user)]
-        order = Order.objects.get(user=user,order_status=False,buy_now=False)
+        try:
+            order = Order.objects.get(user=user,order_status=False,buy_now=False)
+        except:
+            order = {}
     count = len(wishList)
     return render(request, 'users/wish-list.html', {'products':wishList,'order':order,'count':count})
 
@@ -353,7 +354,6 @@ def proceed(request):
                     SignupCoupon.objects.filter(id=coupen_id).update(proceed=True) #
                 elif coupen_type == 'cupn':
                     coupen = Coupen.objects.filter(id=coupen_id)
-                    print(coupen)
                     getCoupen = coupen.get(id=coupen_id)
                     coupen.update(remaining=int(getCoupen.remaining)-1) #
             else:
@@ -428,8 +428,27 @@ def filter_shop_products(request):
         wishList = [item.product.id for item in WishList.objects.filter(user=user)]
 
     t = render_to_string('users/filtered_product.html',{'products':allProducts,'wishList':wishList})
-    
-    return JsonResponse({'data': t})
+    # arr = [{pro.id : pro} for pro in allProducts]
+    print(allProducts)
+    arr = [{pro.id:{
+        'name':pro.name,
+        'price':pro.price,
+        'images1':pro.images1.url,
+        'images2':pro.images2.url,
+        'images3':pro.images3.url,
+        'ram':pro.ram,
+        'storage':pro.storage,
+        'camara':pro.camara,
+        'battery':pro.battery,
+        'processor':pro.processor,
+        'display':pro.display,
+        'stock':pro.stock,
+        'brand':pro.brand.name,
+        'date':pro.date,
+        'product_off':pro.product_off,
+    }} for pro in allProducts]
+    print(arr[1])
+    return JsonResponse({'data': t, 'product':arr})
 
 def dlt_address(request):
     add_id = request.GET.get('add_id')
