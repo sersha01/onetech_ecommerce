@@ -313,13 +313,14 @@ def checkout(request):
 
 def wishItems(request):
     wishList = []
+    order = {}
     if request.user.is_authenticated:
         user = request.user
         wishList = [item.product for item in WishList.objects.filter(user=user)]
         try:
             order = Order.objects.get(user=user,order_status=False,buy_now=False)
         except:
-            order = {}
+            pass
     count = len(wishList)
     return render(request, 'users/wish-list.html', {'products':wishList,'order':order,'count':count})
 
@@ -415,6 +416,8 @@ def filter_shop_products(request):
     rams = request.GET.getlist('ram[]')
     roms = request.GET.getlist('rom[]')
     allProducts=Product.objects.all()
+    req = str(request.GET)
+    print('req ///',req)
     if len(brands)>0:
         allProducts = allProducts.filter(brand__id__in=brands).distinct()
     if len(rams)>0:
@@ -428,8 +431,7 @@ def filter_shop_products(request):
         wishList = [item.product.id for item in WishList.objects.filter(user=user)]
 
     t = render_to_string('users/filtered_product.html',{'products':allProducts,'wishList':wishList})
-    # arr = [{pro.id : pro} for pro in allProducts]
-    print(allProducts)
+    # print(allProducts)
     arr = [{pro.id:{
         'name':pro.name,
         'price':pro.price,
@@ -447,8 +449,9 @@ def filter_shop_products(request):
         'date':pro.date,
         'product_off':pro.product_off,
     }} for pro in allProducts]
-    print(arr[1])
-    return JsonResponse({'data': t, 'product':arr})
+    # print(t)
+    # print(arr)
+    return JsonResponse({'data': t, 'product':arr, 'req':req})
 
 def dlt_address(request):
     add_id = request.GET.get('add_id')

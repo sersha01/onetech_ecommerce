@@ -55,27 +55,6 @@
                         {{field}}
                     </div>
                     {% endfor %}
-                    <!-- <div class="mb-3">
-                        <label class="form-label m-0">Full name</label>
-                        <input type="text" class="form-control form-control-lg py-1 rounded" id="name" required/>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label m-0">Phone</label>
-                        <input type="text" class="form-control form-control-lg py-1 rounded" id="phone" required minlength="10" maxlength="10"/>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label m-0">Email Address</label>
-                        <input type="email" class="form-control form-control-lg py-1 rounded" id="email" required/>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label m-0">Password</label>
-                        <input type="password" id="password" class="form-control form-control-lg py-1 rounded" itemid="password" required minlength="6"/>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label m-0">Confirm Password</label>
-                        <input type="password" id="confirm_password" class="form-control form-control-lg py-1 rounded" required/>
-                        <span id='message'></span>
-                    </div> -->
                     <span id='message'></span>
                     <div>
                         <button type="button" class="btn btn-primary btn-lg w-100 mt-4 rounded text-white" id="button">
@@ -142,27 +121,27 @@
                     if ($('#name').val().length > 2) {
                         var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/
                         if (regex.test($('#email').val())) {
-                            if ($('#phone').val().length == 10){
-                            if (/^[a-zA-Z0-9- ]*$/.test(str) == false) {
-                                if ($('#password').val().trim().split('').length > 7) {
-                                    if ($('#password').val() == $('#confirm_password').val()) {
-                                        $.ajax({
-                                            method: "POST",
-                                            url: "{% url 'otp_l' %}",
-                                            data: {
-                                                number: $('#phone').val(),
-                                                csrfmiddlewaretoken: '{{ csrf_token }}'
-                                            },
-                                            success: function () {
-                                                $('#otp_label').html('OTP sent to your number +91' + $('#phone').val())
-                                                $('#sign_up').toggleClass('d-none')
-                                                $('#div_otp').toggleClass('d-none')
-                                            }
-                                        })
-                                    } else { $('#for_password').html('password not matching'), e.preventDefault() }
-                                } else { $('#for_password').html('Password must be 8 digit'), e.preventDefault() }
-                            } else { $('#for_password').html('Password must be contain a special charecter'), e.preventDefault() }
-                        } else { $('#for_phone').html('Numbeer must be 10 digit.'), e.preventDefault() }
+                            if ($('#phone').val().length == 10) {
+                                if (/^[a-zA-Z0-9- ]*$/.test(str) == false) {
+                                    if ($('#password').val().trim().split('').length > 7) {
+                                        if ($('#password').val() == $('#confirm_password').val()) {
+                                            $.ajax({
+                                                method: "POST",
+                                                url: "{% url 'otp_l' %}",
+                                                data: {
+                                                    number: $('#phone').val(),
+                                                    csrfmiddlewaretoken: '{{ csrf_token }}'
+                                                },
+                                                success: function () {
+                                                    $('#otp_label').html('OTP sent to your number +91' + $('#phone').val())
+                                                    $('#sign_up').toggleClass('d-none')
+                                                    $('#div_otp').toggleClass('d-none')
+                                                }
+                                            })
+                                        } else { $('#for_password').html('password not matching'), e.preventDefault() }
+                                    } else { $('#for_password').html('Password must be 8 digit'), e.preventDefault() }
+                                } else { $('#for_password').html('Password must be contain a special charecter'), e.preventDefault() }
+                            } else { $('#for_phone').html('Numbeer must be 10 digit.'), e.preventDefault() }
                         } else { $('#for_email').html('Please enter your email address.'), e.preventDefault() }
                     } else { $('#for_name').html('Name must be atleast 3 charecters.'), e.preventDefault() }
                 } else { $('#for_name').html('Remove space from first.'), e.preventDefault() }
