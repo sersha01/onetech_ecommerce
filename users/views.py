@@ -18,8 +18,6 @@ from django.template.loader import render_to_string
 @never_cache
 def home(request):
     check = False
-    products = Product.objects.all().order_by('?')
-    brands = Brand.objects.all()
     wishList = []
     if request.user.is_authenticated:
         try:
@@ -39,10 +37,31 @@ def home(request):
                 OrderItem.objects.filter(product=product, order=order).update(quantity=quantity)
             check = True
         wishList = [item.product.id for item in WishList.objects.filter(user=user)]
+    products = Product.objects.all().order_by('?')
+    sRams = []
+    sRoms = []
+    sBrands = []
+    if request.method == 'POST':
+        minPrice = request.POST.get('min-value')
+        maxPrice = request.POST.get('max-value')
+        brands=request.POST.getlist('brand')
+        rams = request.POST.getlist('ram')
+        roms = request.POST.getlist('rom')
+        if len(brands)>0:
+            products = products.filter(brand__id__in=brands).distinct()
+            sBrands = [int(brand) for brand in brands]
+        if len(rams)>0:
+            products = products.filter(ram__in=rams).distinct()
+            sRams = [int(ram[:-2]) for ram in rams]
+        if len(roms)>0:
+            products = products.filter(storage__in=roms).distinct()
+            sRoms = [int(rom[:-2]) for rom in roms]
+        products = products.filter(Q(price__gt=minPrice, price__lt=maxPrice)).distinct()
+    brands = Brand.objects.all()
     minPrice = Product.objects.aggregate(Min('price'))
     maxPrice = Product.objects.aggregate(Max('price'))
     return render(request, 'users/blog.html', {'products':products,'check':check,'brands':brands,'minPrice':minPrice['price__min'],
-    'maxPrice':maxPrice['price__max'], 'wishList':wishList})
+    'maxPrice':maxPrice['price__max'], 'wishList':wishList,'s_brands':sBrands,'s_rams':sRams,'s_roms':sRoms})
 
 @never_cache
 def sign_up(request, **kwargs):
@@ -416,8 +435,7 @@ def filter_shop_products(request):
     rams = request.GET.getlist('ram[]')
     roms = request.GET.getlist('rom[]')
     allProducts=Product.objects.all()
-    req = str(request.GET)
-    print('req ///',req)
+
     if len(brands)>0:
         allProducts = allProducts.filter(brand__id__in=brands).distinct()
     if len(rams)>0:
@@ -451,7 +469,7 @@ def filter_shop_products(request):
     }} for pro in allProducts]
     # print(t)
     # print(arr)
-    return JsonResponse({'data': t, 'product':arr, 'req':req})
+    return JsonResponse({'data': t, 'product':arr})
 
 def dlt_address(request):
     add_id = request.GET.get('add_id')
