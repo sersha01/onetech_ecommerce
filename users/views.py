@@ -12,7 +12,6 @@ from django.contrib.auth import logout, login, authenticate
 from .models import Address, User
 from .forms import AddressForm, UserForm
 from .utils import *
-# from django.template.loader import render_to_string
 
 
 @never_cache
@@ -460,49 +459,6 @@ def coupen(request):
         order = Order.objects.get(id=orderId)
         return JsonResponse({'total':order.get_cart_total})
 
-
-# def filter_shop_products(request):
-#     minPrice = request.GET.get('range[minVal]')
-#     maxPrice = request.GET.get('range[maxVal]')
-#     brands=request.GET.getlist('brand[]')
-#     rams = request.GET.getlist('ram[]')
-#     roms = request.GET.getlist('rom[]')
-#     allProducts=Product.objects.all()
-
-#     if len(brands)>0:
-#         allProducts = allProducts.filter(brand__id__in=brands).distinct()
-#     if len(rams)>0:
-#         allProducts = allProducts.filter(ram__in=rams).distinct()
-#     if len(roms)>0:
-#         allProducts = allProducts.filter(storage__in=roms).distinct()
-#     allProducts = allProducts.filter(Q(price__gt=minPrice, price__lt=maxPrice)).distinct()
-#     wishList = []
-#     if request.user.is_authenticated:
-#         user = request.user
-#         wishList = [item.product.id for item in WishList.objects.filter(user=user)]
-
-#     t = render_to_string('users/filtered_product.html',{'products':allProducts,'wishList':wishList})
-#     # print(allProducts)
-#     arr = [{pro.id:{
-#         'name':pro.name,
-#         'price':pro.price,
-#         'images1':pro.images1.url,
-#         'images2':pro.images2.url,
-#         'images3':pro.images3.url,
-#         'ram':pro.ram,
-#         'storage':pro.storage,
-#         'camara':pro.camara,
-#         'battery':pro.battery,
-#         'processor':pro.processor,
-#         'display':pro.display,
-#         'stock':pro.stock,
-#         'brand':pro.brand.name,
-#         'date':pro.date,
-#         'product_off':pro.product_off,
-#     }} for pro in allProducts]
-#     # print(t)
-#     # print(arr)
-#     return JsonResponse({'data': t, 'product':arr})
 
 def dlt_address(request):
     add_id = request.GET.get('add_id')

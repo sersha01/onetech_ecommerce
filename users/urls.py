@@ -27,7 +27,6 @@ urlpatterns = [
     path('rpay', views.rpay, name='rpay'),
     path('otp_l', views.otp_l, name='otp_l'),
     path('coupen', views.coupen, name='coupen'),
-    path('filter', views.filter_shop_products, name='filter'),
     path('buyNow/<str:id>/', views.buyNow, name='buyNow'),
     path('texting', views.texting, name='texting'),
     # path('remove_coupen', views.removeCoupen, name='remove_coupen'),
