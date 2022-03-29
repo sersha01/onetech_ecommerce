@@ -37,26 +37,39 @@ def home(request):
                 OrderItem.objects.filter(product=product, order=order).update(quantity=quantity)
             check = True
         wishList = [item.product.id for item in WishList.objects.filter(user=user)]
-    products = Product.objects.all().order_by('?')
     sRams = []
     sRoms = []
     sBrands = []
     if request.method == 'POST':
+        print(request.POST)
         minPrice = request.POST.get('min-value')
         maxPrice = request.POST.get('max-value')
         brands=request.POST.getlist('brand')
         rams = request.POST.getlist('ram')
         roms = request.POST.getlist('rom')
-        if len(brands)>0:
-            products = products.filter(brand__id__in=brands).distinct()
-            sBrands = [int(brand) for brand in brands]
-        if len(rams)>0:
-            products = products.filter(ram__in=rams).distinct()
-            sRams = [int(ram[:-2]) for ram in rams]
-        if len(roms)>0:
-            products = products.filter(storage__in=roms).distinct()
-            sRoms = [int(rom[:-2]) for rom in roms]
-        products = products.filter(Q(price__gt=minPrice, price__lt=maxPrice)).distinct()
+        sBrands = [int(brand) for brand in brands]
+        sRams = [int(ram[:-2]) for ram in rams]
+        sRoms = [int(rom[:-2]) for rom in roms]
+        if len(brands)>0 and len(rams)>0 and len(roms)>0:
+            products = Product.objects.filter(brand__id__in=brands, ram__in=rams,storage__in=roms)
+        elif len(brands)>0 and len(rams)>0:
+            products = Product.objects.filter(brand__id__in=brands, ram__in=rams)
+        elif len(brands)>0 and len(roms)>0:
+            products = Product.objects.filter(brand__id__in=brands, storage__in=roms)
+        elif len(rams)>0 and len(roms)>0:
+            products = Product.objects.filter(ram__in=rams,storage__in=roms)
+        elif len(brands)>0:
+            products = Product.objects.filter(brand__id__in=brands)
+        elif len(rams)>0:
+            products = Product.objects.filter(ram__in=rams)
+        elif len(roms)>0:
+            products = Product.objects.filter(storage__in=roms)
+        else:
+            products = Product.objects.all().order_by('?')
+            
+        # products = products.filter(Q(price__gt=minPrice, price__lt=maxPrice)).distinct()
+    else:
+        products = Product.objects.all().order_by('?')
     brands = Brand.objects.all()
     minPrice = Product.objects.aggregate(Min('price'))
     maxPrice = Product.objects.aggregate(Max('price'))
@@ -109,6 +122,7 @@ def sign_up(request, **kwargs):
                         login(request,user)
                         return redirect('home')
     return render(request, 'users/sign_up.html', {'form':form})
+
 
 @never_cache
 def email_login(request):
