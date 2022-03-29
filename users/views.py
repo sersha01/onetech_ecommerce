@@ -12,7 +12,7 @@ from django.contrib.auth import logout, login, authenticate
 from .models import Address, User
 from .forms import AddressForm, UserForm
 from .utils import *
-from django.template.loader import render_to_string
+# from django.template.loader import render_to_string
 
 
 @never_cache
@@ -37,42 +37,61 @@ def home(request):
                 OrderItem.objects.filter(product=product, order=order).update(quantity=quantity)
             check = True
         wishList = [item.product.id for item in WishList.objects.filter(user=user)]
+    minPrice = Product.objects.aggregate(Min('price'))
+    maxPrice = Product.objects.aggregate(Max('price'))
+    sMinPrice = minPrice['price__min']
+    sMaxPrice = maxPrice['price__max']
     sRams = []
     sRoms = []
     sBrands = []
     if request.method == 'POST':
-        print(request.POST)
-        minPrice = request.POST.get('min-value')
-        maxPrice = request.POST.get('max-value')
+        sMinPrice = int(request.POST.get('min-value'))
+        sMaxPrice = int(request.POST.get('max-value'))
         brands=request.POST.getlist('brand')
+
         rams = request.POST.getlist('ram')
         roms = request.POST.getlist('rom')
         sBrands = [int(brand) for brand in brands]
         sRams = [int(ram[:-2]) for ram in rams]
         sRoms = [int(rom[:-2]) for rom in roms]
+
+        brandQueries = [Q(brand__id=brand) for brand in brands]
+        ramQueries = [Q(ram=ram) for ram in rams]
+        romQueries = [Q(storage=rom) for rom in roms]
+
+        if len(brands)>0:
+            brandQuery = brandQueries.pop() 
+        if len(rams)>0:
+            ramQuery = ramQueries.pop() 
+        if len(roms)>0:
+            romQuery = romQueries.pop() 
+
+        for item in brandQueries:
+            brandQuery |= item
+        for item in ramQueries:
+            ramQuery |= item
+        for item in romQueries:
+            romQuery |= item
+
         if len(brands)>0 and len(rams)>0 and len(roms)>0:
-            products = Product.objects.filter(brand__id__in=brands, ram__in=rams,storage__in=roms)
+            products = Product.objects.filter(brandQuery & ramQuery & romQuery & Q(price__gt=sMinPrice, price__lt=sMaxPrice)).order_by('?')
         elif len(brands)>0 and len(rams)>0:
-            products = Product.objects.filter(brand__id__in=brands, ram__in=rams)
+            products = Product.objects.filter(brandQuery & ramQuery & Q(price__gt=sMinPrice, price__lt=sMaxPrice)).order_by('?')
         elif len(brands)>0 and len(roms)>0:
-            products = Product.objects.filter(brand__id__in=brands, storage__in=roms)
+            products = Product.objects.filter(brandQuery & romQuery & Q(price__gt=sMinPrice, price__lt=sMaxPrice)).order_by('?')
         elif len(rams)>0 and len(roms)>0:
-            products = Product.objects.filter(ram__in=rams,storage__in=roms)
+            products = Product.objects.filter(ramQuery & romQuery & Q(price__gt=sMinPrice, price__lt=sMaxPrice)).order_by('?')
         elif len(brands)>0:
-            products = Product.objects.filter(brand__id__in=brands)
+            products = Product.objects.filter(brandQuery & Q(price__gt=sMinPrice, price__lt=sMaxPrice)).order_by('?')
         elif len(rams)>0:
-            products = Product.objects.filter(ram__in=rams)
+            products = Product.objects.filter(ramQuery & Q(price__gt=sMinPrice, price__lt=sMaxPrice)).order_by('?')
         elif len(roms)>0:
-            products = Product.objects.filter(storage__in=roms)
+            products = Product.objects.filter(romQuery & Q(price__gt=sMinPrice, price__lt=sMaxPrice)).order_by('?')
         else:
-            products = Product.objects.all().order_by('?')
-            
-        # products = products.filter(Q(price__gt=minPrice, price__lt=maxPrice)).distinct()
+            products = Product.objects.filter(Q(price__gt=sMinPrice, price__lt=sMaxPrice)).order_by('?')
     else:
         products = Product.objects.all().order_by('?')
     brands = Brand.objects.all()
-    minPrice = Product.objects.aggregate(Min('price'))
-    maxPrice = Product.objects.aggregate(Max('price'))
     return render(request, 'users/blog.html', {'products':products,'check':check,'brands':brands,'minPrice':minPrice['price__min'],
     'maxPrice':maxPrice['price__max'], 'wishList':wishList,'s_brands':sBrands,'s_rams':sRams,'s_roms':sRoms})
 
@@ -442,48 +461,48 @@ def coupen(request):
         return JsonResponse({'total':order.get_cart_total})
 
 
-def filter_shop_products(request):
-    minPrice = request.GET.get('range[minVal]')
-    maxPrice = request.GET.get('range[maxVal]')
-    brands=request.GET.getlist('brand[]')
-    rams = request.GET.getlist('ram[]')
-    roms = request.GET.getlist('rom[]')
-    allProducts=Product.objects.all()
+# def filter_shop_products(request):
+#     minPrice = request.GET.get('range[minVal]')
+#     maxPrice = request.GET.get('range[maxVal]')
+#     brands=request.GET.getlist('brand[]')
+#     rams = request.GET.getlist('ram[]')
+#     roms = request.GET.getlist('rom[]')
+#     allProducts=Product.objects.all()
 
-    if len(brands)>0:
-        allProducts = allProducts.filter(brand__id__in=brands).distinct()
-    if len(rams)>0:
-        allProducts = allProducts.filter(ram__in=rams).distinct()
-    if len(roms)>0:
-        allProducts = allProducts.filter(storage__in=roms).distinct()
-    allProducts = allProducts.filter(Q(price__gt=minPrice, price__lt=maxPrice)).distinct()
-    wishList = []
-    if request.user.is_authenticated:
-        user = request.user
-        wishList = [item.product.id for item in WishList.objects.filter(user=user)]
+#     if len(brands)>0:
+#         allProducts = allProducts.filter(brand__id__in=brands).distinct()
+#     if len(rams)>0:
+#         allProducts = allProducts.filter(ram__in=rams).distinct()
+#     if len(roms)>0:
+#         allProducts = allProducts.filter(storage__in=roms).distinct()
+#     allProducts = allProducts.filter(Q(price__gt=minPrice, price__lt=maxPrice)).distinct()
+#     wishList = []
+#     if request.user.is_authenticated:
+#         user = request.user
+#         wishList = [item.product.id for item in WishList.objects.filter(user=user)]
 
-    t = render_to_string('users/filtered_product.html',{'products':allProducts,'wishList':wishList})
-    # print(allProducts)
-    arr = [{pro.id:{
-        'name':pro.name,
-        'price':pro.price,
-        'images1':pro.images1.url,
-        'images2':pro.images2.url,
-        'images3':pro.images3.url,
-        'ram':pro.ram,
-        'storage':pro.storage,
-        'camara':pro.camara,
-        'battery':pro.battery,
-        'processor':pro.processor,
-        'display':pro.display,
-        'stock':pro.stock,
-        'brand':pro.brand.name,
-        'date':pro.date,
-        'product_off':pro.product_off,
-    }} for pro in allProducts]
-    # print(t)
-    # print(arr)
-    return JsonResponse({'data': t, 'product':arr})
+#     t = render_to_string('users/filtered_product.html',{'products':allProducts,'wishList':wishList})
+#     # print(allProducts)
+#     arr = [{pro.id:{
+#         'name':pro.name,
+#         'price':pro.price,
+#         'images1':pro.images1.url,
+#         'images2':pro.images2.url,
+#         'images3':pro.images3.url,
+#         'ram':pro.ram,
+#         'storage':pro.storage,
+#         'camara':pro.camara,
+#         'battery':pro.battery,
+#         'processor':pro.processor,
+#         'display':pro.display,
+#         'stock':pro.stock,
+#         'brand':pro.brand.name,
+#         'date':pro.date,
+#         'product_off':pro.product_off,
+#     }} for pro in allProducts]
+#     # print(t)
+#     # print(arr)
+#     return JsonResponse({'data': t, 'product':arr})
 
 def dlt_address(request):
     add_id = request.GET.get('add_id')
