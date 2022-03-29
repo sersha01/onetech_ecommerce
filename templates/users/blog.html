@@ -205,7 +205,6 @@
 						{% endfor %}
 					</div>
 				</div>
-				<input type="text" name="h" id="h">
 				<div class="col-10 card mb-3 py-1">
 					<div>
 						<h4>Ram</h4>
@@ -295,10 +294,6 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
 	$(document).ready(function () {
-		console.log('sssss{{ s_brands }}')
-		console.log('sssss{{ s_rams }}')
-		console.log('sssss{{ s_roms }}')
-		console.log('hhhhhhhhhh{{ h }}')
 		$('.add_cart').click(function () {
 			if ('{{ user }}' == 'AnonymousUser') {
 				var productId = $(this).data('id')

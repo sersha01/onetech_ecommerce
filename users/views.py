@@ -91,8 +91,8 @@ def home(request):
     else:
         products = Product.objects.all().order_by('?')
     brands = Brand.objects.all()
-    return render(request, 'users/blog.html', {'products':products,'check':check,'brands':brands,'minPrice':minPrice['price__min'],
-    'maxPrice':maxPrice['price__max'], 'wishList':wishList,'s_brands':sBrands,'s_rams':sRams,'s_roms':sRoms})
+    context = {'products':products,'check':check,'brands':brands,'minPrice':minPrice['price__min'], 'maxPrice':maxPrice['price__max'], 'wishList':wishList,'s_brands':sBrands,'s_rams':sRams,'s_roms':sRoms, 'sMinPrice':sMinPrice, 'sMaxPrice':sMaxPrice}
+    return render(request, 'users/blog.html', context)
 
 @never_cache
 def sign_up(request, **kwargs):
