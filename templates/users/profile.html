@@ -10,7 +10,7 @@
         <h4>{{ user.name }}</h4>
         <h5>{{ user.username }}</h5>
         <h5>{{ user.phone }}</h5>
-        <h5>reference id : <span id="ref_id">127.0.0.1:8000/sign_up/{{ user.ref_id }}</span><button id="copy"
+        <h5>reference id : <span id="ref_id">{{ user.ref_id }}</span><button id="copy"
             class="ml-4 btn btn-outline-info py-0"><i class="fa-solid fa-copy"></i> Copy</button></h5>
       </div>
       <button class="btn btn-lg btn-info ml-auto bd-highlight">
@@ -51,7 +51,7 @@
       </div>
       <div class="col-12 mt-2 d-none justify-content-between row" id="address">
         {% include 'users/address.html' %}
-        <div class="col-12 d-flex justify-content-center"><a href="{% url 'add_address' %}"
+        <div class="col-12 d-flex justify-content-center"><a href="{% url 'addAddress' %}"
             class="btn btn-lg btn-info">&#10010; Add New Address</a></div>
       </div>
       <div class="col-12 mt-4 row pl-5 justify-content-between d-none" id="wish_list">

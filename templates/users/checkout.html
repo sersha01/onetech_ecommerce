@@ -59,63 +59,31 @@
           <h3>ADD SHIPPING ADDRESS</h3>
         </div>
         {% endif %}
-        <div class="row m-0">
+        <div class="row m-0" style="max-height: 300px;overflow-y: scroll" >
           {% for address in address %}
-          <div class="col-md-6 my-3">
-            <div class="col-md-12 border border-success" id="{{ address.id }}">
-              <table>
-                <tr>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                </tr>
-                <tr>
-                  <td>
-                    <input type="radio" name="address" value="{{ address.id }}" />
-                  </td>
-                  <td></td>
-                  <td></td>
-                </tr>
-                <tr>
-                  <td>NAME</td>
-                  <td>:</td>
+          <div class="col-md-12 border border-success my-2" id="{{ address.id }}">
+            <table>
+              <tr>
+                  <td class="pr-3"><input type="radio" name="address" value="{{ address.id }}" class="mt-2" /></td>
                   <td>{{ address.name }}</td>
                 </tr>
-                <tr style="vertical-align: top">
-                  <td class="pr-3 sticky-top">ADDRESS</td>
-                  <td class="pr-3">:</td>
-                  <td>
-                    <div style="white-space: pre-line">
-                      {{ address.address }}
-                    </div>
-                  </td>
+                <tr>
+                  <td></td>
+                  <td><div>{{ address.address }}</div></td>
                 </tr>
                 <tr>
-                  <td>CITY</td>
-                  <td>:</td>
-                  <td>{{ address.city }}</td>
+                  <td></td>
+                  <td>{{ address.city }}, {{ address.state }}, {{ address.pincode }}</td>
                 </tr>
                 <tr>
-                  <td>STATE</td>
-                  <td>:</td>
-                  <td>{{ address.state }}</td>
-                </tr>
-                <tr>
-                  <td>PIN CODE</td>
-                  <td>:</td>
-                  <td>{{ address.pincode }}</td>
-                </tr>
-                <tr>
-                  <td>PHONE</td>
-                  <td>:</td>
+                  <td></td>
                   <td>{{ address.number }}</td>
                 </tr>
               </table>
             </div>
+            {% endfor %}
           </div>
-          {% endfor %}
-        </div>
-      </div>
+          </div>
       <center>
         <a href="{% url 'add_address' %}"><button class="btn btn-info btn-lg col-md-9">
             &#10010; Add New Address

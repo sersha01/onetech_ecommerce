@@ -1,0 +1,58 @@
+{% extends 'users/base.html' %} {% load static %} {% block index %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-12 my-2 bg-light border d-flex align-items-center justify-content-between">
+            <div class="col-3"><p class="m-0 text-dark">Date : {{ order.date_order|date:"d m Y" }}</p></div>
+            <div class="col-2"><p class="m-0 text-dark">Total Items : {{ order.get_cart_items }}</p></div>
+            <div class="col-3"><p class="m-0 text-dark">Total Price : {{ order.get_cart_total }}</p></div>
+            <div class="col-2"><p class="m-0 text-dark">{%if order.payment == 'Pending'%}Not {% endif %}Paid</p></div>
+            <div class="col-2 p-0 my-2">
+                {% if order.status == 'New' or order.status == 'Pending' %}<a href="{% url 'cancel' order.id %}" class="m-0 btn btn-danger w-100"> Cancel </a>
+                {% elif order.status == 'Shipped' %}<button class="m-0 btn btn-warning w-100" disabled> Return </button>
+                {% elif order.status == 'Delivered' %}<a href="{% url 'order_return' order.id %}" onclick="return confirmReturn(this,event)" class="m-0 btn btn-warning w-100 "> Return </a>
+                {% elif  order.status == 'Return' %}<button class="m-0 btn btn-warning w-100" disabled> Returned </button>
+                {% else %}<a href="{% url 'reorder' order.id %}" class="m-0 btn btn-success w-100"> Reorder </a>{% endif %}</div>
+        </div>
+        {% for item in items %}
+        <div class="col-6 border p-3">
+            <div class="row">
+                <div class="col-4"><img src="{{ item.product.image1Url }}" alt="" class="col-12"></div>
+                <div class="col-8 mt-3">
+                    <h3 class="mb-2">{{ item }}</h3>
+                    {% if item.product.last_price != item.product.price %}
+                    <h5><strike class="text-muted">{{ item.product.price }} </strike> &nbsp;&nbsp; <span class="text-success">
+                        {{ item.product.offer }}% off </span></h5>
+                    {% endif %}
+                    <h4>{{ item.product.last_price }}</h4>
+                    <h5 class="mt-5">X {{ item.quantity }}</h5>
+                    <h4>&#x20B9; {{ item.get_total }}</h4>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<script>
+    function confirmReturn(url,e){
+        e.preventDefault()
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "Do you return this order",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Return'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href= url.href
+            } else {
+                Swal.fire('your order is not returned')
+            }
+        })
+    }
+</script>
+
+{% endblock %}
