@@ -1,30 +1,51 @@
 {% for address in address %}
-<div class="col-md-6 my-3"><div class="col-md-12 border border-secondary p-3 rounded" id="{{ address.id }}">
-<table><tr><td></td><td></td><td></td></tr>
-<tr><td>NAME </td><td>:</td><td> {{ address.name }}</td></tr>
-<tr style="vertical-align:top"><td class="pr-3 sticky-top">ADDRESS </td><td class="pr-3">:</td><td><div style="white-space:pre-line"> {{ address.address }} </div></td></tr>
-<tr><td>CITY </td><td>:</td><td> {{ address.city }}</td></tr>
-<tr><td>STATE </td><td>:</td><td> {{ address.state }}</td></tr>
-<tr><td>PIN CODE </td><td>:</td><td> {{ address.pincode }}</td></tr>
-<tr><td>PHONE </td><td>:</td><td> {{ address.number }}</td></tr></table>
-<tr><div class="d-flex justify-content-around mt-2"><a href="{% url 'edit_address' address.id %}"><div class="col-5 btn btn-warning" id="edit">Edit</div></a>
-    <div class="col-5 btn btn-danger" id="delete" data-address="{{ address.id }}">Delete</div></div></tr>
-</div></div>
-
-<script>
-    $(document).ready(function(){
-        $('#delete').click(function(){
-            $.ajax({
-                url: '{% url  "dlt_address" %}',
-                data:{
-                    add_id : $(this).data('address')
-                },
-                success: function(response){
-                    alert(response.id)
-                }
-            })
-        })
-    })
-</script>
+<div class="col-md-6 border border-success my-2" id="{{ address.id }}">
+    <table>
+        <tr>
+            <td class="pr-3">
+                <input type="radio" name="address" value="{{ address.id }}" class="mt-2" />
+            </td>
+            <td>{{ address.name }}</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>
+                <div>{{ address.address }}</div>
+            </td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>{{ address.city }}, {{ address.state }}, {{ address.pincode }}</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>{{ address.number }}</td>
+        </tr>
+    </table>
+    <div class="d-flex justify-content-around my-2">
+        <a class="w-100" href="{% url 'edit_address' address.id %}">
+            <div class="col-9 btn btn-warning w-100" id="edit">Edit</div>
+        </a>
+        <div class="col-5 btn btn-danger delete" data-address="{{ address.id }}">
+            Delete
+        </div>
+    </div>
+</div>
 
 {% endfor %}
+
+<script>
+    $(document).ready(function () {
+        $(".delete").click(function () {
+            $.ajax({
+                url: '{% url  "dlt_address" %}',
+                data: {
+                    add_id: $(this).data("address"),
+                },
+                success: function (response) {
+                    $('#'+response.id).remove()
+                },
+            });
+        });
+    });
+</script>

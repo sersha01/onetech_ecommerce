@@ -1,44 +1,20 @@
-<div class="row bg-light">
+<div class="row bg-light mb-4" style="height: 500px; overflow-y: scroll;">
     {% for order in orders %}
-    <div class="col-12 p-4 bg-light">
+    <a href="{% url 'order_details' order.id %}" class="col-12 p-4 bg-light">
         <div class="col-md-12 p-2 bg-light border border-dark d-flex align-items-center justify-content-between">
-            <div class="col-3"><h4>Order Date : {{ order.date_order|date:"d m Y" }}</h4></div>
-            <div class="col-2"><h4>Total Items : {{ order.get_cart_items }}</h4></div>
-            <div class="col-3"><h4>Total Price : {{ order.get_cart_total }}</h4></div>
-            <div class="col-2"><h4>{%if order.payment == 'Pending'%}Not {% endif %}Paid</h4></div>
-            {% if order.status == 'New' or order.status == 'Pending' %}
-            <div class="col-2 p-0"><a href="{% url 'cancel' order.id %}" class="btn btn-info w-100">Cancel order</a></div>
-            {% elif order.status == 'Delivered' %}
-            <div class="col-2 p-0"><a href="{% url 'order_return' order.id %}" onclick="return confirmReturn(this,event)" class="btn btn-warning w-100" id="return">Return</a></div>
-            {% elif order.status == 'Shipped' %}
-            <div class="col-2 h-50 btn w-100" style="background-color: #e0a800;">Return</div>
-            {% elif  order.status == 'Return' %}
-            <div class="col-2 h-50 btn w-100" style="background-color: #e0a800;">Returned</div>
-            {% else %}<div class="col-2 h-50 btn w-100 " style="background-color: #f05c5c;color: #fff;">Cancelled</div>{% endif %}
-        </div>
-    </div>
+            <div class="col-3"><p class="m-0 text-dark">Date : {{ order.date_order|date:"d m Y" }}</p></div>
+            <div class="col-2"><p class="m-0 text-dark">Total Items : {{ order.get_cart_items }}</p></div>
+            <div class="col-3"><p class="m-0 text-dark">Total Price : {{ order.get_cart_total }}</p></div>
+            <div class="col-2"><p class="m-0 text-dark">{%if order.payment == 'Pending'%}Not {% endif %}Paid</p></div>
+            <div class="col-2 p-0">
+                {% if order.status == 'New' or order.status == 'Pending' %} <p class="m-0 text-primary "> Ordered </p>
+                {% elif order.status == 'Shipped' %}<p class="m-0 text-info "> Out of Delivery </p>
+                {% elif order.status == 'Delivered' %}<p class="m-0 text-success "> Delivered </p>
+                {% elif  order.status == 'Return' %}<p class="m-0 text-warning "> Returned </p>
+                {% else %}<p class="m-0 text-danger "> Cancelled </p>{% endif %}</div>
+        </div></a>
     <div class="col-12"><hr class="py-0 my-0"></div>
     {% endfor %}
 </div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script>
-    function confirmReturn(url,e){
-        e.preventDefault()
-        Swal.fire({
-            title: 'Are you sure?',
-            text: "Do you return this order",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Return'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                window.location.href= url.href
-            } else {
-                Swal.fire('your order is not returned')
-            }
-        })
-    }
-</script>

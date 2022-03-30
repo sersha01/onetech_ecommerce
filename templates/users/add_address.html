@@ -2,7 +2,11 @@
 
 <div class="row justify-content-center">
   <div class="col-md-6 bg-info p-5">
+    {% if check %}
     <form action="{% url 'add_address' %}" method="POST" autocomplete="off">
+    {% else %}
+      <form action="{% url 'addAddress' %}" method="POST" autocomplete="off">
+      {% endif %}
       {% csrf_token %} 
       <div class="row m-0">
     {% for field in form %}

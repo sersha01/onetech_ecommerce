@@ -249,7 +249,7 @@
 		</div>
 		<div class="col-md-9 row" id="filteredProducts">
 			{% for product in products %}
-			{% if product.last_price > sMinPrice and product.last_price < sMaxPrice %}
+			{% if product.last_price >= sMinPrice and product.last_price <= sMaxPrice %}
 			<div class="col-sm-6 col-lg-4">
 				<div class="card text-center m-3 w-100 position-relative">
 					<a href="{% url 'single_product' product.id %}" style="text-decoration: none;">

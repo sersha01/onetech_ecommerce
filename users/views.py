@@ -45,7 +45,7 @@ def home(request):
     sBrands = []
     if request.method == 'POST':
         sMinPrice = int(request.POST.get('min-value'))
-        sMaxPrice = int(request.POST.get('max-value'))
+        sMaxPrice = int(request.POST.get('max-value'))+1
         brands=request.POST.getlist('brand')
 
         rams = request.POST.getlist('ram')
@@ -414,7 +414,6 @@ def proceed(request):
                     SignupCoupon.objects.filter(id=coupen_id).update(proceed=True) #
                 elif coupen_type == 'cupn':
                     coupen = Coupen.objects.filter(id=coupen_id)
-                    print(coupen)
                     getCoupen = coupen.get(id=coupen_id)
                     coupen.update(remaining=int(getCoupen.remaining)-1) #
             for item in items :
@@ -491,15 +490,6 @@ def homeBanner(request):
     selling = products.filter(id__in=sellinglist)
     return render(request, 'users/home.html', {'banners':banner, 'arrivals':arrivals, 'selling':selling})
 
-# def removeCoupen(request):
-#     if request.method == "POST":
-#         coupenId = request.POST.get('coupenId')
-#         orderId = request.POST.get('orderId')
-#         coupen = SignupCoupon.objects.get(id=coupenId)
-#         Order.objects.filter(id=orderId).update(coupen=NULL)
-#         order = Order.objects.get(id=orderId)
-#         return JsonResponse({'total':order.get_cart_total})
-
 
 def buyNow(request,id):
     if request.user.is_authenticated:
@@ -518,20 +508,12 @@ def buyNow(request,id):
         'coupens':coupens, 'signupCoupens':signupCoupens})
     else:
         return redirect('email_login') 
-# @never_cache
-# def view_cart(request):
-#     if request.user.is_authenticated:
-#         user = request.user
-#         order = Order.objects.get(user=user,order_status=False)
-#         items = order.orderitem_set.all()
-#     else:
-#         order = []
-#         items = {}
-#     return render(request, 'users/checkout.html', {'order':order,'items':items})
+
 
 @never_cache
 def add_address(request):
     form = AddressForm()
+    just = True
     if request.method == 'POST':
         form = AddressForm(request.POST)
         if form.is_valid():
@@ -539,16 +521,20 @@ def add_address(request):
             address.user = request.user
             address.save()
             return redirect('checkout')
+    return render(request, 'users/add_address.html', {'form':form, 'check':just})
+
+@never_cache
+def addAddress(request):
+    form = AddressForm()
+    if request.method == 'POST':
+        form = AddressForm(request.POST)
+        if form.is_valid():
+            address = form.save(commit=False)
+            address.user = request.user
+            address.save()
+            return redirect('profile')
     return render(request, 'users/add_address.html', {'form':form})
 
-# def user_orders(request):
-#     user = request.user
-#     orders = Order.objects.filter(user=user,order_status=True).order_by('-date_order')
-#     items = []
-#     for order in orders:
-#         item = order.orderitem_set.all()
-#         items.append(item)
-#     return render(request, 'users/orders.html', {'orders':orders, 'items':items})
 
 def profile(request):
     user = request.user
@@ -561,27 +547,6 @@ def profile(request):
     return render(request, 'users/profile.html', {'orders':orders, 'items':items,'address':address})
 
 
-# def cart(request):
-#     global valu
-#     valu = 1
-#     print('suc')
-#     stock = 5
-#     try:
-#         val = int(request.POST.get('action'))
-#         print(val)
-#         if stock > val:
-#             print('hello')
-#             valu = val + 1
-#             print(valu)
-#         else:
-#             print('hellooo') 
-#             valu = stock
-#     except:
-#         pass
-#     user = request.user
-#     order = Order.objects.get(user=user,order_status=False)
-#     items = order.orderitem_set.all()
-#     return render(request, 'users/cart.html',{'order':order,'items':items})
 
 def rpay(request):
     user = request.user
@@ -596,13 +561,21 @@ def order_return(request,id):
     order.update(status='Return')
     return redirect('profile')
 
+def reorder(request,id):
+    order = Order.objects.filter(id=id)
+    order.update(status='New')
+    return redirect('profile')
+
+def order_details(request,id):
+    order = Order.objects.get(id=id)
+    items = order.orderitem_set.all()
+    return render(request, 'users/order.html', {'order':order, 'items':items})
+
+
 def texting(request):
     if request.method == 'POST':
-        print('hy')
-        print(request.POST)
         form = UserForm(request.POST)
         if form.is_valid():
-            print('valid')
             form.save()
     return render(request, 'users/sign_up.html')
 
