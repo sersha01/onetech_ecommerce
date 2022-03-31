@@ -141,44 +141,76 @@
     <div id="top" class="sa-app__body px-2 px-lg-4">
         <div class="container pb-6" id="items">
             <div class="row justify-content-center">
-                <div class="col-md-6 p-3 border">
+                <div class="col-md-8 p-3 border">
                     <div class="text-center">
                         <h3>Coupon Offers</h3>
                     </div>
                     <div class="d-flex my-2 align-items-center border shadow py-3 mb-3">
-                        <div class="col-2"><strong>ID</strong></div>
+                        <div class="col-1"><strong>ID</strong></div>
                         <div class="col-3"><strong>Name</strong></div>
-                        <div class="col-2"><strong>Offer</strong></div>
-                        <div class="col-2"><strong>Remaining</strong></div>
+                        <div class="col-1"><strong>Offer</strong></div>
+                        <div class="col-1"><strong>Balance</strong></div>
+                        <div class="col-3 d-flex justify-content-center bg-light p-2"></div>
                         <div class="col-3 d-flex justify-content-center bg-light p-2"></div>
                     </div>
                     {% for coupon in coupons %}
                     <div class="d-flex my-2 align-items-center shadow-sm">
-                        <div class="col-2">#00{{ coupon.id }}</div>
+                        <div class="col-1">#00{{ coupon.id }}</div>
                         <div class="col-3">{{ coupon.name }}</div>
-                        <div class="col-2">{{ coupon.price }}</div>
-                        <div class="col-2">{{ coupon.remaining }}</div>
+                        <div class="col-1">{{ coupon.price }}</div>
+                        <div class="col-1">{{ coupon.remaining }}</div>
+                        <div class="col-3 d-flex justify-content-center">
+                            <button class="btn btn-warning w-75 edit" data-val="{{ coupon.price }}" data-bal="{{ coupon.remaining }}" data-name="{{ coupon.name }}" id="{{ coupon.id }}">Edit</button>
+                        </div>
                         <div class="col-3 d-flex justify-content-center">
                             <a href="{% url 'cpn_dlt' coupon.id %}" class="btn btn-danger w-75">Delete</a>
                         </div>
                     </div>
                     {% endfor %}
                     <div class="d-flex my-2 shadow my-3">
-                        <div class="offset-2 col-md-8 btn btn-primary" id="btn-for-form">Add New Coupen</div>
+                        <div class="accordion w-100" id="accordionExample">
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingThree">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#collapseThree" aria-expanded="false"
+                                        aria-controls="collapseThree">
+                                        &#10010; Add Coupon
+                                    </button>
+                                </h2>
+                                <div id="collapseThree" class="accordion-collapse collapse"
+                                    aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+                                    <div class="accordion-body">
+                                        <div class="col-12 d-flex align-items-center" id="form">
+                                            <form action="{% url 'cpn_add' %}" method="post" class="card col-12 px-3">
+                                                {% csrf_token %}
+                                                <label for="name" class="mt-3">Coupon Name</label>
+                                                <input class="form-control my-3" type="text" name="name" placeholder="New Coupon Name" required>
+                                                <div class="d-flex justify-content-around my-3">
+                                                    <div class="col-md-5"><label for="">Offer</label><input type="number" value="0" class="form-control" name="offer"></div>
+                                                    <div class="col-md-5"><label for="">Remaining</label><input type="number" value="0" class="form-control" name="stock"></div>
+                                                </div>
+                                                <input type="submit" class="offset-4 col-4 btn btn-primary" id="submit-btn">
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 d-flex align-items-center d-none" id="forms">
+                        <form method="post" class="card col-12 px-3">
+                            {% csrf_token %}
+                            <label for="name" class="mt-3">Coupon Name</label>
+                            <input class="form-control my-3" id="this_name" type="text" name="name" required value="">
+                            <div class="d-flex justify-content-around my-3">
+                                <div class="col-md-5"><label for="">Offer</label><input type="text" id="this_input" value="0" class="form-control" name="offer"></div>
+                                <div class="col-md-5"><label for="">Remaining</label><input type="number" id="this_bal" value="0" class="form-control" name="stock"></div>
+                            </div>
+                            <button class="offset-4 col-4 btn btn-primary" id="this_btn">Submit</button>
+                        </form>
                     </div>
                 </div>
-                <div class="col-md-6 d-flex align-items-center d-none" id="form">
-                    <form action="{% url 'cpn_add' %}" method="post" class="card col-12 px-3">
-                        {% csrf_token %}
-                        <label for="name" class="mt-3">Coupon Name</label>
-                        <input class="form-control my-3" type="text" name="name" placeholder="New Coupon Name" required>
-                        <div class="d-flex justify-content-around my-3">
-                            <div class="col-md-5"><label for="">Offer</label><input type="number" value="0" class="form-control" name="offer"></div>
-                            <div class="col-md-5"><label for="">Remaining</label><input type="number" value="0" class="form-control" name="stock"></div>
-                        </div>
-                        <input type="submit" class="offset-4 col-4 btn btn-primary" id="submit-btn">
-                    </form>
-                </div>
+                
             </div>
         </div>
     </div>
@@ -186,15 +218,51 @@
 
 <script>
     $(document).ready(function(){
-        $('#btn-for-form').click(function(){
-            $('#form').removeClass('d-none')
-            $('#btn-for-form').hide()
+        $('.edit').click(function(){
+            var id_s = $(this).attr('id')
+            var name = $(this).data('name')
+            var bal = $(this).data('bal')
+            var val = $(this).data('val')
+            // $('#this_id').html(id_s)
+            $('#this_name').val(name)
+            $('#this_input').val(val)
+            $('#this_bal').val(bal)
+            $('#this_btn').attr('data-val',id_s)
+            $('#forms').removeClass('d-none')
         })
-        $('#submit-btn').click(function(){
-            $('#form').addClass('d-none')
-            $('#btn-for-form').show()
+        $('#this_btn').click(function(){
+            var typeId = $(this).data('val')
+            var val = $('#this_input').val()
+            var bal = $('#this_bal').val()
+            var name = $('#this_name').val()
+            $.ajax({
+                method:"POST",
+                url: "{% url 'cpn_edit' %}",
+                data:{
+                    typeId:typeId,
+                    val:val,
+                    bal:bal,
+                    name:name,
+                    csrfmiddlewaretoken: '{{ csrf_token }}'
+                },
+                success: function(){
+                    location.reload()
+                    // $('#forms').hide()
+                    // $('#items').show()
+                }
+            })
         })
+
+        // $('#btn-for-form').click(function(){
+        //     $('#form').removeClass('d-none')
+        //     $('#btn-for-form').hide()
+        // })
+        // $('#submit-btn').click(function(){
+        //     $('#form').addClass('d-none')
+        //     $('#btn-for-form').show()
+        // })
     })
 </script>
+cpn_edit
 
 {% endblock %}

@@ -1,4 +1,5 @@
 
+from bdb import Breakpoint
 from django.db.models import Q
 from datetime import datetime, timedelta
 from django.http import HttpResponse, JsonResponse
@@ -26,9 +27,13 @@ def test(request):
 
 def products(request):
     if request.session.has_key('admin'):
+        # breakpoint()
         products = Product.objects.all().order_by('id')
         for p in products:
+        #     print(p.brand.category_off,'bbb')
+        #     print(p.product_off.price,'lll')
             p.last_price
+        #     print(p.last_price)
         return render(request, 'admins/products-list.html',{'products':products})
     else:
         return redirect('login')
@@ -260,8 +265,7 @@ def br_delete(request,id):
 
 def br_add(request):
     name = request.POST.get('name')
-    offer = request.POST.get('offer')
-    Brand.objects.create(name=name,category_off=offer)
+    Brand.objects.create(name=name)
     return redirect('brands')
 
 def brands(request):
@@ -366,17 +370,20 @@ def coupenManage(request):
 
 def cpn_add(request):
     if request.method == "POST":
-        name = request.POST['name']
-        offer = request.POST['offer']
-        stock = request.POST['stock']
-        Coupen.objects.create(name = name,price = offer, remaining = 0)
+        name = request.POST.get('name')
+        offer = request.POST.get('offer')
+        stock = request.POST.get('stock')
+        Coupen.objects.create(name = name, price = offer, remaining = stock)
     return redirect('coupen-manage')
 
 def cpn_edit(request):
     if request.method == "POST":
         id = request.POST.get('typeId')
         val = request.POST.get('val')
-        Coupen.objects.filter(id = id).update(price=val)
+        bal = request.POST.get('bal')
+        name = request.POST.get('name')
+        print(id,val,bal,name)
+        Coupen.objects.filter(id = id).update(price=val, name=name, remaining=bal)
     return redirect('coupen-manage')
 
 

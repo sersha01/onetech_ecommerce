@@ -4,9 +4,14 @@ from users.models import Address, User
 
 # Create your models here.
 
+class Offer(models.Model):
+    TYPE = (('Product','Product'),('Category','Category'))
+    name = models.CharField(max_length=200, choices = TYPE, null=True)
+    price = models.CharField(max_length=200, null=True)
+
 class Brand(models.Model):
     name = models.CharField(max_length=200, null=True)
-    category_off = models.IntegerField(default=0)
+    category_off = models.ForeignKey(Offer, on_delete=models.SET_NULL, null=True)
 
     def __str__(self):
         return self.name
@@ -27,7 +32,7 @@ class Product(models.Model):
     stock = models.IntegerField(null=True)
     brand = models.ForeignKey(Brand,on_delete=models.CASCADE, null=True)
     date = models.DateTimeField(auto_now_add=True)
-    product_off = models.IntegerField(default=0)
+    product_off = models.ForeignKey(Offer, on_delete=models.SET_NULL, null=True)
 
     def __str__(self):
         return self.name
