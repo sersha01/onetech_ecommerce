@@ -164,35 +164,58 @@
                     </div>
                     {% endfor %}
                     <div class="d-flex my-2 shadow my-3">
-                        <div class="offset-2 col-8 btn btn-primary" id="btn-for-form">Add New Brand</div>
+                        <div class="accordion w-100" id="accordionExample">
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingThree">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#collapseThree" aria-expanded="false"
+                                        aria-controls="collapseThree">
+                                        &#10010; Add Brand
+                                    </button>
+                                </h2>
+                                <div id="collapseThree" class="accordion-collapse collapse"
+                                    aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+                                    <div class="accordion-body">
+                                        <div class="col-12 d-flex align-items-center" id="form">
+                                            <form action="{% url 'br_add' %}" method="post"
+                                                class="card col-12 px-3">
+                                                {% csrf_token %}
+                                                <div class="row m-0">
+                                                    <div class="col-8"><input class="form-control my-3 w-100"
+                                                            type="text" name="name" placeholder="New Brand Name"
+                                                            required></div>
+                                                    <div class="col-4 d-flex align-items-center"><input type="submit"
+                                                            class="col-md-5 btn btn-primary w-100" id="submit-btn">
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="col-md-6 d-flex align-items-center d-none" id="form">
-                    <form action="{% url 'br_add' %}" method="post" class="card col-12 px-3">
-                        {% csrf_token %}
-                        <input class="form-control my-3" type="text" name="name" placeholder="New Brand Name" required>
-                        <div class="d-flex justify-content-around my-3">
-                            <div class="col-md-5"><input type="number" value="0" class="form-control" name="offer"></div>
-                            <input type="submit" class="col-md-5 btn btn-primary" id="submit-btn">
-                        </div>
-                    </form>
-                </div>
+
+
+
+
             </div>
         </div>
     </div>
 </div>
 
-<script>
-    $(document).ready(function(){
-        $('#btn-for-form').click(function(){
+<!-- <script>
+    $(document).ready(function () {
+        $('#btn-for-form').click(function () {
             $('#form').removeClass('d-none')
             $('#btn-for-form').hide()
         })
-        $('#submit-btn').click(function(){
+        $('#submit-btn').click(function () {
             $('#form').addClass('d-none')
             $('#btn-for-form').show()
         })
     })
-</script>
+</script> -->
 
 {% endblock %}

@@ -159,33 +159,7 @@
                   scrollbar-width: none;  /* Firefox */
                 }
             </style> -->
-            <div class="row">
-
-                <div class="col-md-6 p-3 example border">
-                    <div class="text-center">
-                        <h3>Coupon</h3>
-                    </div>
-                    <div class="d-flex my-2 align-items-center border shadow py-3 mb-3">
-                        <div class="col-2"><strong>ID</strong></div>
-                        <div class="col-3"><strong>Name</strong></div>
-                        <div class="col-2"><strong>Remaining</strong></div>
-                        <div class="col-2"><strong>Offer</strong></div>
-                        <div class="col-3 d-flex justify-content-center bg-light p-2"></div>
-                    </div>
-                    {% for coupon in coupons %}
-                    <div class="d-flex my-2 align-items-center shadow-sm">
-                        <div class="col-2">#00{{ coupon.id }}</div>
-                        <div class="col-3">{{ coupon.name }}</div>
-                        <div class="col-2">{{ coupon.remaining }}</div>
-                        <div class="col-2">{{ coupon.price }}</div>
-                        <div class="col-3 d-flex justify-content-center">
-                            <button class="cpn_btn btn btn-primary w-75" data-val="{{ coupon.price }}" data-name="{{ coupon.name }}"
-                             id="{{ coupon.id }}">Edit</button>
-                        </div>
-                    </div>
-                    {% endfor %}
-                </div>
-
+            <div class="row"></div>
 
                 <div class="col-md-6 p-3 example border">
                     <div class="text-center">
@@ -232,9 +206,9 @@
                                 class="w-25"></div>
                         <div class="col-3">{{ product.name }}</div>
                         <div class="col-2">{{ product.ram }} | {{ product.storage }}</div>
-                        <div class="col-2">{{ product.product_off }}</div>
+                        <div class="col-2">{{ product.product_off.price }}</div>
                         <div class="col-2 d-flex justify-content-center">
-                            <button class="pro_btn btn btn-primary w-75" data-val="{{ product.product_off }}" data-name="{{ product.name }}"
+                            <button class="pro_btn btn btn-primary w-75" data-val="{{ product.product_off.price }}" data-name="{{ product.name }}"
                              id="{{ product.id }}">Edit</button>
                         </div>
                     </div>
@@ -270,19 +244,6 @@
             $('#this_name').html(name)
             $('#this_input').val(val)
             $('#this_btn').attr('data-type','brand')
-            $('#this_btn').attr('data-val',id_s)
-            $('#items').hide()
-            $('#forms').show()
-            
-        })
-        $('.cpn_btn').click(function(){
-            var id_s = $(this).attr('id')
-            var name = $(this).data('name')
-            var val = $(this).data('val').replace('%','')
-            $('#this_id').html(id_s)
-            $('#this_name').html(name)
-            $('#this_input').val(val) 
-            $('#this_btn').attr('data-type','coupon')
             $('#this_btn').attr('data-val',id_s)
             $('#items').hide()
             $('#forms').show()
