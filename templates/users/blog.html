@@ -356,7 +356,7 @@ $(document).ready(function() {
 	  prefix: '₹'
 	});
 	noUiSlider.create(rangeSlider, {
-	  start: [minVal, maxVal],
+	  start: [parseInt('{{sMinPrice}}')+1, parseInt('{{sMaxPrice}}')-1],
 	  step: 1,
 	  range: {
 		'min': [minVal],

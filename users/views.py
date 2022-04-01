@@ -42,7 +42,7 @@ def home(request):
     sRoms = []
     sBrands = []
     if request.method == 'POST':
-        sMinPrice = int(request.POST.get('min-value'))
+        sMinPrice = int(request.POST.get('min-value'))-1
         sMaxPrice = int(request.POST.get('max-value'))+1
         brands=request.POST.getlist('brand')
 
