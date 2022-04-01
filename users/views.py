@@ -552,7 +552,10 @@ def rpay(request):
     user = request.user
     address_id = request.GET.get('address')
     address = Address.objects.get(id=address_id)
-    order = Order.objects.get(user=user,order_status=False,buy_now=False)
+    try:
+        order = Order.objects.get(user=user,order_status=False,buy_now=True)
+    except:
+        order = Order.objects.get(user=user,order_status=False,buy_now=False)
     response={'total':order.get_cart_total,'name':address.name,'email':address.user.username,'phone':address.number}
     return JsonResponse(response)
 

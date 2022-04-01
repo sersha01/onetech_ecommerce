@@ -249,12 +249,13 @@ def get_data(request, *args, **kwargs):
     return JsonResponse(data)
 
 def coupens(request):
-    products = Product.objects.all().order_by('-product_off')
-    brands = Brand.objects.all().order_by('-category_off','id')
-    for brand in brands:
+    products = Product.objects.all()
+    brands = Brand.objects.all()
+    off_products = Product.objects.exclude(product_off=None )
+    off_brands = Brand.objects.exclude(category_off=None )
+    for brand in off_brands:
         brand.items = products.filter(brand=brand).count()
-    coupens = Coupen.objects.all()
-    return render(request, 'admins/offers.html',{'products':products,'brands':brands,'coupons':coupens})
+    return render(request, 'admins/offers.html',{'off_products':off_products,'off_brands':off_brands,'products':products,'brands':brands})
 
 def test1(request, *args, **kwargs):
     return render(request, 'admins/test1.html')
@@ -275,19 +276,29 @@ def brands(request):
         brand.items = products.filter(brand=brand).count()
     return render(request, 'admins/brand.html',{'brands':brands})
 
+def addOffer(request):
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        brand_id = request.POST.get('brand')
+        product_id = request.POST.get('product')
+        offer = request.POST.get('offer')
+        if name == 'Category':
+            offerId = Offer.objects.create(name='Category',price=offer)
+            Brand.objects.filter(id=brand_id).update(category_off=offerId)
+        elif name == 'Product':
+            offerId = Offer.objects.create(name='Product',price=offer)
+            Product.objects.filter(id=product_id).update(product_off=offerId)
+    return redirect('coupens')
+
+def dltOffer(request,id):
+    Offer.objects.filter(id=id).delete()
+    return redirect('coupens')
+
 def offers(request):
     if request.method == "POST":
-        type = request.POST.get('type')
         id = request.POST.get('typeId')
         val = request.POST.get('val')
-        if type == "brand":
-            Brand.objects.filter(id=id).update(category_off=val)
-        elif type == "product":
-            Product.objects.filter(id=id).update(product_off=val)
-    # products = Product.objects.all().order_by('-product_off')
-    # brands = Brand.objects.all().order_by('-category_off')
-    # for brand in brands:
-    #     brand.items = products.filter(brand=brand).count()
+        Offer.objects.filter(id=id).update(price=val)
     return redirect('coupens')
 
 
