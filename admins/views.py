@@ -1,5 +1,4 @@
 
-from bdb import Breakpoint
 from django.db.models import Q
 from datetime import datetime, timedelta
 from django.http import HttpResponse, JsonResponse
@@ -27,13 +26,9 @@ def test(request):
 
 def products(request):
     if request.session.has_key('admin'):
-        # breakpoint()
         products = Product.objects.all().order_by('id')
         for p in products:
-        #     print(p.brand.category_off,'bbb')
-        #     print(p.product_off.price,'lll')
             p.last_price
-        #     print(p.last_price)
         return render(request, 'admins/products-list.html',{'products':products})
     else:
         return redirect('login')
@@ -58,8 +53,6 @@ def product(request,id,edit=None):
         edit=None
         if form.is_valid():
             form.save()
-        else:
-            print(form.errors)
     else:
         form = ProductForm( instance=product)
     return render(request, 'admins/dd.html', {'form':form, 'product':product, 'edit':edit})
@@ -132,11 +125,8 @@ def customers(request):
 
 def customers_sts(request):
     id = request.GET.get('id')
-    print(id)
     if request.session.has_key('admin'):
-        print('hy')
         user = User.objects.get(id=id)
-        print(user)
         if user.status == True:
             User.objects.filter(id=id).update(status=False)
         else:
@@ -184,7 +174,6 @@ def order_update(request):
         else:
             status = 'Cancelled'
         order.update(status=status)
-        print(status)
     return redirect('orders')
 
 def get_data(request, *args, **kwargs):
@@ -210,7 +199,6 @@ def get_data(request, *args, **kwargs):
         products = brand.product_set.all()
         oders = Order.objects.filter(order_status=True)
         count = OrderItem.objects.filter(product__id__in=products, order__id__in=oders).count()
-        print(count)
         sold.append(count)
         product_arr.append(str(brand))
 
@@ -393,7 +381,6 @@ def cpn_edit(request):
         val = request.POST.get('val')
         bal = request.POST.get('bal')
         name = request.POST.get('name')
-        print(id,val,bal,name)
         Coupen.objects.filter(id = id).update(price=val, name=name, remaining=bal)
     return redirect('coupen-manage')
 

@@ -1,4 +1,3 @@
-from pickle import NONE
 from django.db import models
 from users.models import Address, User
 

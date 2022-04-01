@@ -1,4 +1,3 @@
-from http.client import responses
 from django.db.models import Q,Min,Max
 from pconst import const
 import json
@@ -12,7 +11,6 @@ from django.contrib.auth import logout, login, authenticate
 from .models import Address, User
 from .forms import AddressForm, UserForm
 from .utils import *
-
 
 @never_cache
 def home(request):
