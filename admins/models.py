@@ -1,3 +1,4 @@
+from pickle import NONE
 from django.db import models
 from users.models import Address, User
 
@@ -63,20 +64,24 @@ class Product(models.Model):
 
     @property
     def offer(self):
-        if self.product_off != 0 or self.brand.category_off != 0:
-            return self.brand.category_off if self.product_off < self.brand.category_off else self.product_off
+        if self.product_off is not None and self.brand.category_off is not None:
+            if self.product_off.price != 0 or self.brand.category_off.price != 0:
+                return self.brand.category_off.price if self.product_off.price < self.brand.category_off.price else self.product_off.price
+            elif self.product_off.price != 0:
+                return self.product_off.price
+            elif self.brand.category_off.price != 0:
+                return self.brand.category_off.price
+        elif self.product_off is not None:
+            return self.product_off.price
+        elif self.brand.category_off is not None:
+            return self.brand.category_off.price
+        else:
+            return 0
 
     @property
     def last_price(self):
-        if self.product_off != 0 and self.brand.category_off != 0:
-            if self.product_off < self.brand.category_off:
-                price = self.price - (self.price * self.brand.category_off / 100)
-            else:
-                price = self.price - (self.price * self.product_off / 100)
-        elif self.product_off != 0:
-            price = self.price - (self.price * self.product_off / 100)
-        elif self.brand.category_off != 0:
-            price = self.price - (self.price * self.brand.category_off / 100)
+        if self.offer != 0:
+            price = self.price - (self.price * self.offer / 100)
         else:
             price = self.price
         return price
@@ -156,3 +161,6 @@ class Coupen(models.Model):
 class WishList(models.Model):
     user = models.ForeignKey(User,on_delete=models.CASCADE, null=True)
     product = models.ForeignKey(Product,on_delete=models.SET_NULL, null=True)
+
+
+
